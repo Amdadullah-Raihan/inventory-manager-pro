@@ -29,11 +29,11 @@ const Navbar = () => {
                 <div className="flex-none">
                     <div className="dropdown dropdown-end mr-4 flex items-center">
 
-                        <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='Create Invoice'>
-                            <Link href='/pages/invoice/new' >
+                        <Link href='/pages/invoice/new' >
+                            <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='Create Invoice'>
                                 <HiOutlineDocumentPlus className='text-2xl text-[#5a66f1]' />
-                            </Link>
-                        </label>
+                            </label>
+                        </Link>
                         <Link href='/pages/products'>
                             <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='See All Products'>
                                 <BsBagCheckFill className='text-xl text-[#5a66f1]' />

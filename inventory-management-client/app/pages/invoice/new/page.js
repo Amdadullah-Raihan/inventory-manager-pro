@@ -11,10 +11,10 @@ const CreateInvoice = () => {
 
 
     return (
-        <div className='bg-[#F7F7F9] min-h-[100vh] p-4 '>
-            <div className='max-w-[700px] mx-auto bg-white shadow p-4'>
+        <div className='bg-[#F7F7F9] min-h-[100vh] p-2 lg:p-4 '>
+            <div className='max-w-[700px] mx-auto bg-white shadow p-2 lg:p-4'>
                 {/* top div */}
-                <div className='grid grid-cols-2 justify-between gap-x-8 pb-8 border-b-2 '>
+                <div className='grid grid-cols-1 lg:grid-cols-2 justify-between gap-x-8 pb-8 border-b-2 '>
                     {/* top left */}
                     <div>
                         <div>
@@ -33,7 +33,7 @@ const CreateInvoice = () => {
                     </div>
 
                     {/* top right */}
-                    <div className='text-right first-letter:w-full'>
+                    <div className='mt-4 lg:mt-0 lg:text-right w-full'>
                         <h1 className='text-xl font-semibold text-gray-500'>Invoice #CN-{currentYear}{currentMonth}{currentDay}-001</h1>
                         <p>Date Issued: {currentDay}-{currentMonth}-{currentYear}</p>
                     </div>
@@ -41,7 +41,7 @@ const CreateInvoice = () => {
 
 
                 {/* middle div 1*/}
-                <div className="flex  justify-between py-8 border-b-2">
+                <div className="flex flex-col gap-y-4 lg:flex-row justify-between py-8 border-b-2">
                     {/* middle left */}
                     <div className="text-gray-400">
                         <h5 className='text-gray-600'>Invoice To: </h5>
@@ -66,7 +66,7 @@ const CreateInvoice = () => {
 
                 {/* middle div 2  */}
                 <div>
-                    <div className="overflow-x-auto border-b mb-8 ">
+                    <div className="overflow-x-auto border-b mb-4 lg:mb-8 ">
                         <table className="table">
                             {/* head */}
                             <thead>
@@ -120,12 +120,16 @@ const CreateInvoice = () => {
                 </div>
 
                 {/* middle div 3 */}
-                <div className='flex justify-between  border-b-2 '>
+                <div className='flex flex-col-reverse lg:flex-row justify-between  border-b-2 '>
                     {/* left */}
-                    <div className=" h-full flex flex-col justify-between text-gray-400">
-                        <p className=''><span className='text-gray-600'>Sold By: </span> Ismail Patowary</p>
-                        <div className="flex-grow flex-1"></div>
-                        <p className=' h-full  max-w-[150px] mt-[153px] border-t text-gray-500'>Sales Person&apos;s Signature</p>
+                    <div className="flex justify-between lg:flex-col  mt-10 lg:mt-0 h-full  text-gray-400 ">
+                        <div>
+                            <p className=''><span className='text-gray-600'>Sold By: <br className='lg:hidden' /> </span> Ismail Patowary</p>
+                        </div>
+
+                        <div>
+                            <p className=' h-full max-w-[150px] lg:mt-[153px] border-t text-gray-500'>Sales Person&apos;s Signature</p>
+                        </div>
                     </div>
 
                     {/* right */}
@@ -146,7 +150,7 @@ const CreateInvoice = () => {
                             <p>Total:</p>
                             <p className='flex items-center text-gray-700'><TbCurrencyTaka />12,00,000</p>
                         </div>
-                        <div className='flex justify-between mt-8 border-t'>
+                        <div className='flex  justify-end lg:justify-between mt-8 border-t'>
                             <p>Total In Words</p>
                             <p className='flex items-center text-gray-700'><TbCurrencyTaka /></p>
                         </div>

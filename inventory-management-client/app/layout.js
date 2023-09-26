@@ -20,10 +20,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
 
-      <body className={inter.className} style={{ overflow: 'hidden' }}>
+      <body className={inter.className}>
         <AuthContextProvider>
           <ProtectedRoute router={router}>
-
             <Navbar />
             {children}
           </ProtectedRoute>
