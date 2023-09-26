@@ -1,5 +1,7 @@
 import React from 'react'
-import { TbCurrencyTaka } from 'react-icons/tb'
+import { TbCurrencyTaka, TbFileDownload } from 'react-icons/tb'
+import { AiFillPrinter, AiOutlineSend } from 'react-icons/ai'
+
 
 const CreateInvoice = () => {
     const currentDate = new Date();
@@ -11,8 +13,9 @@ const CreateInvoice = () => {
 
 
     return (
-        <div className='bg-[#F7F7F9] min-h-[100vh] p-2 lg:p-4 '>
-            <div className='max-w-[700px] mx-auto bg-white shadow p-2 lg:p-4'>
+        <div className='w-full bg-[#F7F7F9] lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
+            {/* left-invoice */}
+            <div className='max-w-[700px]  bg-white shadow p-2 lg:p-4 rounded-md'>
                 {/* top div */}
                 <div className='grid grid-cols-1 lg:grid-cols-2 justify-between gap-x-8 pb-8 border-b-2 '>
                     {/* top left */}
@@ -162,6 +165,14 @@ const CreateInvoice = () => {
                 <div className="py-6 text-gray-400">
                     <p><span className='text-gray-600'>Note:</span> You are an incredible custormar. We were extremly lucky to serve you. We hope you will keep us in mind for the future shopping. Thank you!  </p>
                 </div>
+            </div>
+
+            {/* right btns */}
+            <div className='max-h-[300px] w-full lg:max-w-[400px] bg-white rounded-md shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'>
+                <button className='btn w-full bg-[#5a66f1] text-white hover:text-black'><AiOutlineSend className='text-xl' />Submit Invoice</button>
+                <button className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'><AiFillPrinter className='text-xl' />Print </button>
+                <button className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'><TbFileDownload className='text-xl' />Download </button>
+
             </div>
         </div>
     )
