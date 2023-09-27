@@ -1,6 +1,9 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import { TbCurrencyTaka, TbFileDownload } from 'react-icons/tb'
 import { AiFillPrinter, AiOutlineSend } from 'react-icons/ai'
+import { RiFileEditFill, RiSave3Fill } from 'react-icons/ri';
+import { FaPlus } from 'react-icons/fa6';
 
 
 const CreateInvoice = () => {
@@ -10,6 +13,52 @@ const CreateInvoice = () => {
     const currentMonth = currentDate.getMonth() + 1; // Get the current month (0-11, so add 1 to get 1-12)
     const currentDay = currentDate.getDate(); // Get the current day of the month (1-31)
 
+    const [invoice, setInvoice] = useState({
+        customerDetails: {
+            customerName: '',
+            customerAddress: '',
+            customerPhoneNo: '',
+            customerEmail: ''
+        },
+        productDetails: {
+            products: [{
+                productName: '',
+                warranty: '',
+                quantity: 0,
+                unitPrice: 0,
+
+            }],
+        },
+        paymentDetails: {
+            totalPaid: 0,
+            totalDue: 0,
+
+        }
+    })
+
+    // console.log('customerDetails', invoice.customerDetails);
+    console.log('productDetails', invoice.productDetails);
+    console.log('paymentDetails', invoice.paymentDetails);
+
+    //handel add item
+    const handleAddItem = () => {
+        setInvoice({
+            ...invoice,
+            productDetails: {
+                ...invoice.productDetails,
+                products: [
+                    ...invoice.productDetails.products,
+                    {
+                        productName: '',
+                        warranty: '',
+                        quantity: 0,
+                        unitPrice: 0,
+                        totalPrice: 0
+                    }
+                ]
+            }
+        });
+    }
 
 
     return (
@@ -44,85 +93,214 @@ const CreateInvoice = () => {
 
 
                 {/* middle div 1*/}
-                <div className="flex flex-col gap-y-4 lg:flex-row justify-between py-8 border-b-2">
-                    {/* middle left */}
+                <div className="flex flex-col gap-y-4 lg:flex-row  justify-between py-8 border-b-2">
+                    {/* left */}
                     <div className="text-gray-400">
                         <h5 className='text-gray-600'>Invoice To: </h5>
-                        <p>Amdadul Islam{ }</p>
-                        <address>1183 Nurerchala Rd., Vatara, Dhaka-1212</address>
-                        <p>+8801890103204</p>
-                        <p>amdaudllahrayhan@gmail.com</p>
+                        <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 lg:mr-4'>
+                            <input
+                                type="text"
+                                className='input w-full input-bordered '
+                                placeholder="Customer's Name"
+                                onChange={(e) => setInvoice({
+                                    ...invoice, customerDetails: {
+                                        ...invoice.customerDetails,
+                                        customerName: e.target.value
+                                    }
+                                }
+                                )
+                                }
+                            />
+                            <input
+                                type="text"
+                                className='input w-full input-bordered'
+                                placeholder="Customer's Address"
+                                onChange={(e) => setInvoice({
+                                    ...invoice, customerDetails: {
+                                        ...invoice.customerDetails,
+                                        customerAddress: e.target.value
+                                    }
+                                }
+                                )
+                                }
+                            />
+                            <input
+                                type="text"
+                                className='input w-full input-bordered '
+                                placeholder="Customer's Phone No."
+                                onChange={(e) => setInvoice({
+                                    ...invoice, customerDetails: {
+                                        ...invoice.customerDetails,
+                                        customerPhoneNo: e.target.value
+                                    }
+                                }
+                                )
+                                }
+                            />
+                            <input
+                                type="text"
+                                className='input w-full input-bordered'
+                                placeholder="Customer's Email"
+                                onChange={(e) => setInvoice({
+                                    ...invoice, customerDetails: {
+                                        ...invoice.customerDetails,
+                                        customerEmail: e.target.value
+                                    }
+                                }
+                                )
+                                }
+                            />
+                        </div>
+
                     </div>
 
 
-                    {/* middle right*/}
-                    <div className='text-gray-400'>
+                    {/* right*/}
+                    <div className='w-full lg:max-w-[230px]   text-gray-400'>
                         <h5 className='text-gray-600'>Billing Details: </h5>
-                        <p className='flex items-center'>Total Paid:{ }<TbCurrencyTaka className='text-gray-500 text-lg ' />12390 </p>
-                        <p className='flex items-center'>Total Due:{ }<TbCurrencyTaka className='text-gray-500 text-lg ' />0 </p>
-                        <p className='flex items-center'>Paid By: Cash/Bkash/Bank </p>
+                        <div className="leading-8">
+                            <div className='flex  items-center '>
+                                <p className='w-full'>Total Paid:</p>
 
+                                <input
+                                    type="text"
+                                    className='max-h-6 w-full input input-bordered'
+                                    placeholder=""
+                                    onChange={(e) => setInvoice({
+                                        ...invoice, paymentDetails: {
+                                            ...invoice.paymentDetails,
+                                            totalPaid: e.target.value
+                                        }
+                                    }
+                                    )
+                                    }
+                                />
+                            </div>
+                            <p className='flex items-center'>Total Due:{ }<TbCurrencyTaka className='text-gray-500 text-lg ' />
+                                { }
+                            </p>
+
+                        </div>
 
 
                     </div>
                 </div>
 
                 {/* middle div 2  */}
-                <div>
-                    <div className="overflow-x-auto border-b mb-4 lg:mb-8 ">
-                        <table className="table">
-                            {/* head */}
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Product Name</th>
-                                    <th>Warranty</th>
-                                    <th>Quantity</th>
-                                    <th>Unite Price </th>
-                                    <th>Total Price </th>
-                                </tr>
-                            </thead>
-                            <tbody className='text-gray-400'>
-                                {/* row  */}
-                                <tr>
-                                    <th>1</th>
-                                    <td>Macbook Air M1 2020</td>
-                                    <td>1 Years </td>
-                                    <td>2</td>
-                                    <td>90,000</td>
-                                    <td>1,80,000</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Macbook Air M2 2021</td>
-                                    <td>2 Years </td>
-                                    <td>1</td>
-                                    <td>1,10,000</td>
-                                    <td>1,10,000</td>
-                                </tr>
-                                <tr>
-                                    <th>3</th>
-                                    <td>Macbook Pro M1 2020</td>
-                                    <td>3 Years </td>
-                                    <td>3</td>
-                                    <td>90,000</td>
-                                    <td>2,70,000</td>
-                                </tr>
-                                <tr>
-                                    <th>4</th>
-                                    <td>Macbook Pro M2 2022</td>
-                                    <td>2 Years </td>
-                                    <td>2</td>
-                                    <td>190,000</td>
-                                    <td>3,80,000</td>
-                                </tr>
+                <div className='w-full'>
+                    <div className="overflow-x-auto border-b ">
+                        {
+                            invoice.productDetails?.products?.lenght && invoice.productDetails.products.map((product, idx) => {
+                                <table className="table">
+                                    {/* head */}
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Product Name</th>
+                                            <th>Warranty</th>
+                                            <th>Quantity</th>
+                                            <th>Unite Price </th>
+                                            <th>Total Price </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className='text-gray-400'>
+                                        {/* row  */}
+                                        <tr>
+                                            <th>{idx + 1}</th>
+                                            <td>Macbook Air M1 2020</td>
+                                            <td>1 Years </td>
+                                            <td>2</td>
+                                            <td>90,000</td>
+                                            <td>1,80,000</td>
+                                        </tr>
 
-                            </tbody>
-                        </table>
+
+                                    </tbody>
+                                </table>
+                            })
+                        }
+
+                    </div>
+
+                </div>
+                {/* middle div 3 */}
+
+                <div className='p-2 border-b-2 mb-4'>
+                    <h4 className=''>Add Product&apos;s Details</h4>
+                    <div className='grid grid-cols-1 lg:grid-cols-4 gap-2 p-1 '>
+                        <input
+                            type="text"
+                            className='w-full input input-bordered '
+                            placeholder="Product's Name"
+                            onChange={(e) => setInvoice({
+                                ...invoice,
+                                productDetails: {
+                                    ...invoice.productDetails,
+                                    products: {
+                                        ...invoice.productDetails.products,
+                                        productName: e.target.value
+                                    }
+                                }
+                            })}
+                        />
+                        <input
+                            type="text"
+                            className='w-full input input-bordered '
+                            placeholder="Warranty"
+                            onChange={(e) => setInvoice({
+                                ...invoice,
+                                productDetails: {
+                                    ...invoice.productDetails,
+                                    products: {
+                                        ...invoice.productDetails.products,
+                                        warranty: e.target.value
+                                    }
+                                }
+                            })}
+                        />
+                        <input
+                            type="number"
+                            className='w-full input input-bordered '
+                            placeholder="Quantity"
+                            onChange={(e) => setInvoice({
+                                ...invoice,
+                                productDetails: {
+                                    ...invoice.productDetails,
+                                    products: {
+                                        ...invoice.productDetails.products,
+                                        quantity: e.target.value
+                                    }
+                                }
+                            })}
+                        />
+                        <input
+                            type="number"
+                            className='w-full input input-bordered '
+                            placeholder="Unit Price"
+                            onChange={(e) => setInvoice({
+                                ...invoice,
+                                productDetails: {
+                                    ...invoice.productDetails,
+                                    products: {
+                                        ...invoice.productDetails.products,
+                                        unitPrice: e.target.value
+                                    }
+                                }
+                            })}
+                        />
+                    </div>
+
+                    <div className='w-full text-right'>
+                        <button
+                            className='btn  mr-1 mt-1 bg-[#5a66f1] text-white rounded-md hover:text-black'
+                            onClick={handleAddItem}
+                        >
+                            <FaPlus className='inline' />
+                            Add Item
+                        </button>
                     </div>
                 </div>
-
-                {/* middle div 3 */}
+                {/* middle div 4 */}
                 <div className='flex flex-col-reverse lg:flex-row justify-between  border-b-2 '>
                     {/* left */}
                     <div className="flex justify-between lg:flex-col  mt-10 lg:mt-0 h-full  text-gray-400 ">
@@ -139,7 +317,7 @@ const CreateInvoice = () => {
                     <div className='text-gray-400 min-w-[180px] leading-10'>
                         <div className='flex justify-between'>
                             <p>Subtotal:</p>
-                            <p className='flex items-center text-gray-700'><TbCurrencyTaka />12,80,000</p>
+                            <p className='flex items-center text-gray-700'><TbCurrencyTaka />{invoice.productDetails.totalPrice}</p>
                         </div>
                         <div className='flex justify-between'>
                             <p>Discount:</p>
@@ -169,7 +347,8 @@ const CreateInvoice = () => {
 
             {/* right btns */}
             <div className='max-h-[300px] w-full lg:max-w-[400px] bg-white rounded-md shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'>
-                <button className='btn w-full bg-[#5a66f1] text-white hover:text-black'><AiOutlineSend className='text-xl' />Submit Invoice</button>
+                <button className='btn w-full bg-[#5a66f1] text-white hover:text-black'><RiSave3Fill className='text-xl' />Save Invoice</button>
+                <button className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'><RiFileEditFill className='text-xl' />Edit Invoice</button>
                 <button className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'><AiFillPrinter className='text-xl' />Print </button>
                 <button className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'><TbFileDownload className='text-xl' />Download </button>
 

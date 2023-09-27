@@ -45,7 +45,7 @@ const CreateProduct = () => {
         }
     }, [user]);
 
-    console.log("user from add product page", user);
+
     // console.log("product", product);
     // console.log("shop name", product.purchasedFrom.shopName);
     // console.log("node_env", process.ene.NODE_ENV);

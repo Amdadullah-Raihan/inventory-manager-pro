@@ -9,7 +9,7 @@ import { BsFillBagCheckFill } from 'react-icons/bs';
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(true);
-    console.log('isOpen', isOpen);
+
     return (
         <div className='md:relative absolute mt-[-79px]'>
 

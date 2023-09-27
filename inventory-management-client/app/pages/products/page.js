@@ -14,7 +14,7 @@ const Products = () => {
     const [isLoading, setIsLoading] = useState(true);
     const { user } = useAuth();
     const router = useRouter();
-    console.log("user from product page", user);
+
 
     useEffect(() => {
 

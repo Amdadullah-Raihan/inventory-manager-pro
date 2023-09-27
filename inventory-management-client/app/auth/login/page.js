@@ -9,7 +9,7 @@ const Login = () => {
     const { handleGoogleSignIn, setUser, user } = useAuth();
     const router = useRouter();
 
-    console.log(router);
+
     // Function to handle Google login
     const handleGoogleLogin = async () => {
 

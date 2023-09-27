@@ -4,7 +4,7 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 import dp from '../../assests/raihan.png'
-import { FaCircleUser, FaGear, FaMagnifyingGlass, FaMobileScreenButton, FaMoon, FaPlus, FaRightFromBracket, FaSun, FaSunPlantWilt, FaUser } from 'react-icons/fa6'
+import { FaCircleUser, FaFileInvoice, FaGear, FaMagnifyingGlass, FaMobileScreenButton, FaMoon, FaPlus, FaRightFromBracket, FaSun, FaSunPlantWilt, FaUser } from 'react-icons/fa6'
 import { BsBagCheckFill, BsMoon, BsSearch, BsSun } from 'react-icons/bs'
 import { HiOutlineDocument, HiOutlineDocumentPlus } from 'react-icons/hi2'
 import { GrSettingsOption } from 'react-icons/gr'
@@ -29,6 +29,11 @@ const Navbar = () => {
                 <div className="flex-none">
                     <div className="dropdown dropdown-end mr-4 flex items-center">
 
+                        <Link href='/pages/invoice/preview' >
+                            <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='Create Invoice'>
+                                <FaFileInvoice className='text-2xl text-[#5a66f1]' />
+                            </label>
+                        </Link>
                         <Link href='/pages/invoice/new' >
                             <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='Create Invoice'>
                                 <HiOutlineDocumentPlus className='text-2xl text-[#5a66f1]' />
