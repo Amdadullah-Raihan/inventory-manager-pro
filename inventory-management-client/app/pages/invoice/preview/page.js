@@ -1,50 +1,30 @@
 'use client'
-import React from 'react'
+import BillingDetails from '@/app/components/Invoice/BillingDetails';
+import InvoiceHeader from '@/app/components/Invoice/InvoiceHeader';
+import { useInvoiceContext } from '@/app/components/context/InvoiceContext';
+import React, { useEffect, useState } from 'react'
 import { AiFillPrinter } from 'react-icons/ai';
 import { RiFileEditFill, RiSave3Fill } from 'react-icons/ri';
 import { TbCurrencyTaka, TbFileDownload } from 'react-icons/tb';
 
 const InvoicePreview = () => {
+    const { invoice } = useInvoiceContext();
     const currentDate = new Date();
 
     const currentYear = currentDate.getFullYear(); // Get the current year (e.g., 2023)
     const currentMonth = currentDate.getMonth() + 1; // Get the current month (0-11, so add 1 to get 1-12)
     const currentDay = currentDate.getDate(); // Get the current day of the month (1-31)
 
-
+    // console.log("invoice preview", invoice);
 
     return (
         <div className='w-full bg-[#F7F7F9] lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
-            {/* left-invoice */}
+            {/* start invoice */}
             <div className='max-w-[700px]  bg-white shadow p-2 lg:p-4 rounded-md'>
-                {/* top div */}
-                <div className='grid grid-cols-1 lg:grid-cols-2 justify-between gap-x-8 pb-8 border-b-2 '>
-                    {/* top left */}
-                    <div>
-                        <div>
-                            <h1 className='text-2xl font-bold mb-3 text-gray-700'><span className='text-[#5A66F1]'>CN </span> Computer</h1>
-                        </div>
-                        <div className='text-gray-500'>
-                            <address>
-                                Office 149, 450 South Brand Brooklyn
-
-                                San Diego County, CA 91905, USA
-
-                                +1 (123) 456 7891, +44 (876) 543 2198
-                            </address>
-                        </div>
-
-                    </div>
-
-                    {/* top right */}
-                    <div className='mt-4 lg:mt-0 lg:text-right w-full'>
-                        <h1 className='text-xl font-semibold text-gray-500'>Invoice #CN-{currentYear}{currentMonth}{currentDay}-001</h1>
-                        <p>Date Issued: {currentDay}-{currentMonth}-{currentYear}</p>
-                    </div>
-                </div>
+                <InvoiceHeader />
 
 
-                {/* middle div 1*/}
+                {/* Invoice to starts*/}
                 <div className="flex flex-col gap-y-4 lg:flex-row justify-between py-8 border-b-2">
                     {/* middle left */}
                     <div className="text-gray-400">
@@ -67,8 +47,9 @@ const InvoicePreview = () => {
 
                     </div>
                 </div>
+                {/* Invoice to end */}
 
-                {/* middle div 2  */}
+                {/* Product details starts */}
                 <div>
                     <div className="overflow-x-auto border-b mb-4 lg:mb-8 ">
                         <table className="table">
@@ -85,82 +66,28 @@ const InvoicePreview = () => {
                             </thead>
                             <tbody className='text-gray-400'>
                                 {/* row  */}
-                                <tr>
-                                    <th>1</th>
-                                    <td>Macbook Air M1 2020</td>
-                                    <td>1 Years </td>
-                                    <td>2</td>
-                                    <td>90,000</td>
-                                    <td>1,80,000</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Macbook Air M2 2021</td>
-                                    <td>2 Years </td>
-                                    <td>1</td>
-                                    <td>1,10,000</td>
-                                    <td>1,10,000</td>
-                                </tr>
-                                <tr>
-                                    <th>3</th>
-                                    <td>Macbook Pro M1 2020</td>
-                                    <td>3 Years </td>
-                                    <td>3</td>
-                                    <td>90,000</td>
-                                    <td>2,70,000</td>
-                                </tr>
-                                <tr>
-                                    <th>4</th>
-                                    <td>Macbook Pro M2 2022</td>
-                                    <td>2 Years </td>
-                                    <td>2</td>
-                                    <td>190,000</td>
-                                    <td>3,80,000</td>
-                                </tr>
+                                {
+                                    invoice?.productDetails?.products && invoice.productDetails.products.map((product, idx) => <tr key={idx}>
+                                        <th>{idx + 1}</th>
+                                        <td>{product.productName}</td>
+                                        <td>{product.warranty} </td>
+                                        <td>{product.quantity}</td>
+                                        <td>{product.unitPrice}</td>
+                                        <td>{product.unitPrice * product.quantity}</td>
+
+                                    </tr>)
+                                }
+
+
 
                             </tbody>
                         </table>
                     </div>
                 </div>
+                {/* Product details ends */}
 
-                {/* middle div 3 */}
-                <div className='flex flex-col-reverse lg:flex-row justify-between  border-b-2 '>
-                    {/* left */}
-                    <div className="flex justify-between lg:flex-col  mt-10 lg:mt-0 h-full  text-gray-400 ">
-                        <div>
-                            <p className=''><span className='text-gray-600'>Sold By: <br className='lg:hidden' /> </span> Ismail Patowary</p>
-                        </div>
-
-                        <div>
-                            <p className=' h-full max-w-[150px] lg:mt-[153px] border-t text-gray-500'>Sales Person&apos;s Signature</p>
-                        </div>
-                    </div>
-
-                    {/* right */}
-                    <div className='text-gray-400 min-w-[180px] leading-10'>
-                        <div className='flex justify-between'>
-                            <p>Subtotal:</p>
-                            <p className='flex items-center text-gray-700'><TbCurrencyTaka />12,80,000</p>
-                        </div>
-                        <div className='flex justify-between'>
-                            <p>Discount:</p>
-                            <p className='flex items-center text-gray-700'><TbCurrencyTaka />8,000</p>
-                        </div>
-                        <div className='flex justify-between border-b'>
-                            <p>Tax/Vat:</p>
-                            <p className='flex items-center text-gray-700'>0%</p>
-                        </div>
-                        <div className='flex justify-between '>
-                            <p>Total:</p>
-                            <p className='flex items-center text-gray-700'><TbCurrencyTaka />12,00,000</p>
-                        </div>
-                        <div className='flex  justify-end lg:justify-between mt-8 border-t'>
-                            <p>Total In Words</p>
-                            <p className='flex items-center text-gray-700'><TbCurrencyTaka /></p>
-                        </div>
-
-                    </div>
-                </div>
+                {/*Billing details */}
+                <BillingDetails />
 
                 {/* last div */}
                 <div className="py-6 text-gray-400">

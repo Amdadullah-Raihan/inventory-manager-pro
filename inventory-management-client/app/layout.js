@@ -6,6 +6,7 @@ import Sidebar from './components/SideBar/Sidebar'
 import { AuthContextProvider } from './components/context/AuthContext'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import { InvoiceContextProvider } from './components/context/InvoiceContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,10 +23,12 @@ export default function RootLayout({ children }) {
 
       <body className={inter.className}>
         <AuthContextProvider>
-          <ProtectedRoute router={router}>
-            <Navbar />
-            {children}
-          </ProtectedRoute>
+          <InvoiceContextProvider>
+            <ProtectedRoute router={router}>
+              <Navbar />
+              {children}
+            </ProtectedRoute>
+          </InvoiceContextProvider>
 
         </AuthContextProvider>
       </body>

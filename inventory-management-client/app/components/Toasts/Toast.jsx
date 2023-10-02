@@ -13,3 +13,5 @@ function App() {
         </div>
     );
 }
+
+//the component is for testing purposes

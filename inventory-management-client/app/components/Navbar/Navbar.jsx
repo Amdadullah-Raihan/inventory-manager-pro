@@ -1,17 +1,32 @@
 
 'use client'
 
-import Image from 'next/image'
+//external imports
 import React, { useState } from 'react'
-import dp from '../../assests/raihan.png'
-import { FaCircleUser, FaFileInvoice, FaGear, FaMagnifyingGlass, FaMobileScreenButton, FaMoon, FaPlus, FaRightFromBracket, FaSun, FaSunPlantWilt, FaUser } from 'react-icons/fa6'
+import Image from 'next/image'
+import Link from 'next/link'
+import {
+    FaCircleUser,
+    FaFileInvoice,
+    FaGear,
+    FaMagnifyingGlass,
+    FaMobileScreenButton,
+    FaMoon,
+    FaPlus,
+    FaRightFromBracket,
+    FaSun,
+    FaSunPlantWilt,
+    FaUser
+} from 'react-icons/fa6'
 import { BsBagCheckFill, BsMoon, BsSearch, BsSun } from 'react-icons/bs'
 import { HiOutlineDocument, HiOutlineDocumentPlus } from 'react-icons/hi2'
 import { GrSettingsOption } from 'react-icons/gr'
 import { TbShoppingBagPlus } from 'react-icons/tb'
-import Link from 'next/link'
+
+//internal imports
 import useFirebase from '@/app/hooks/useFirebase'
 import { useAuth } from '../context/AuthContext'
+import dp from '../../assests/raihan.png'
 
 
 
