@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaPlus } from 'react-icons/fa6'
-import { useInvoiceContext } from '../context/InvoiceContext'
+import { useInvoiceContext } from '../../context/InvoiceContext'
+
 
 const AddProductDetails = () => {
     const { invoice, setInvoice } = useInvoiceContext()

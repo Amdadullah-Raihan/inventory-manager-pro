@@ -1,21 +1,17 @@
 'use client'
-import BillingDetails from '@/app/components/Invoice/BillingDetails';
-import InvoiceHeader from '@/app/components/Invoice/InvoiceHeader';
-import { useInvoiceContext } from '@/app/components/context/InvoiceContext';
 import React, { useEffect, useState } from 'react'
+import { useInvoiceContext } from '@/app/components/context/InvoiceContext';
 import { AiFillPrinter } from 'react-icons/ai';
 import { RiFileEditFill, RiSave3Fill } from 'react-icons/ri';
 import { TbCurrencyTaka, TbFileDownload } from 'react-icons/tb';
+import InvoiceHeader from '@/app/components/Invoice/CreateInvoice/InvoiceHeader';
+import BillingDetails from '@/app/components/Invoice/CreateInvoice/BillingDetails';
+import ProductDetailsPreview from '@/app/components/Invoice/Preview/ProductDetailsPreview';
+import BillingDetailsPreview from '@/app/components/Invoice/Preview/BillingDetailsPreview';
 
 const InvoicePreview = () => {
-    const { invoice } = useInvoiceContext();
-    const currentDate = new Date();
+    //states will go here
 
-    const currentYear = currentDate.getFullYear(); // Get the current year (e.g., 2023)
-    const currentMonth = currentDate.getMonth() + 1; // Get the current month (0-11, so add 1 to get 1-12)
-    const currentDay = currentDate.getDate(); // Get the current day of the month (1-31)
-
-    // console.log("invoice preview", invoice);
 
     return (
         <div className='w-full bg-[#F7F7F9] lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
@@ -47,49 +43,12 @@ const InvoicePreview = () => {
 
                     </div>
                 </div>
-                {/* Invoice to end */}
 
-                {/* Product details starts */}
-                <div>
-                    <div className="overflow-x-auto border-b mb-4 lg:mb-8 ">
-                        <table className="table">
-                            {/* head */}
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Product Name</th>
-                                    <th>Warranty</th>
-                                    <th>Quantity</th>
-                                    <th>Unite Price </th>
-                                    <th>Total Price </th>
-                                </tr>
-                            </thead>
-                            <tbody className='text-gray-400'>
-                                {/* row  */}
-                                {
-                                    invoice?.productDetails?.products && invoice.productDetails.products.map((product, idx) => <tr key={idx}>
-                                        <th>{idx + 1}</th>
-                                        <td>{product.productName}</td>
-                                        <td>{product.warranty} </td>
-                                        <td>{product.quantity}</td>
-                                        <td>{product.unitPrice}</td>
-                                        <td>{product.unitPrice * product.quantity}</td>
-
-                                    </tr>)
-                                }
+                <ProductDetailsPreview />
+                <BillingDetailsPreview />
 
 
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                {/* Product details ends */}
-
-                {/*Billing details */}
-                <BillingDetails />
-
-                {/* last div */}
+                {/* notes*/}
                 <div className="py-6 text-gray-400">
                     <p><span className='text-gray-600'>Note:</span> You are an incredible custormar. We were extremly lucky to serve you. We hope you will keep us in mind for the future shopping. Thank you!  </p>
                 </div>

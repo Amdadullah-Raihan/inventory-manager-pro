@@ -7,13 +7,13 @@ import { FaPlus } from 'react-icons/fa6';
 import ProtectedRoute from '@/app/components/ProtectedRoute/ProtectedRoute';
 import { useRouter } from 'next/navigation';
 import { ToWords } from 'to-words';
-import InvoiceHeader from '@/app/components/Invoice/InvoiceHeader';
-import InvoiceTo from '@/app/components/Invoice/InvoiceTo';
-import AddProductDetails from '@/app/components/Invoice/AddProductDetails';
-import BillingDetails from '@/app/components/Invoice/BillingDetails';
 import useInvoice from '@/app/hooks/useInvoice';
 import { useInvoiceContext } from '@/app/components/context/InvoiceContext';
 import Link from 'next/link';
+import InvoiceHeader from '@/app/components/Invoice/CreateInvoice/InvoiceHeader';
+import InvoiceTo from '@/app/components/Invoice/CreateInvoice/InvoiceTo';
+import AddProductDetails from '@/app/components/Invoice/CreateInvoice/AddProductDetails';
+import BillingDetails from '@/app/components/Invoice/CreateInvoice/BillingDetails';
 
 
 const CreateInvoice = () => {

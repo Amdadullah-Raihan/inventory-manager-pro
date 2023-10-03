@@ -18,6 +18,9 @@ const useInvoice = () => {
             }],
         },
         paymentDetails: {
+            subtotal: 0,
+            discount: 0,
+            total: 0,
             totalPaid: 0,
             totalDue: 0,
 

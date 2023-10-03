@@ -3,7 +3,7 @@ import useInvoice from '@/app/hooks/useInvoice'
 import React, { useEffect, useState } from 'react'
 import { TbCurrencyTaka } from 'react-icons/tb'
 import { ToWords } from 'to-words';
-import { useInvoiceContext } from '../context/InvoiceContext';
+import { useInvoiceContext } from '../../context/InvoiceContext';
 
 
 
@@ -29,11 +29,32 @@ const toWords = new ToWords({
 
 const BillingDetails = () => {
     const { invoice, setInvoice } = useInvoiceContext();
-    const [subtotal, setSubtotal] = useState(0)
-    const [discount, setDiscount] = useState(0)
-    const [total, setTotal] = useState(subtotal)
+
     const [totalInWords, setTotalInWords] = useState('')
 
+
+    const handleDiscount = (e) => {
+
+        setInvoice((prevInvoice) => ({
+            ...prevInvoice,
+            paymentDetails: {
+                ...prevInvoice.paymentDetails,
+                discount: e.target.value,
+            },
+        }));
+
+    }
+
+    const handleTotalPaidChange = (e) => {
+
+        setInvoice((prevInvoice) => ({
+            ...prevInvoice,
+            paymentDetails: {
+                ...prevInvoice.paymentDetails,
+                totalPaid: e.target.value,
+            },
+        }));
+    }
 
 
     useEffect(() => {
@@ -43,16 +64,32 @@ const BillingDetails = () => {
             newSubtotal += product.unitPrice * product.quantity;
         });
 
-        setSubtotal(newSubtotal);
+        setInvoice((prevInvoice) => ({
+            ...prevInvoice,
+            paymentDetails: {
+                ...prevInvoice.paymentDetails,
+                subtotal: newSubtotal,
+            },
+        }));
+
     }, [invoice.productDetails.products]);
 
 
-    const handleDiscount = (e) => {
-        let discount = e.target.value;
-        let total = subtotal - discount;;
-        setTotal(total);
-        setTotalInWords(toWords.convert(total))
-    }
+
+    useEffect(() => {
+        let subtotal = invoice.paymentDetails.subtotal;
+        let newTotal = invoice.paymentDetails.subtotal - invoice.paymentDetails.discount;
+        setInvoice((prevInvoice) => ({
+            ...prevInvoice,
+            paymentDetails: {
+                ...prevInvoice.paymentDetails,
+                total: newTotal,
+            },
+        }));
+        setTotalInWords(toWords.convert(newTotal))
+    }, [invoice.paymentDetails.subtotal, invoice.paymentDetails.discount])
+
+
 
 
     return (
@@ -64,11 +101,18 @@ const BillingDetails = () => {
                     <div className='flex flex-col gap-y-2'>
                         <div className='flex gap-2'>
                             <p>Total Paid:</p>
-                            <input type='number' className='input input-bordered input-xs' />
+                            <input
+                                type='number'
+                                className='input input-bordered input-xs'
+                                onChange={handleTotalPaidChange}
+                            />
                         </div>
                         <div className='flex items-center gap-2'>
                             <p>Total Due:</p>
-                            <p className='text-gray-700 flex items-center'><TbCurrencyTaka className='' /> will show</p>
+                            <div className='text-gray-700 flex items-center'>
+                                <TbCurrencyTaka className='' />
+                                <p>{invoice.paymentDetails.total - invoice.paymentDetails.totalPaid}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,27 +123,37 @@ const BillingDetails = () => {
             </div>
 
             {/* right */}
-            <div className='w-full text-gray-400  leading-10'>
-                <div className='flex justify-between'>
+            <div className='w-full text-gray-400'>
+                <div className='flex justify-between mb-2'>
                     <p>Subtotal:</p>
-                    <p className='flex items-center text-gray-700'><TbCurrencyTaka />{subtotal}</p>
+                    <p className='flex items-center text-gray-700'>
+                        <TbCurrencyTaka />
+                        {invoice.paymentDetails.subtotal}
+                    </p>
                 </div>
-                <div className='flex justify-between'>
+                <div className='flex justify-between mb-2'>
                     <p>Discount:</p>
                     <p className='flex items-center text-gray-700'>
                         <TbCurrencyTaka />
-                        <input type="number" className='input input-bordered input-xs' onChange={handleDiscount} />
+                        <input
+                            type="number"
+                            className='input input-bordered input-xs'
+                            onChange={handleDiscount}
+                        />
                     </p>
                 </div>
-                <div className='flex justify-between border-b'>
+                <div className='flex justify-between border-b mb-2'>
                     <p>Tax/Vat:</p>
                     <p className='flex items-center text-gray-700'>0%</p>
                 </div>
-                <div className='flex justify-between '>
+                <div className='flex justify-between'>
                     <p>Total:</p>
-                    <p className='flex items-center text-gray-700'><TbCurrencyTaka />{total}</p>
+                    <p className='flex items-center text-gray-700'>
+                        <TbCurrencyTaka />
+                        {invoice.paymentDetails.total}
+                    </p>
                 </div>
-                <div className='mt-8 '>
+                <div className='mt-[93px] '>
                     <p>{totalInWords}</p>
                     <div className='flex  justify-end lg:justify-between border-t'>
                         <p>Total In Words</p>
