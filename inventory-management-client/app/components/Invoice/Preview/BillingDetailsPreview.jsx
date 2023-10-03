@@ -35,14 +35,18 @@ const BillingDetailsPreview = () => {
     }, [invoice.paymentDetails.total])
 
     return (
-        <div className='flex flex-col-reverse lg:flex-row lg:justify-between gap-6  py-2'>
+        <div className='billing-details flex flex-col-reverse lg:flex-row lg:justify-between gap-6  py-2'>
             {/* left */}
-            <div className="w-full text-gray-400 ">
-                <div className='mb-[150px]'>
+            <div className="w-full text-gray-500 ">
+                <div className='mb-[90px]'>
                     <h4 className='text-gray-700 mb-2'>Billing&apos;s Details</h4>
                     <div className='flex flex-col gap-y-2'>
                         <div className='flex gap-2'>
-                            <p>Total Paid: {invoice.paymentDetails.totalPaid}</p>
+                            <p>Total Paid:</p>
+                            <div className='text-gray-700 flex items-center'>
+                                <TbCurrencyTaka className='' />
+                                <p>{invoice.paymentDetails.totalPaid}</p>
+                            </div>
 
                         </div>
                         <div className='flex items-center gap-2'>
@@ -61,22 +65,22 @@ const BillingDetailsPreview = () => {
             </div>
 
             {/* right */}
-            <div className='w-full text-gray-400  leading-10'>
-                <div className='flex justify-between'>
+            <div className='w-full text-gray-500'>
+                <div className='flex justify-between mb-2'>
                     <p>Subtotal:</p>
                     <p className='flex items-center text-gray-700'>
                         <TbCurrencyTaka />
                         {invoice.paymentDetails.subtotal}
                     </p>
                 </div>
-                <div className='flex justify-between'>
+                <div className='flex justify-between mb-2'>
                     <p>Discount:</p>
                     <p className='flex items-center text-gray-700'>
                         <TbCurrencyTaka />
                         {invoice.paymentDetails.discount}
                     </p>
                 </div>
-                <div className='flex justify-between border-b'>
+                <div className='flex justify-between border-b mb-2'>
                     <p>Tax/Vat:</p>
                     <p className='flex items-center text-gray-700'>0%</p>
                 </div>

@@ -7,6 +7,7 @@ import { AuthContextProvider } from './components/context/AuthContext'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { InvoiceContextProvider } from './components/context/InvoiceContext'
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,7 +27,10 @@ export default function RootLayout({ children }) {
           <InvoiceContextProvider>
             <ProtectedRoute router={router}>
               <Navbar />
+
               {children}
+
+
             </ProtectedRoute>
           </InvoiceContextProvider>
 

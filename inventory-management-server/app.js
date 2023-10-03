@@ -9,7 +9,7 @@ require('dotenv').config();
 //internal imports
 const products = require('./routes/products');
 const user = require('./routes/users');
-const invoices = require('./routes/invoice');
+const invoice = require('./routes/invoice');
 
 
 //variable declarations
@@ -43,7 +43,7 @@ mongoose.connect(dbUrl)
 //routes handlers middlewares
 app.use('/api/products', products);
 app.use('/api/user', user)
-app.use('/api/invoices', invoices);
+app.use('/api/invoice', invoice);
 
 
 //main route 

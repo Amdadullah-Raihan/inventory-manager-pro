@@ -39,12 +39,17 @@ const Navbar = () => {
         <div>
             <div className="navbar bg-base-100 shadow-sm">
                 <div className="flex-1">
-                    <Link href='/' className='btn bg-[#5a66f1] text-white text-xl font-bold '><span className=''>CN</span> <span className='hidden lg:block'>Computer</span></Link>
+                    <Link href='/' className='btn  bg-white text-gray-700 border-none text-xl font-bold '>
+                        <p>
+                            <span className='text-[#5a66f1]'>CN </span><span className='hidden lg:inline-block'> Computer & Networks</span>
+                        </p>
+                    </Link>
+
                 </div>
                 <div className="flex-none">
                     <div className="dropdown dropdown-end mr-4 flex items-center">
 
-                        <Link href='/pages/invoice/preview' >
+                        <Link href='/pages/invoice' >
                             <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='Create Invoice'>
                                 <FaFileInvoice className='text-2xl text-[#5a66f1]' />
                             </label>

@@ -8,7 +8,6 @@ router.get('/', async (req, res) => {
     try {
 
         const email = req.query.email;
-        console.log("queryStr", req.query);
 
         let products;
 

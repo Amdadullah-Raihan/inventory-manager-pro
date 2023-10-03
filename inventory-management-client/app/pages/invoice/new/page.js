@@ -26,7 +26,7 @@ const CreateInvoice = () => {
 
 
     // console.log('customerDetails', invoice.customerDetails);
-    console.log('productDetails', invoice.productDetails.products);
+    console.log('invoice', invoice);
     // console.log('paymentDetails', invoice.paymentDetails);
 
 
@@ -43,7 +43,7 @@ const CreateInvoice = () => {
                     <BillingDetails />
 
                     {/* Notes Starts */}
-                    <div className=" pt-1 mt-4 text-gray-400 border-t">
+                    <div className=" pt-1 mt-4 text-gray-500 border-t">
                         <p><span className='text-gray-600'>Note:</span> You are an incredible custormar. We were extremly lucky to serve you. We hope you will keep us in mind for the future shopping. Thank you!  </p>
                     </div>
                     {/* Notes ends */}

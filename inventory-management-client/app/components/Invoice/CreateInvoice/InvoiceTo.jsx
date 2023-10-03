@@ -1,10 +1,12 @@
 import React from 'react'
+import { useInvoiceContext } from '../../context/InvoiceContext'
 
 const InvoiceTo = () => {
+    const { invoice, setInvoice } = useInvoiceContext();
     return (
         <div className="py-4 border-b">
             {/* left */}
-            <div className="text-gray-400">
+            <div className="text-gray-500">
                 <h5 className='text-gray-600'>Invoice To: </h5>
                 <div className='grid grid-cols-2 lg:grid-cols-4 gap-2'>
                     <input

@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
+import { useAuth } from '../components/context/AuthContext'
 
 const useInvoice = () => {
+
+
+
     const [invoice, setInvoice] = useState({
+        userEmail: '',
+        invoiceNumber: '',
         customerDetails: {
-            customerName: '',
-            customerAddress: '',
-            customerPhoneNo: '',
-            customerEmail: ''
+            customerName: 'Customer Name',
+            customerAddress: 'Customer Address',
+            customerPhoneNo: 'Customer Phone Number',
+            customerEmail: 'Customer Email'
         },
         productDetails: {
             products: [{
@@ -25,7 +32,9 @@ const useInvoice = () => {
             totalDue: 0,
 
         }
-    })
+    });
+
+
     return {
         invoice,
         setInvoice

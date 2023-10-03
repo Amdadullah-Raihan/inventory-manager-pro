@@ -18,7 +18,7 @@ const ProductDetailsPreview = () => {
                             <th>Total Price </th>
                         </tr>
                     </thead>
-                    <tbody className='text-gray-400'>
+                    <tbody className='text-gray-500'>
                         {/* row  */}
                         {
                             invoice?.productDetails?.products && invoice.productDetails.products.map((product, idx) => <tr key={idx}>

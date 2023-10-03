@@ -95,7 +95,7 @@ const BillingDetails = () => {
     return (
         <div className='flex flex-col-reverse lg:flex-row lg:justify-between gap-6  py-2'>
             {/* left */}
-            <div className="w-full text-gray-400 ">
+            <div className="w-full text-gray-500 ">
                 <div className='mb-[150px]'>
                     <h4 className='text-gray-700 mb-2'>Billing&apos;s Details</h4>
                     <div className='flex flex-col gap-y-2'>
@@ -123,7 +123,7 @@ const BillingDetails = () => {
             </div>
 
             {/* right */}
-            <div className='w-full text-gray-400'>
+            <div className='w-full text-gray-500'>
                 <div className='flex justify-between mb-2'>
                     <p>Subtotal:</p>
                     <p className='flex items-center text-gray-700'>

@@ -2,6 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
+
 * {
     box-sizing: border-box;
+}
+
+
+@media print {
+
+    @page {
+        size: A4;
+        margin: 0
+    }
+
+    /* Use styles for desktop-sized screens */
+
+
+    #printable-content {
+        min-width: 788px;
+        width: 100%;
+        box-shadow: none;
+        padding: 20px;
+        margin: 0;
+        color: black;
+
+    }
+
+    .invoice-header {
+
+        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: space-between;
+
+    }
+
+    .invoice-header-right {
+
+        margin-top: 0;
+        text-align: right;
+    }
+
+
+
+
+    .billing-details {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
 }

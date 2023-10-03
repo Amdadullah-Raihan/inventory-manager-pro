@@ -11,7 +11,7 @@ const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(true);
 
     return (
-        <div className='md:relative absolute mt-[-79px]'>
+        <div className='flex-grow-2 '>
 
             <button className={isOpen ? 'hidden' : 'absolute left-4 top-[27px] p-2 bg-[#5A66F1] text-white rounded-full'} onClick={() => setIsOpen(!isOpen)}>
                 <FaArrowRight />

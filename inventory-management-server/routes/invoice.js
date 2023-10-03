@@ -7,11 +7,17 @@ const router = express.Router();
 //get all invoices => /api/invoices/
 router.get('/', async (req, res) => {
     try {
+        const userEmail = req.query.userEmail;
 
-        const invoices = await Invoice.find({});
+        let invoice;
+
+        if (!userEmail) invoice = await Invoice.find();
+
+        invoice = await Invoice.find({ userEmail: userEmail });
+
         res.status(200).json({
             success: true,
-            invoices: invoices
+            invoice: invoice
         });
     }
     catch (err) {
@@ -25,12 +31,11 @@ router.get('/', async (req, res) => {
 
 
 //create invoice => /api/invoices/new
-router.get('/new', async (req, res) => {
+router.post('/new', async (req, res) => {
+
     try {
 
-        const product = new Invoice({
-
-        })
+        const product = new Invoice(req.body)
 
         const result = await product.save();
 
