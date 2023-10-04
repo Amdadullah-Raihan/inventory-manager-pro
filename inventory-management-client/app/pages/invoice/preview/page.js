@@ -10,7 +10,7 @@ import ProductDetailsPreview from '@/app/components/Invoice/Preview/ProductDetai
 import BillingDetailsPreview from '@/app/components/Invoice/Preview/BillingDetailsPreview';
 import axios from 'axios';
 import useApiUrl from '@/app/hooks/useApiUrl';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 import ReactToPrint from 'react-to-print';
@@ -34,9 +34,9 @@ const InvoicePreview = () => {
                     toast.success('Invoice added successfully!', {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000, // Close the toast after 3 seconds (optional)
-                    });
+                    }
+                    );
                     setIsSuccess(true);
-                    alert('Invoice added successfully');
 
                 }
             })
@@ -78,6 +78,7 @@ const InvoicePreview = () => {
         <div className='w-full bg-[#F7F7F9] lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
             {/* start invoice */}
             <div ref={componentRef} id="printable-content" className='max-w-[700px]  bg-white shadow p-2 lg:p-4 rounded-md'>
+                <ToastContainer />
                 <InvoiceHeader />
                 <ProductDetailsPreview />
                 <BillingDetailsPreview />

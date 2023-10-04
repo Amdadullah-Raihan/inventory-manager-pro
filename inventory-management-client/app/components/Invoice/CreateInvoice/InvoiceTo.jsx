@@ -13,6 +13,7 @@ const InvoiceTo = () => {
                         type="text"
                         className='input w-full input-bordered '
                         placeholder="Customer's Name"
+                        value={invoice.customerDetails.customerName}
                         onChange={(e) => setInvoice({
                             ...invoice, customerDetails: {
                                 ...invoice.customerDetails,
@@ -26,6 +27,7 @@ const InvoiceTo = () => {
                         type="text"
                         className='input w-full input-bordered'
                         placeholder="Customer's Address"
+                        value={invoice.customerDetails.customerAddress}
                         onChange={(e) => setInvoice({
                             ...invoice, customerDetails: {
                                 ...invoice.customerDetails,
@@ -39,6 +41,7 @@ const InvoiceTo = () => {
                         type="text"
                         className='input w-full input-bordered '
                         placeholder="Customer's Phone No."
+                        value={invoice.customerDetails.customerPhoneNo}
                         onChange={(e) => setInvoice({
                             ...invoice, customerDetails: {
                                 ...invoice.customerDetails,
@@ -52,6 +55,7 @@ const InvoiceTo = () => {
                         type="text"
                         className='input w-full input-bordered'
                         placeholder="Customer's Email"
+                        value={invoice.customerDetails.customerEmail}
                         onChange={(e) => setInvoice({
                             ...invoice, customerDetails: {
                                 ...invoice.customerDetails,

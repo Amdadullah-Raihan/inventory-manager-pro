@@ -37,6 +37,7 @@ const AddProductDetails = () => {
             },
         });
     };
+    console.log('Invoice updated', invoice);
 
     return (
         <div className='border-b py-4'>
@@ -51,6 +52,7 @@ const AddProductDetails = () => {
                                     type="text"
                                     className='w-full input input-bordered '
                                     placeholder="Product's Name"
+                                    value={invoice.productDetails.products[idx].productName}
                                     onChange={(e) => handleProductChange(e, idx, 'productName')}
 
                                 />
@@ -58,6 +60,7 @@ const AddProductDetails = () => {
                                     type="text"
                                     className='w-full input input-bordered '
                                     placeholder="Warranty"
+                                    value={invoice.productDetails.products[idx].warranty}
                                     onChange={(e) => handleProductChange(e, idx, 'warranty')}
 
                                 />
@@ -65,6 +68,7 @@ const AddProductDetails = () => {
                                     type="number"
                                     className='w-full input input-bordered '
                                     placeholder="Quantity"
+                                    value={invoice.productDetails.products[idx].quantity === 0 ? '' : invoice.productDetails.products[idx].quantity}
                                     onChange={(e) => handleProductChange(e, idx, 'quantity')}
 
                                 />
@@ -72,6 +76,7 @@ const AddProductDetails = () => {
                                     type="number"
                                     className='w-full input input-bordered '
                                     placeholder="Unit Price"
+                                    value={invoice.productDetails.products[idx].unitPrice === 0 ? '' : invoice.productDetails.products[idx].unitPrice}
                                     onChange={(e) => handleProductChange(e, idx, 'unitPrice')}
                                 />
                             </div>

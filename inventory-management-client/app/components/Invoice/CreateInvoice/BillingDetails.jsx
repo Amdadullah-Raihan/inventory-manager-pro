@@ -104,6 +104,7 @@ const BillingDetails = () => {
                             <input
                                 type='number'
                                 className='input input-bordered input-xs'
+                                value={invoice.paymentDetails.totalPaid === 0 ? '' : invoice.paymentDetails.totalPaid}
                                 onChange={handleTotalPaidChange}
                             />
                         </div>
@@ -138,6 +139,7 @@ const BillingDetails = () => {
                         <input
                             type="number"
                             className='input input-bordered input-xs'
+                            value={invoice.paymentDetails.discount === 0 ? ' ' : invoice.paymentDetails.discount}
                             onChange={handleDiscount}
                         />
                     </p>

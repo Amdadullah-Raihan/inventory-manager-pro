@@ -4,29 +4,31 @@ import { useAuth } from '../components/context/AuthContext'
 
 const useInvoice = () => {
 
-    const issuedDate = new Date().toLocaleDateString()
+    const issuedDate = new Date().toISOString().split('T')[0];
+
+    console.log('issuedDate', issuedDate);
 
     const [invoice, setInvoice] = useState({
         userEmail: '',
         invoiceNumber: '',
         issuedDate: issuedDate,
         customerDetails: {
-            customerName: 'Customer Name',
-            customerAddress: 'Customer Address',
-            customerPhoneNo: 'Customer Phone Number',
-            customerEmail: 'Customer Email'
+            customerName: '',
+            customerAddress: '',
+            customerPhoneNo: '',
+            customerEmail: ''
         },
         productDetails: {
             products: [{
                 productName: '',
                 warranty: '',
-                quantity: 0,
-                unitPrice: 0,
+                quantity: '',
+                unitPrice: '',
 
             }],
         },
         paymentDetails: {
-            subtotal: 0,
+            subtotal: '',
             discount: 0,
             total: 0,
             totalPaid: 0,

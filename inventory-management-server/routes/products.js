@@ -4,31 +4,49 @@ const router = express.Router();
 
 
 //get all prouducts => /api/products
-router.get('/', async (req, res) => {
+router.get('/:userEmail', async (req, res) => {
     try {
+        const userEmail = req.params.userEmail;
+        const partialQuery = req.query.partialQuery;
 
-        const email = req.query.email;
+        if (userEmail && partialQuery) {
+            const products = await Product.find({
+                user: userEmail, // Match the specific user's email address
+                $or: [
+                    { 'barCode': { $regex: `.*${partialQuery}.*`, $options: 'i' } },
+                    { 'productName': { $regex: `.*${partialQuery}.*`, $options: 'i' } },
+                    { 'purchasedFrom.shopName': { $regex: `.*${partialQuery}.*`, $options: 'i' } },
+                    { 'purchasedFrom.shopNumber': { $regex: `.*${partialQuery}.*`, $options: 'i' } },
+                    { 'purchasedFrom.shopAddress': { $regex: `.*${partialQuery}.*`, $options: 'i' } },
 
-        let products;
+                ]
+            });
 
-        if (!email) products = await Product.find();
+            res.status(200).json({
+                success: true,
+                products: products
+            });
+        } else if (userEmail) {
+            // Only userEmail is provided
+            const products = await Product.find({ user: userEmail });
 
-        products = await Product.find({ user: email });
-
-
-        res.status(200).json({
-            success: true,
-            products: products
-        });
-    }
-    catch (err) {
-        console.log(err);
+            res.status(200).json({
+                success: true,
+                products: products
+            });
+        } else {
+            res.status(400).json({
+                success: false,
+                error: 'User email is missing from the URL or partialQuery is missing from the query parameters.'
+            });
+        }
+    } catch (err) {
         res.status(500).json({
             success: false,
-            message: err.message
-        })
+            error: err.message
+        });
     }
-})
+});
 
 
 //create a new product => /api/products/new
@@ -107,8 +125,10 @@ router.delete('/:id', async (req, res) => {
         const deletedProduct = await Product.findByIdAndDelete(req.params.id)
         res.status(200).json({
             success: true,
+            message: 'Product deleted successfully',
             deletedProduct: deletedProduct
         });
+
     }
     catch (err) {
         console.log(err);

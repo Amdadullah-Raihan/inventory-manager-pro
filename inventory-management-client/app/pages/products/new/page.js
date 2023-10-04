@@ -43,12 +43,13 @@ const CreateProduct = () => {
             // Update the product state with the user's email
             setProduct({ ...product, user: user.email });
         }
-    }, [user]);
+    }, [user, user.email]);
 
 
-    // console.log("product", product);
+    console.log("product", product);
     // console.log("shop name", product.purchasedFrom.shopName);
     // console.log("node_env", process.ene.NODE_ENV);
+
 
 
     const handleAddProduct = (e) => {
@@ -93,8 +94,7 @@ const CreateProduct = () => {
             });
     };
 
-    const successToast = () => {
-    }
+
 
     return (
         <ProtectedRoute router={router}>
@@ -114,9 +114,10 @@ const CreateProduct = () => {
                                     <input
                                         type="text"
                                         name="title"
-                                        placeholder="Product's Title"
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        placeholder="Product's Name"
+                                        value={product.productName}
                                         required
+                                        className='border rounded-md  h-[48px]  w-full px-4'
                                         onChange={(e) => setProduct({ ...product, productName: e.target.value })} />
 
                                 </div>
@@ -126,8 +127,9 @@ const CreateProduct = () => {
                                         type="text"
                                         name="brand"
                                         placeholder="Product's Brand"
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        value={product.brand}
                                         required
+                                        className='border rounded-md  h-[48px]  w-full px-4'
                                         onChange={(e) => setProduct({ ...product, brand: e.target.value })}
                                     />
                                 </div>
@@ -138,8 +140,9 @@ const CreateProduct = () => {
                                             type="text"
                                             name="barCode"
                                             placeholder="Write Serial No."
-                                            className='border rounded-md  h-[48px]  w-full px-4'
+                                            value={product.barCode}
                                             required
+                                            className='border rounded-md  h-[48px]  w-full px-4'
                                             onChange={(e) => setProduct({ ...product, barCode: e.target.value })} />
 
                                         <AiOutlineScan className='absolute text-3xl text-[#5A66F1] right-2 bg-white' />
@@ -151,8 +154,9 @@ const CreateProduct = () => {
                                         type="number"
                                         name="stock"
                                         placeholder="Product's Stock"
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        value={product.stock}
                                         required
+                                        className='border rounded-md  h-[48px]  w-full px-4'
                                         onChange={(e) => setProduct({ ...product, stock: e.target.value })}
                                     />
                                 </div>
@@ -162,8 +166,9 @@ const CreateProduct = () => {
                                         type="text"
                                         name="warranty"
                                         placeholder="Product's Warranty (ex: 2 years, 3 months etc.)"
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        value={product.warranty}
                                         required
+                                        className='border rounded-md  h-[48px]  w-full px-4'
                                         onChange={(e) => setProduct({ ...product, warranty: e.target.value })}
                                     />
                                 </div>
@@ -180,8 +185,9 @@ const CreateProduct = () => {
                                     <input
                                         type="text" name="shopName"
                                         placeholder="Shop Name"
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        value={product.purchasedFrom.shopName}
                                         required
+                                        className='border rounded-md  h-[48px]  w-full px-4'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, shopName: e.target.value } })}
                                     />
                                 </div>
@@ -191,8 +197,9 @@ const CreateProduct = () => {
                                     <input
                                         type="text" name="shopNumber"
                                         placeholder="Shop Number"
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        value={product.purchasedFrom.shopNumber}
                                         required
+                                        className='border rounded-md  h-[48px]  w-full px-4'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, shopNumber: e.target.value } })}
                                     />
                                 </div>
@@ -201,18 +208,21 @@ const CreateProduct = () => {
                                     <input
                                         type="text" name="shopAddress"
                                         placeholder="Shop Address"
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        value={product.purchasedFrom.shopAddress}
                                         required
+                                        className='border rounded-md  h-[48px]  w-full px-4'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, shopAddress: e.target.value } })}
                                     />
                                 </div>
                                 <div>
                                     <p>Purchasing Price </p>
                                     <input
-                                        type="number" name="purchasingPrice"
+                                        type="number"
+                                        name="purchasingPrice"
                                         placeholder="Purchasing Price in Taka"
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        value={product.purchasedFrom.purchasingPrice}
                                         required
+                                        className='border rounded-md  h-[48px]  w-full px-4'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, purchasingPrice: e.target.value } })}
                                     />
                                 </div>
@@ -221,8 +231,9 @@ const CreateProduct = () => {
                                     <input
                                         type="number" name="sellingPrice"
                                         placeholder="Selling Price in Taka"
-                                        className='border rounded-md h-[48px]  w-full px-4'
+                                        value={product.purchasedFrom.sellingPrice}
                                         required
+                                        className='border rounded-md h-[48px]  w-full px-4'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, sellingPrice: e.target.value } })}
                                     />
                                 </div>

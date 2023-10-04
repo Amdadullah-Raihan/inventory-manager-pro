@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { TbCurrencyTaka, TbFileDownload } from 'react-icons/tb'
 import { AiFillPrinter, AiOutlineSend } from 'react-icons/ai'
 import { RiFileEditFill, RiSave3Fill } from 'react-icons/ri';
-import { FaPlus } from 'react-icons/fa6';
+import { FaArrowRotateRight, FaPlus } from 'react-icons/fa6';
 import ProtectedRoute from '@/app/components/ProtectedRoute/ProtectedRoute';
 import { useRouter } from 'next/navigation';
 import { ToWords } from 'to-words';
@@ -14,6 +14,7 @@ import InvoiceHeader from '@/app/components/Invoice/CreateInvoice/InvoiceHeader'
 import InvoiceTo from '@/app/components/Invoice/CreateInvoice/InvoiceTo';
 import AddProductDetails from '@/app/components/Invoice/CreateInvoice/AddProductDetails';
 import BillingDetails from '@/app/components/Invoice/CreateInvoice/BillingDetails';
+import { GrPowerReset } from 'react-icons/gr';
 
 
 const CreateInvoice = () => {
@@ -23,12 +24,84 @@ const CreateInvoice = () => {
 
 
 
-
-
     // console.log('customerDetails', invoice.customerDetails);
     // console.log('invoice', invoice);
     // console.log('paymentDetails', invoice.paymentDetails);
 
+    const issuedDate = new Date().toISOString().split('T')[0];
+
+    const handleReset = (resetOption) => {
+        if (resetOption === 'all') {
+            setInvoice({
+                userEmail: '',
+                invoiceNumber: '',
+                issuedDate: issuedDate,
+                customerDetails: {
+                    customerName: '',
+                    customerAddress: '',
+                    customerPhoneNo: '',
+                    customerEmail: ''
+                },
+                productDetails: {
+                    products: [{
+                        productName: '',
+                        warranty: '',
+                        quantity: 0,
+                        unitPrice: 0,
+
+                    }],
+                },
+                paymentDetails: {
+                    subtotal: 0,
+                    discount: 0,
+                    total: 0,
+                    totalPaid: 0,
+                    totalDue: 0,
+
+                }
+            })
+        }
+        else if (resetOption === 'customer') {
+            setInvoice((prevInvoice) => ({
+                ...prevInvoice,
+                customerDetails: {
+                    customerName: '',
+                    customerAddress: '',
+                    customerPhoneNo: '',
+                    customerEmail: ''
+                } // Reset customerDetails to an empty object
+            }));
+
+        }
+        else if (resetOption === 'product') {
+            setInvoice((prevInvoice) => ({
+                ...prevInvoice,
+                productDetails: {
+                    products: [{
+                        productName: '',
+                        warranty: '',
+                        quantity: 0,
+                        unitPrice: 0,
+
+                    }],
+
+                } // Reset productsDetails to an empty object
+            }));
+            setInvoice((prevInvoice) => ({
+                ...prevInvoice,
+                paymentDetails: {
+                    subtotal: 0,
+                    discount: 0,
+                    total: 0,
+                    totalPaid: 0,
+                    totalDue: 0,
+
+                } // Reset paymentDetails to an empty object
+            }));
+
+        }
+
+    }
 
     return (
         <ProtectedRoute router={router}>
@@ -55,6 +128,31 @@ const CreateInvoice = () => {
                     <Link href='/pages/invoice/preview'>
                         <button className='btn w-full bg-[#5a66f1] text-white hover:text-black'><RiSave3Fill className='text-xl' />See Preview</button>
                     </Link>
+
+                    <button
+                        className='btn w-full bg-orange-500 text-white hover:text-black'
+                        onClick={() => handleReset('customer')}
+                    >
+
+                        Reset customer details
+                    </button>
+
+                    <button
+                        className='btn w-full bg-blue-500 text-white hover:text-black'
+                        onClick={() => handleReset('product')}
+                    >
+
+                        Reset Product Details
+                    </button>
+
+                    <button
+                        className='btn w-full bg-rose-500 text-white hover:text-black'
+                        onClick={() => handleReset('all')}
+                    >
+
+                        Reset All
+                    </button>
+
 
 
                 </div>

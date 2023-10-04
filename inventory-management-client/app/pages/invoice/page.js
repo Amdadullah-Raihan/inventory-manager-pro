@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { AiOutlineFolderView, AiOutlinePlus } from 'react-icons/ai';
 import { TbTrash } from 'react-icons/tb';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Invoice = () => {
     const [apiUrl] = useApiUrl();
@@ -46,7 +47,9 @@ const Invoice = () => {
             .then(res => {
                 console.log("deleted invoice", res);
                 if (res.data.success) {
-                    alert(res.data.message);
+                    toast.success("Invoice deleted successfully", {
+                        position: toast.POSITION.TOP_RIGHT
+                    })
 
                 }
                 const newInvoiceList = invoiceList.filter(invoice => invoice._id !== invoiceId)
@@ -59,6 +62,8 @@ const Invoice = () => {
 
     return (
         <div className='p-2 lg:p-4  bg-[#F7F7F9] min-h-[100vh] '>
+            <ToastContainer />
+
             <div className="bg-white shadow-md rounded-lg ">
                 <div className='flex  justify-between py-6 px-4'>
                     <select className="select select-bordered w-full max-w-xs" disabled>
@@ -118,20 +123,45 @@ const Invoice = () => {
                                             </td>
 
                                             <td>
-                                                {invoice.issuedDate ? <span>{invoice.issuedDate} </span> : <span>No Date Found!</span>}
+                                                {invoice.issuedDate ? <span>{new Date(invoice.issuedDate).toISOString().split("T")[0]} </span> : <span>No Date Found!</span>}
                                             </td>
                                             <td>
-                                                <button className="btn btn-ghost btn-xs" onClick={() => handleDeleteInvoice(invoice._id)}>
+                                                <button
+                                                    className="btn btn-ghost btn-xs"
+                                                    onClick={() => document.getElementById('my_modal_3').showModal()}
+                                                >
                                                     <TbTrash className='text-2xl text-rose-500' />
                                                 </button>
-                                                <button className="btn btn-ghost btn-xs">
+                                                <button className="btn btn-ghost btn-xs" >
                                                     <AiOutlineFolderView className='text-2xl text-[#5A5FE0]' />
                                                 </button>
                                             </td>
+
+                                            {/* modal  */}
+                                            <dialog id="my_modal_3" className="modal">
+                                                <div className="modal-box">
+                                                    <form method="dialog">
+                                                        {/* if there is a button in form, it will close the modal */}
+                                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                    </form>
+                                                    <h3 className="font-bold text-l uppercase">Are you sure want to <span className='text-rose-500'>delete</span> the invoice?</h3>
+                                                    <div>
+                                                        <div className="modal-action">
+                                                            <form method="dialog">
+
+                                                                <button className="btn bg-green-500 text-white mr-2 hover:text-green-500" >Cancel</button>
+                                                                <button className='btn bg-rose-500 text-white hover:text-rose-500' onClick={() => handleDeleteInvoice(invoice._id)}>Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </dialog>
                                         </tr>
 
                                     ) :
-                                        <div> No Invoice Found! </div>
+                                        <div className='my-16 text-center text-xl uppercase text-rose-500'>
+                                            No Invoice Found!
+                                        </div>
                             }
 
 
@@ -141,6 +171,7 @@ const Invoice = () => {
                     </table>
                 </div>
             </div>
+
         </div>
     )
 }
