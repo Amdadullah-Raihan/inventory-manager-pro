@@ -4,11 +4,12 @@ import { useAuth } from '../components/context/AuthContext'
 
 const useInvoice = () => {
 
-
+    const issuedDate = new Date().toLocaleDateString()
 
     const [invoice, setInvoice] = useState({
         userEmail: '',
         invoiceNumber: '',
+        issuedDate: issuedDate,
         customerDetails: {
             customerName: 'Customer Name',
             customerAddress: 'Customer Address',

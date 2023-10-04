@@ -69,4 +69,35 @@ router.post('/new', async (req, res) => {
     }
 });
 
+// Delete an invoice by ID => /api/invoice/:id
+router.delete('/:id', async (req, res) => {
+    const invoiceId = req.params.id;
+    console.log(invoiceId);
+
+    try {
+        // Find the invoice by ID and remove it
+        const deletedInvoice = await Invoice.findByIdAndRemove(invoiceId);
+
+        if (!deletedInvoice) {
+            // If the invoice with the given ID is not found
+            return res.status(404).json({
+                success: false,
+                error: 'Invoice not found',
+            });
+        }
+
+        // If the invoice was successfully deleted
+        res.status(200).json({
+            success: true,
+            message: 'Invoice deleted successfully',
+        });
+    } catch (err) {
+        // Handle errors, e.g., database errors
+        res.status(500).json({
+            success: false,
+            error: err.message,
+        });
+    }
+});
+
 module.exports = router;

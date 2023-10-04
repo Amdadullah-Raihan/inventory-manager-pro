@@ -2,7 +2,10 @@
 import { useAuth } from '@/app/components/context/AuthContext';
 import useApiUrl from '@/app/hooks/useApiUrl';
 import axios from 'axios';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
+import { AiOutlineFolderView, AiOutlinePlus } from 'react-icons/ai';
+import { TbTrash } from 'react-icons/tb';
 
 const Invoice = () => {
     const [apiUrl] = useApiUrl();
@@ -36,32 +39,107 @@ const Invoice = () => {
 
     }, [user?.email, apiUrl, partialQuery]);
 
+
+    const handleDeleteInvoice = (invoiceId) => {
+        console.log(invoiceId);
+        axios.delete(`${apiUrl}/api/invoice/${invoiceId}`)
+            .then(res => {
+                console.log("deleted invoice", res);
+                if (res.data.success) {
+                    alert(res.data.message);
+
+                }
+                const newInvoiceList = invoiceList.filter(invoice => invoice._id !== invoiceId)
+                setInvoiceList(newInvoiceList)
+            })
+            .catch(err => {
+
+            });
+    };
+
     return (
-        <div className='p-2 lg:p-16 bg-[#F7F7F9] min-h-[100vh] '>
-            <p className='text-rose-500 text-center uppercase text-3xl mb-8 '>This page will be designed soon!!</p>
+        <div className='p-2 lg:p-4  bg-[#F7F7F9] min-h-[100vh] '>
+            <div className="bg-white shadow-md rounded-lg ">
+                <div className='flex  justify-between py-6 px-4'>
+                    <select className="select select-bordered w-full max-w-xs" disabled>
+                        <option disabled selected>Actions</option>
 
-            <div className='flex justify-between'>
-                <p className='text-gray-700 capitalize text-2xl mb-2'>See all of your invoices</p>
-
-                <div className="form-control">
-                    <div className="input-group">
-                        <input type="text" placeholder="Search…" className="input input-bordered input-md" onChange={(e) => setPartialQuery(e.target.value)} />
-                        <button className="btn btn-square" >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                        </button>
+                    </select>
+                    <div className='flex  items-center'>
+                        <input type="text" className='input input-bordered mr-2' placeholder='Search Invoice' onChange={(e) => setPartialQuery(e.target.value)} />
+                        <Link href='/pages/invoice/new' className='btn bg-[#5A5FE0] text-white hover:text-gray-700'>
+                            <AiOutlinePlus className='' /> Create Invoice
+                        </Link>
                     </div>
                 </div>
-            </div>
-            <div className='bg-white p-4 rounded-lg '>
-                {
-                    isLoading ? <p>Loading...</p> :
+                <div className="overflow-x-auto ">
+
+                    <table className="table">
+                        {/* head */}
+                        <thead className='bg-base-200'>
+                            <tr>
+                                <th>
+                                    <label>
+                                        <input type="checkbox" className="checkbox" />
+                                    </label>
+                                </th>
+                                <th>Invoic ID</th>
+                                <th>Customer  </th>
+                                <th>Issued Date</th>
+                                <th>Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* row 1 */}
+
+                            {
+                                isLoading ? <p>Loading...</p> :
 
 
-                        invoiceList?.length > 0 ? invoiceList?.map((invoice, idx) => <div key={invoice._id} className='mb-3'>
+                                    invoiceList?.length > 0 ? invoiceList?.map((invoice, idx) =>
 
-                            {idx + 1}. {invoice.invoiceNumber} <br /> <span className='ml-8'>{invoice.customerDetails.customerName}</span>
-                        </div>) : <div> No Invoice Found! </div>
-                }
+                                        <tr key={invoice._id}>
+                                            <td>
+                                                <label>
+                                                    <input type="checkbox" className="checkbox" />
+                                                </label>
+                                            </td>
+                                            <td className='text-[#5A5FE0] font-semibold'>
+                                                #{invoice.invoiceNumber}
+                                            </td>
+                                            <td>
+                                                <div className="flex items-center space-x-3">
+                                                    <div>
+                                                        <div className="font-bold">{invoice.customerDetails.customerName}</div>
+                                                        <div className="text-sm opacity-50">{invoice.customerDetails.customerEmail}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                {invoice.issuedDate ? <span>{invoice.issuedDate} </span> : <span>No Date Found!</span>}
+                                            </td>
+                                            <td>
+                                                <button className="btn btn-ghost btn-xs" onClick={() => handleDeleteInvoice(invoice._id)}>
+                                                    <TbTrash className='text-2xl text-rose-500' />
+                                                </button>
+                                                <button className="btn btn-ghost btn-xs">
+                                                    <AiOutlineFolderView className='text-2xl text-[#5A5FE0]' />
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                    ) :
+                                        <div> No Invoice Found! </div>
+                            }
+
+
+                        </tbody>
+
+
+                    </table>
+                </div>
             </div>
         </div>
     )

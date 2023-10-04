@@ -9,6 +9,10 @@ const invoiceSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    issuedDate: {
+        type: Date,
+        required: true,
+    },
     customerDetails: {
         customerName: {
             type: String,
