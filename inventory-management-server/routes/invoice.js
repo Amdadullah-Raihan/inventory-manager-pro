@@ -3,20 +3,21 @@ const Invoice = require('../models/invoice');
 const router = express.Router();
 
 
-
 // Get invoices for a specific user with optional partial query => /api/invoices/:userEmail?partialQuery=...
 router.get('/:userEmail', async (req, res) => {
     try {
         const userEmail = req.params.userEmail;
         const partialQuery = req.query.partialQuery;
-        console.log(userEmail, partialQuery);
 
         if (userEmail && partialQuery) {
-
             const invoices = await Invoice.find({
                 userEmail: userEmail, // Match the specific user's email address
-
-                invoiceNumber: { $regex: `.*${partialQuery}.*`, $options: 'i' } // Partial match on invoiceNumber
+                $or: [
+                    { 'invoiceNumber': { $regex: `.*${partialQuery}.*`, $options: 'i' } },
+                    { 'customerDetails.customerName': { $regex: `.*${partialQuery}.*`, $options: 'i' } },
+                    { 'customerDetails.customerEmail': { $regex: `.*${partialQuery}.*`, $options: 'i' } },
+                    // Add more fields here as needed
+                ]
             });
 
             res.status(200).json({
@@ -72,7 +73,7 @@ router.post('/new', async (req, res) => {
 // Delete an invoice by ID => /api/invoice/:id
 router.delete('/:id', async (req, res) => {
     const invoiceId = req.params.id;
-    console.log(invoiceId);
+
 
     try {
         // Find the invoice by ID and remove it
