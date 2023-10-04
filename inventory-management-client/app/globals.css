@@ -15,18 +15,21 @@
         margin: 0
     }
 
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+    }
+
     /* Use styles for desktop-sized screens */
-
-
     #printable-content {
         min-width: 788px;
         width: 100%;
         box-shadow: none;
         padding: 20px;
         margin: 0;
-        color: black;
-
     }
+
 
     .invoice-header {
 
@@ -35,6 +38,7 @@
         justify-content: space-between;
 
     }
+
 
     .invoice-header-right {
 
@@ -49,6 +53,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+
     }
 
 }

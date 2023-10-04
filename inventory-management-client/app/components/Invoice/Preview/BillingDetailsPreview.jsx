@@ -37,7 +37,7 @@ const BillingDetailsPreview = () => {
     return (
         <div className='billing-details flex flex-col-reverse lg:flex-row lg:justify-between gap-6  py-2'>
             {/* left */}
-            <div className="w-full text-gray-500 ">
+            <div className="w-full text-gray-700 ">
                 <div className='mb-[90px]'>
                     <h4 className='text-gray-700 mb-2'>Billing&apos;s Details</h4>
                     <div className='flex flex-col gap-y-2'>
@@ -60,12 +60,12 @@ const BillingDetailsPreview = () => {
                 </div>
 
                 <div>
-                    <p className='inline border-t text-gray-500'>Sales Person&apos;s Signature</p>
+                    <p className='inline border-t text-gray-700'>Sales Person&apos;s Signature</p>
                 </div>
             </div>
 
             {/* right */}
-            <div className='w-full text-gray-500'>
+            <div className='w-full text-gray-700'>
                 <div className='flex justify-between mb-2'>
                     <p>Subtotal:</p>
                     <p className='flex items-center text-gray-700'>
@@ -93,9 +93,9 @@ const BillingDetailsPreview = () => {
                 </div>
                 <div className='mt-8 '>
                     <p>{totalInWords}</p>
-                    <div className='flex  justify-end lg:justify-between border-t'>
+                    <div className='flex justify-between border-t'>
                         <p>Total In Words</p>
-                        <p className='flex items-center text-gray-700'><TbCurrencyTaka /></p>
+                        <TbCurrencyTaka />
                     </div>
                 </div>
 

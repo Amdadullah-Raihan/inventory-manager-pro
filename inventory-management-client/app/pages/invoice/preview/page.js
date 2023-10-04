@@ -14,10 +14,12 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 import ReactToPrint from 'react-to-print';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const InvoicePreview = () => {
     //states will go here
-    const [isSuccess, setIsSuccess] = useState(true);
+    const [isSuccess, setIsSuccess] = useState(false);
     const { invoice } = useInvoiceContext();
     const [apiUrl] = useApiUrl();
     const router = useRouter();
@@ -45,6 +47,32 @@ const InvoicePreview = () => {
 
     };
 
+    const handleDownloadPDF = () => {
+        const input = componentRef.current;
+
+        //store and define shadow
+        const originalBoxShadow = input.style.boxShadow;
+        input.style.boxShadow = 'none';
+
+
+        html2canvas(input)
+            .then(canvas => {
+                input.style.boxShadow = originalBoxShadow;
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4', true);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = canvas.width;
+                const imgHeight = canvas.height;
+                const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+                const imgX = (pdfWidth - imgWidth * ratio);
+                const imgY = 0;
+                pdf.addImage(imgData, "png", imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+                pdf.save(`${invoice.customerDetails.customerName}-invoice-${invoice.invoiceNumber}.pdf`);
+
+            })
+    };
+
 
     return (
         <div className='w-full bg-[#F7F7F9] lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
@@ -56,7 +84,7 @@ const InvoicePreview = () => {
 
 
                 {/* notes*/}
-                <div className="py-4 text-gray-500">
+                <div className="py-4 text-gray-700">
                     <p><span className='text-gray-600'>Note:</span> You are an incredible custormar. We were extremly lucky to serve you. We hope you will keep us in mind for the future shopping. Thank you!  </p>
                 </div>
             </div>
@@ -98,23 +126,16 @@ const InvoicePreview = () => {
                 />
 
 
-                <ReactToPrint
-                    trigger={() => {
-                        return <button
-                            className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'
-                            disabled={!isSuccess}
+                <button
+                    className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'
+                    disabled={!isSuccess}
+                    onClick={handleDownloadPDF}
 
-                        >
-                            <TbFileDownload className='text-xl' />
-                            Download
-                        </button>
-                    }}
-                    documentTitle='Invoice'
-                    content={() => componentRef.current}
+                >
+                    <TbFileDownload className='text-xl' />
+                    Download
+                </button>
 
-
-
-                />
 
 
 

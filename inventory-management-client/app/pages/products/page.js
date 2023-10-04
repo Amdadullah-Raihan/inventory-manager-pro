@@ -21,7 +21,7 @@ const Products = () => {
         if (user?.email) {
             axios.get(`${apiURL}/api/products?email=${user?.email}`)
                 .then(res => {
-                    console.log(res.data.products);
+                    // console.log(res.data.products);
                     setProducts(res.data.products);
                     setIsLoading(false);
                 })

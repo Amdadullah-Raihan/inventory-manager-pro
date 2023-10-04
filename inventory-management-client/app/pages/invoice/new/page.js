@@ -26,7 +26,7 @@ const CreateInvoice = () => {
 
 
     // console.log('customerDetails', invoice.customerDetails);
-    console.log('invoice', invoice);
+    // console.log('invoice', invoice);
     // console.log('paymentDetails', invoice.paymentDetails);
 
 

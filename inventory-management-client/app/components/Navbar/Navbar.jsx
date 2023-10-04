@@ -50,7 +50,7 @@ const Navbar = () => {
                     <div className="dropdown dropdown-end mr-4 flex items-center">
 
                         <Link href='/pages/invoice' >
-                            <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='Create Invoice'>
+                            <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='See All Invoices'>
                                 <FaFileInvoice className='text-2xl text-[#5a66f1]' />
                             </label>
                         </Link>

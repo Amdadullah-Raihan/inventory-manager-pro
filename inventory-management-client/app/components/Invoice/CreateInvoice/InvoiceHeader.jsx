@@ -34,7 +34,7 @@ const InvoiceHeader = () => {
                 <div>
                     <h1 className='text-2xl font-bold mb-3 text-gray-700'><span className='text-[#5A66F1]'>CN </span> Computer & Network</h1>
                 </div>
-                <div className='text-gray-500'>
+                <div className='text-gray-700'>
                     <address>
                         Shop# 545-546, Level# 5,Suvastu Arcade ICT Bhaban, New Elephant Road, Dhaka-1205, 01832-231421,
                         01867-428132, cncomputer0@gmail.com
@@ -45,8 +45,8 @@ const InvoiceHeader = () => {
             </div>
 
             {/* top right */}
-            <div className='invoice-header-right mt-4 lg:mt-0 text-gray-500 lg:text-right w-full'>
-                <h1 className='text-xl font-semibold text-gray-500'>Invoice #{invoice.invoiceNumber}</h1>
+            <div className='invoice-header-right mt-4 lg:mt-0 text-gray-700 lg:text-right w-full'>
+                <h1 className='text-xl font-semibold text-gray-700'>Invoice #{invoice.invoiceNumber}</h1>
                 <p>Date Issued: {currentDay}-{currentMonth}-{currentYear}</p>
                 <p className='border-b inline'>Customer&apos;s Details</p>
                 <div className='lg:text-right'>
