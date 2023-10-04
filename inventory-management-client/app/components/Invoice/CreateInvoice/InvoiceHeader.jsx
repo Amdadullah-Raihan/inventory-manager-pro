@@ -32,7 +32,7 @@ const InvoiceHeader = () => {
             {/* top left */}
             <div className='invoice-header-left'>
                 <div>
-                    <h1 className='text-2xl font-bold mb-3 text-gray-700'><span className='text-[#5A66F1]'>CN </span> Computer & Network</h1>
+                    <h1 className='text-2xl font-bold mb-3 text-gray-700'><span className='text-[#5A66F1]'>CN </span> Computer & Networks</h1>
                 </div>
                 <div className='text-gray-700'>
                     <address>

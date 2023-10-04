@@ -4,25 +4,41 @@ const router = express.Router();
 
 
 
-//get all invoices => /api/invoices/
-router.get('/', async (req, res) => {
+// Get invoices for a specific user with optional partial query => /api/invoices/:userEmail?partialQuery=...
+router.get('/:userEmail', async (req, res) => {
     try {
-        const userEmail = req.query.userEmail;
+        const userEmail = req.params.userEmail;
+        const partialQuery = req.query.partialQuery;
+        console.log(userEmail, partialQuery);
 
-        let invoice;
+        if (userEmail && partialQuery) {
 
-        if (!userEmail) invoice = await Invoice.find();
+            const invoices = await Invoice.find({
+                userEmail: userEmail, // Match the specific user's email address
 
-        invoice = await Invoice.find({ userEmail: userEmail });
+                invoiceNumber: { $regex: `.*${partialQuery}.*`, $options: 'i' } // Partial match on invoiceNumber
+            });
 
-        res.status(200).json({
-            success: true,
-            invoice: invoice
-        });
-    }
-    catch (err) {
+            res.status(200).json({
+                success: true,
+                invoices: invoices
+            });
+        } else if (userEmail) {
+            // Only userEmail is provided
+            const invoices = await Invoice.find({ userEmail: userEmail });
 
-        res.status(err.statusCode).json({
+            res.status(200).json({
+                success: true,
+                invoices: invoices
+            });
+        } else {
+            res.status(400).json({
+                success: false,
+                error: 'User email is missing from the URL or partialQuery is missing from the query parameters.'
+            });
+        }
+    } catch (err) {
+        res.status(500).json({
             success: false,
             error: err.message
         });
