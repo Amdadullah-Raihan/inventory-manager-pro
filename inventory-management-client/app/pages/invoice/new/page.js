@@ -64,6 +64,7 @@ const CreateInvoice = () => {
         else if (resetOption === 'customer') {
             setInvoice((prevInvoice) => ({
                 ...prevInvoice,
+                invoiceNumber: '',
                 customerDetails: {
                     customerName: '',
                     customerAddress: '',
@@ -76,6 +77,7 @@ const CreateInvoice = () => {
         else if (resetOption === 'product') {
             setInvoice((prevInvoice) => ({
                 ...prevInvoice,
+                invoiceNumber: '',
                 productDetails: {
                     products: [{
                         productName: '',
@@ -89,6 +91,7 @@ const CreateInvoice = () => {
             }));
             setInvoice((prevInvoice) => ({
                 ...prevInvoice,
+                invoiceNumber: '',
                 paymentDetails: {
                     subtotal: 0,
                     discount: 0,

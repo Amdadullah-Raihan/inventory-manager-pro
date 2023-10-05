@@ -2,30 +2,50 @@
 import React, { useEffect } from 'react'
 import { useInvoiceContext } from '../../context/InvoiceContext';
 import { useAuth } from '../../context/AuthContext';
+import axios from 'axios';
+import useApiUrl from '@/app/hooks/useApiUrl';
 
 
 
 const InvoiceHeader = () => {
-    const { user } = useAuth()
+    const { user } = useAuth();
+    const [apiUrl] = useApiUrl();
     const { invoice, setInvoice } = useInvoiceContext();
     const currentDate = new Date();
 
-    const currentYear = currentDate.getFullYear(); // Get the current year (e.g., 2023)
-    const currentMonth = currentDate.getMonth() + 1; // Get the current month (0-11, so add 1 to get 1-12)
-    const currentDay = currentDate.getDate(); // Get the current day of the month (1-31)
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
 
+
+
+    console.log('Updated invoiceNumber: ' + invoice.invoiceNumber);
     useEffect(() => {
-        let newInvoiceNumber = `CN-${currentYear}${currentMonth}${currentDay}-001`
-        setInvoice(invoice => ({
-            ...invoice,
-            invoiceNumber: newInvoiceNumber
-        }));
+        axios.post(`${apiUrl}/api/invoice/latestInvoice`)
+            .then(res => {
+                if (res.data.greatestInvoiceNumber) {
+                    const greatestInvoiceNumber = parseInt(res.data.greatestInvoiceNumber);
+                    console.log('greatestInvoiceNumber: ' + greatestInvoiceNumber);
+
+                    let newInvoiceNumber = `CN-${currentYear}${currentMonth}${currentDay}-${String(greatestInvoiceNumber + 1).padStart(3, '0')}`;
+                    console.log('new invoice no', newInvoiceNumber);
+
+                    setInvoice(prevInvoice => ({
+                        ...prevInvoice,
+                        invoiceNumber: newInvoiceNumber
+                    }));
+
+                }
+
+            })
+
+
         setInvoice(invoice => ({
             ...invoice,
             userEmail: user.email
         }));
 
-    }, [user])
+    }, [user, apiUrl, invoice.invoiceNumber])
 
     return (
         <div className='invoice-header grid grid-cols-1 lg:grid-cols-2 justify-between gap-x-4 pb-2 border-b '>

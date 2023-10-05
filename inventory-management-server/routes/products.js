@@ -53,7 +53,6 @@ router.get('/:userEmail', async (req, res) => {
 router.post('/new', async (req, res) => {
 
 
-    console.log(req.body);
     try {
 
         const product = new Product({

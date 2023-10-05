@@ -101,4 +101,39 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.post('/latestInvoice', async (req, res) => {
+    try {
+        const userEmail = req.params.userEmail;
+        const currentDate = new Date().toISOString().split('T')[0];
+        const invoices = await Invoice.find({ issuedDate: currentDate }).select('invoiceNumber');
+
+        // console.log('invoices', invoices);
+
+        // Extract the numeric part of the invoice numbers and convert them to numbers
+        const numericParts = invoices.map(invoice => {
+            const parts = invoice.invoiceNumber.split('-');
+            const numericPart = parseInt(parts[2]);
+            return !isNaN(numericPart) ? numericPart : 0; // Filter out non-numeric values
+        });
+
+        // console.log('numericParts', numericParts);
+
+        // Find the maximum numeric part
+        const maxNumericPart = Math.max(...numericParts);
+
+        // Create the greatest invoice number by combining it with the prefix
+        const greatestInvoiceNumber = `${maxNumericPart.toString().padStart(3, '0')}`;
+
+
+        console.log(greatestInvoiceNumber);
+
+        res.status(200).json({ greatestInvoiceNumber });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 module.exports = router;

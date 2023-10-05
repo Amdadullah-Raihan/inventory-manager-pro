@@ -37,7 +37,7 @@ const AddProductDetails = () => {
             },
         });
     };
-    console.log('Invoice updated', invoice);
+    // console.log('Invoice updated', invoice);
 
     return (
         <div className='border-b py-4'>

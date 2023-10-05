@@ -6,7 +6,7 @@ const useInvoice = () => {
 
     const issuedDate = new Date().toISOString().split('T')[0];
 
-    console.log('issuedDate', issuedDate);
+    // console.log('issuedDate', issuedDate);
 
     const [invoice, setInvoice] = useState({
         userEmail: '',
