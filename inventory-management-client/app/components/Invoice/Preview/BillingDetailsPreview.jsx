@@ -26,8 +26,7 @@ const toWords = new ToWords({
 });
 
 
-const BillingDetailsPreview = () => {
-    const { invoice } = useInvoiceContext();
+const BillingDetailsPreview = ({ invoice }) => {
     const [totalInWords, setTotalInWords] = useState('');
 
     useEffect(() => {

@@ -29,7 +29,7 @@ const invoiceSchema = new mongoose.Schema({
         },
         customerEmail: {
             type: String,
-            required: true,
+            required: false,
         },
     },
     productDetails: {

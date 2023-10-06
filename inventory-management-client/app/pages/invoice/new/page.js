@@ -113,7 +113,7 @@ const CreateInvoice = () => {
                 {/* Invoice Starts */}
                 <div className='max-w-[700px]  bg-white shadow p-2 lg:p-4 rounded-md'>
 
-                    <InvoiceHeader />
+                    <InvoiceHeader invoice={invoice} />
                     <InvoiceTo />
                     <AddProductDetails />
                     <BillingDetails />

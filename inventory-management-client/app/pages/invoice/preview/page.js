@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import ReactToPrint from 'react-to-print';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import NotePreview from '@/app/components/Invoice/Preview/NotePreview';
 
 const InvoicePreview = () => {
     //states will go here
@@ -79,15 +80,11 @@ const InvoicePreview = () => {
             {/* start invoice */}
             <div ref={componentRef} id="printable-content" className='max-w-[700px]  bg-white shadow p-2 lg:p-4 rounded-md'>
                 <ToastContainer />
-                <InvoiceHeader />
-                <ProductDetailsPreview />
-                <BillingDetailsPreview />
+                <InvoiceHeader invoice={invoice} />
+                <ProductDetailsPreview invoice={invoice} />
+                <BillingDetailsPreview invoice={invoice} />
+                <NotePreview />
 
-
-                {/* notes*/}
-                <div className="py-4 text-gray-700">
-                    <p><span className='text-gray-600'>Note:</span> You are an incredible custormar. We were extremly lucky to serve you. We hope you will keep us in mind for the future shopping. Thank you!  </p>
-                </div>
             </div>
 
             {/* right btns */}

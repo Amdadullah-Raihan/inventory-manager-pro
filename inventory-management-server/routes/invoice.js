@@ -3,6 +3,44 @@ const Invoice = require('../models/invoice');
 const router = express.Router();
 
 
+// Get an invoice by ID => /api/invoice/:id
+router.get('/singleInvoice/:id', async (req, res) => {
+    try {
+        const invoiceId = req.params.id;
+        if (invoiceId.match(/^[0-9a-fA-F]{24}$/)) {
+
+            // Find the invoice by ID
+            const invoice = await Invoice.findById(invoiceId);
+
+            if (!invoice) {
+                // If the invoice with the given ID is not found
+                return res.status(404).json({
+                    success: false,
+                    error: 'Invoice not found',
+                });
+            }
+
+            // If the invoice was successfully found
+            res.status(200).json({
+                success: true,
+                invoice: invoice,
+            });
+        }
+        else {
+            res.status(404).json({
+                message: 'Object ID is not a valid invoice'
+            });
+        }
+
+    } catch (err) {
+        // Handle errors, e.g., database errors
+        res.status(500).json({
+            success: false,
+            error: err.message,
+        });
+    }
+});
+
 // Get invoices for a specific user with optional partial query => /api/invoices/:userEmail?partialQuery=...
 router.get('/:userEmail', async (req, res) => {
     try {
@@ -47,28 +85,9 @@ router.get('/:userEmail', async (req, res) => {
 });
 
 
-//create invoice => /api/invoices/new
-router.post('/new', async (req, res) => {
 
-    try {
 
-        const product = new Invoice(req.body)
 
-        const result = await product.save();
-
-        res.status(200).json({
-            success: true,
-            result: result
-        });
-    }
-    catch (err) {
-
-        res.status(err.statusCode).json({
-            success: false,
-            error: err.message
-        });
-    }
-});
 
 // Delete an invoice by ID => /api/invoice/:id
 router.delete('/:id', async (req, res) => {
@@ -101,9 +120,34 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.post('/latestInvoice', async (req, res) => {
+
+
+//create invoice => /api/invoices/new
+router.post('/new', async (req, res) => {
+
     try {
-        const userEmail = req.params.userEmail;
+
+        const product = new Invoice(req.body)
+
+        const result = await product.save();
+
+        res.status(200).json({
+            success: true,
+            result: result
+        });
+    }
+    catch (err) {
+
+        res.status(err.statusCode).json({
+            success: false,
+            error: err.message
+        });
+    }
+});
+
+router.get('/latest/invoiceNumber', async (req, res) => {
+    console.log("api hitted");
+    try {
         const currentDate = new Date().toISOString().split('T')[0];
         const invoices = await Invoice.find({ issuedDate: currentDate }).select('invoiceNumber');
 
@@ -116,16 +160,21 @@ router.post('/latestInvoice', async (req, res) => {
             return !isNaN(numericPart) ? numericPart : 0; // Filter out non-numeric values
         });
 
-        // console.log('numericParts', numericParts);
+        // Filter out values that are not valid numbers (including 0)
+        const validNumericParts = numericParts.filter(numericPart => numericPart > 0);
+
+        if (validNumericParts.length === 0) {
+            // Handle the case where there are no valid invoice numbers
+            return res.status(200).json({ greatestInvoiceNumber: '000' });
+        }
 
         // Find the maximum numeric part
-        const maxNumericPart = Math.max(...numericParts);
+        const maxNumericPart = Math.max(...validNumericParts);
 
         // Create the greatest invoice number by combining it with the prefix
         const greatestInvoiceNumber = `${maxNumericPart.toString().padStart(3, '0')}`;
 
-
-        console.log(greatestInvoiceNumber);
+        // console.log(greatestInvoiceNumber);
 
         res.status(200).json({ greatestInvoiceNumber });
 

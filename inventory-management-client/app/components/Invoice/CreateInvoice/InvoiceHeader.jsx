@@ -7,45 +7,13 @@ import useApiUrl from '@/app/hooks/useApiUrl';
 
 
 
-const InvoiceHeader = () => {
-    const { user } = useAuth();
-    const [apiUrl] = useApiUrl();
-    const { invoice, setInvoice } = useInvoiceContext();
-    const currentDate = new Date();
+const InvoiceHeader = ({ invoice }) => {
 
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentDay = currentDate.getDate();
+    const dateString = invoice.issuedDate;
+    const date = new Date(dateString);
+    const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
 
 
-
-    console.log('Updated invoiceNumber: ' + invoice.invoiceNumber);
-    useEffect(() => {
-        axios.post(`${apiUrl}/api/invoice/latestInvoice`)
-            .then(res => {
-                if (res.data.greatestInvoiceNumber) {
-                    const greatestInvoiceNumber = parseInt(res.data.greatestInvoiceNumber);
-                    console.log('greatestInvoiceNumber: ' + greatestInvoiceNumber);
-
-                    let newInvoiceNumber = `CN-${currentYear}${currentMonth}${currentDay}-${String(greatestInvoiceNumber + 1).padStart(3, '0')}`;
-                    console.log('new invoice no', newInvoiceNumber);
-
-                    setInvoice(prevInvoice => ({
-                        ...prevInvoice,
-                        invoiceNumber: newInvoiceNumber
-                    }));
-
-                }
-
-            })
-
-
-        setInvoice(invoice => ({
-            ...invoice,
-            userEmail: user.email
-        }));
-
-    }, [user, apiUrl, invoice.invoiceNumber])
 
     return (
         <div className='invoice-header grid grid-cols-1 lg:grid-cols-2 justify-between gap-x-4 pb-2 border-b '>
@@ -66,14 +34,14 @@ const InvoiceHeader = () => {
 
             {/* top right */}
             <div className='invoice-header-right mt-4 lg:mt-0 text-gray-700 lg:text-right w-full'>
-                <h1 className='text-xl font-semibold text-gray-700'>Invoice #{invoice.invoiceNumber}</h1>
-                <p>Date Issued: {currentDay}-{currentMonth}-{currentYear}</p>
+                <h1 className='text-xl font-semibold text-gray-700'>Invoice #{invoice?.invoiceNumber}</h1>
+                <p>Date Issued: {formattedDate}</p>
                 <p className='border-b inline'>Customer&apos;s Details</p>
                 <div className='lg:text-right'>
-                    {invoice.customerDetails.customerName} <br />
-                    {invoice.customerDetails.customerAddress} <br />
-                    {invoice.customerDetails.customerPhoneNo} <br />
-                    {invoice.customerDetails.customerEmail} <br />
+                    {invoice?.customerDetails?.customerName} <br />
+                    {invoice?.customerDetails?.customerAddress} <br />
+                    {invoice?.customerDetails?.customerPhoneNo} <br />
+                    {invoice?.customerDetails?.customerEmail} <br />
                 </div>
             </div>
         </div>

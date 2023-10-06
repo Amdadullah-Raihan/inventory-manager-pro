@@ -15,8 +15,9 @@ const Invoice = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [invoiceList, setInvoiceList] = useState([]);
     const [partialQuery, setPartialQuery] = useState('');
+    const [id, setId] = useState('');
 
-    // console.log("invoiceList", invoiceList);
+
 
     useEffect(() => {
         setIsLoading(true);
@@ -113,6 +114,7 @@ const Invoice = () => {
                                         invoiceList?.length > 0 ? invoiceList?.map((invoice, idx) =>
 
                                             <tr key={invoice._id}>
+
                                                 <td>
                                                     <label>
                                                         <input type="checkbox" className="checkbox" />
@@ -136,13 +138,18 @@ const Invoice = () => {
                                                 <td>
                                                     <button
                                                         className="btn btn-ghost btn-xs"
-                                                        onClick={() => document.getElementById('my_modal_3').showModal()}
+                                                        onClick={() => {
+                                                            document.getElementById('my_modal_3').showModal()
+                                                            setId(invoice._id)
+                                                        }}
                                                     >
                                                         <TbTrash className='text-2xl text-rose-500' />
                                                     </button>
-                                                    <button className="btn btn-ghost btn-xs" >
-                                                        <AiOutlineFolderView className='text-2xl text-[#5A5FE0]' />
-                                                    </button>
+                                                    <Link href={`/pages/invoice/${invoice._id}`}>
+                                                        <button className="btn btn-ghost btn-xs" >
+                                                            <AiOutlineFolderView className='text-2xl text-[#5A5FE0]' />
+                                                        </button>
+                                                    </Link>
                                                 </td>
 
                                                 {/* modal  */}
@@ -158,7 +165,7 @@ const Invoice = () => {
                                                                 <form method="dialog">
 
                                                                     <button className="btn bg-green-500 text-white mr-2 hover:text-green-500" >Cancel</button>
-                                                                    <button className='btn bg-rose-500 text-white hover:text-rose-500' onClick={() => handleDeleteInvoice(invoice._id)}>Delete</button>
+                                                                    <button className='btn bg-rose-500 text-white hover:text-rose-500' onClick={() => handleDeleteInvoice(id)}>Delete</button>
                                                                 </form>
                                                             </div>
                                                         </div>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useInvoiceContext } from '../../context/InvoiceContext'
 
-const ProductDetailsPreview = () => {
-    const { invoice } = useInvoiceContext();
+const ProductDetailsPreview = ({ invoice }) => {
+
+
     return (
         <div>
             <div className="overflow-x-auto border-b mb-4 lg:mb-8 ">

@@ -15,6 +15,7 @@ const Products = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [productsList, setproductsList] = useState([]);
     const [partialQuery, setPartialQuery] = useState('');
+    const [id, setId] = useState('');
 
     // console.log("productsList", productsList);
 
@@ -142,7 +143,10 @@ const Products = () => {
                                                 <td>
                                                     <button
                                                         className="btn btn-ghost btn-xs"
-                                                        onClick={() => document.getElementById('my_modal_3').showModal()}
+                                                        onClick={() => {
+                                                            document.getElementById('my_modal_3').showModal();
+                                                            setId(product._id);
+                                                        }}
                                                     >
                                                         <TbTrash className='text-2xl text-rose-500' />
                                                     </button>
@@ -163,7 +167,7 @@ const Products = () => {
                                                                 <form method="dialog">
 
                                                                     <button className="btn bg-green-500 text-white mr-2 hover:text-green-500" >Cancel</button>
-                                                                    <button className='btn bg-rose-500 text-white hover:text-rose-500' onClick={() => handleDeleteProduct(product._id)}>Delete</button>
+                                                                    <button className='btn bg-rose-500 text-white hover:text-rose-500' onClick={() => handleDeleteProduct(id)}>Delete</button>
                                                                 </form>
                                                             </div>
                                                         </div>

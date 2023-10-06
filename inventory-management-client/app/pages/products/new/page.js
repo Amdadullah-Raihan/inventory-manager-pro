@@ -12,7 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const CreateProduct = () => {
-    const [apiURL] = useApiUrl();
+    const [apiUrl] = useApiUrl();
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const { user } = useAuth();
