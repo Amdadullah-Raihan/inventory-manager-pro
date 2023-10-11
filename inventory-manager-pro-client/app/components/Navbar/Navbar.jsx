@@ -27,12 +27,16 @@ import { TbShoppingBagPlus } from 'react-icons/tb'
 import useFirebase from '@/app/hooks/useFirebase'
 import { useAuth } from '../context/AuthContext'
 import dp from '../../assests/raihan.png'
+import { useTimeInvterval } from '../context/TimeIntervalContext'
 
 
 
 const Navbar = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const { user, handleSignOut } = useAuth();
+    const { timeInterval, setTimeInterval } = useTimeInvterval();
+
+
 
 
     return (
@@ -48,6 +52,20 @@ const Navbar = () => {
                 </div>
                 <div className="flex-none">
                     <div className="dropdown dropdown-end mr-4 flex items-center">
+
+
+                        <label tabIndex={0} className="mr-2" onClick={() => { }} title='See All Invoices'>
+                            <select
+                                className="select select-bordered w-full max-w-xs"
+                                value={timeInterval}
+                                onChange={(e) => setTimeInterval(e.target.value)}>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="yearly">Yearly</option>
+                                <option disabled value="all">All</option>
+                            </select>
+                        </label>
 
                         <Link href='/pages/invoice' >
                             <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='See All Invoices'>

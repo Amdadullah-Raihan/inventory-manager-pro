@@ -8,6 +8,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { InvoiceContextProvider } from './components/context/InvoiceContext'
 import 'react-toastify/dist/ReactToastify.css';
+import { TimeIntervalContextProvider } from './components/context/TimeIntervalContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,15 +25,18 @@ export default function RootLayout({ children }) {
 
       <body className={inter.className}>
         <AuthContextProvider>
-          <InvoiceContextProvider>
-            <ProtectedRoute router={router}>
-              <Navbar />
+          <TimeIntervalContextProvider>
 
-              {children}
+            <InvoiceContextProvider>
+              <ProtectedRoute router={router}>
+                <Navbar />
+
+                {children}
 
 
-            </ProtectedRoute>
-          </InvoiceContextProvider>
+              </ProtectedRoute>
+            </InvoiceContextProvider>
+          </TimeIntervalContextProvider>
 
         </AuthContextProvider>
       </body>

@@ -10,6 +10,7 @@ require('dotenv').config();
 const products = require('./routes/products');
 const user = require('./routes/users');
 const invoice = require('./routes/invoice');
+const apiFeatures = require('./utils/apiFeatures');
 
 
 //variable declarations
@@ -44,6 +45,7 @@ mongoose.connect(dbUrl)
 app.use('/api/products', products);
 app.use('/api/user', user)
 app.use('/api/invoice', invoice);
+app.use('/api/features', apiFeatures);
 
 
 //main route 
