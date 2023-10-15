@@ -16,11 +16,6 @@ const useInvoice = () => {
     const currentDay = currentDate.getDate();
 
 
-
-
-
-    // console.log('issuedDate', issuedDate);
-
     const [invoice, setInvoice] = useState({
         userEmail: '',
         invoiceNumber: '',
@@ -55,13 +50,12 @@ const useInvoice = () => {
         axios.get(`${apiUrl}/api/invoice/latest/invoiceNumber`)
             .then(res => {
                 if (res.data.greatestInvoiceNumber) {
-                    console.log(res.data.greatestInvoiceNumber);
+
                     const greatestInvoiceNumber = parseInt(res.data.greatestInvoiceNumber);
-                    console.log('greatestInvoiceNumber: ' + greatestInvoiceNumber);
 
                     let newInvoiceNumber = `CN-${currentYear}${currentMonth}${currentDay}-${String(greatestInvoiceNumber + 1).padStart(3, '0')}`;
 
-                    console.log('new invoice no', newInvoiceNumber);
+
 
                     setInvoice(prevInvoice => ({
                         ...prevInvoice,

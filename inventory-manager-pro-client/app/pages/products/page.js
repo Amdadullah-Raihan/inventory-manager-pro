@@ -44,7 +44,7 @@ const Products = () => {
 
 
     const handleDeleteProduct = (productId) => {
-        console.log(productId);
+
         axios.delete(`${apiUrl}/api/products/${productId}`)
             .then(res => {
                 console.log("deleted product", res);

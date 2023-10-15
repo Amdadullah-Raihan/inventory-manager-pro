@@ -1,57 +1,52 @@
-import initializeAuthentication, { initializeAuth } from '@/public/firebase/firebase.init'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
-import { useAuthState } from 'react-firebase-hooks/auth'
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
-
-
-initializeAuthentication();
-const googleProvider = new GoogleAuthProvider();
-const auth = getAuth();
+import initializeAuthentication from '@/public/firebase/firebase.init';
 
 const useFirebase = () => {
     const [user, setUser] = useState({});
-    const [errorMsg, setErrorMsg] = useState('');
+    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(true);
-    const router = useRouter()
+    const router = useRouter();
 
+    // Initialize authentication
+    initializeAuthentication();
+    const googleProvider = new GoogleAuthProvider();
+    const auth = getAuth();
 
-    //handle google signin 
+    // Handle Google sign-in
     const handleGoogleSignIn = () => {
         return signInWithPopup(auth, googleProvider);
     };
-    //handle log out
+
+    // Handle log out
     const handleSignOut = () => {
         signOut(auth)
             .then(() => {
-                setUser({})
-                router.push('/')
-
-            }).catch((error) => {
-                // const errorCode = error.code;
-                const errorMessage = error.message;
-                setErrorMsg(errorMessage)
-                // ..
+                setUser({});
+                router.push('/');
+            })
+            .catch((error) => {
+                setError(error.message);
             });
-    }
+    };
 
-
-    //remember the user state
+    // Remember the user state
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) setUser(user);
-            else setUser({})
-        })
-    }, [user])
-
+            else setUser({});
+        });
+    }, [user, auth]);
 
     return {
         user,
         setUser,
+        error,
         handleGoogleSignIn,
-        handleSignOut
-    }
+        handleSignOut,
+    };
+};
 
-}
-
-export default useFirebase
+export default useFirebase;

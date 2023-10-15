@@ -31,7 +31,7 @@ const Invoice = () => {
         if (user?.email) {
             axios.get(url)
                 .then((invoice) => {
-                    // console.log(invoice.data);
+
                     setInvoiceList(invoice.data.invoices);
                     setIsLoading(false)
                 })
@@ -44,10 +44,9 @@ const Invoice = () => {
 
 
     const handleDeleteInvoice = (invoiceId) => {
-        console.log(invoiceId);
+
         axios.delete(`${apiUrl}/api/invoice/${invoiceId}`)
             .then(res => {
-                console.log("deleted invoice", res);
                 if (res.data.success) {
                     toast.success("Invoice deleted successfully", {
                         position: toast.POSITION.TOP_RIGHT

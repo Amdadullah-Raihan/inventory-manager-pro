@@ -37,16 +37,18 @@ const CreateProduct = () => {
         warranty: "",
 
     });
+
     // Use useEffect to update the product state when user data becomes available
     useEffect(() => {
+
         if (user && user.email) {
-            // Update the product state with the user's email
             setProduct({ ...product, user: user.email });
         }
+
     }, [user, user.email]);
 
 
-    console.log("product", product);
+
     // console.log("shop name", product.purchasedFrom.shopName);
     // console.log("node_env", process.ene.NODE_ENV);
 
