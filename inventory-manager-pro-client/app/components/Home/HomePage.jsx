@@ -13,9 +13,7 @@ const HomePage = () => {
     const [totalSold, setTotalSold] = useState(0);
     const [totalPurchased, setTotalPurchased] = useState(0);
     const { timeInterval } = useTimeInvterval();
-    console.log("timeInterval", timeInterval);
 
-    console.log('totalSold', totalSold);
 
 
     //function to put commas in numbers 

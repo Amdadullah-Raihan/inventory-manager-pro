@@ -28,115 +28,53 @@ import useFirebase from '@/app/hooks/useFirebase'
 import { useAuth } from '../context/AuthContext'
 import dp from '../../assests/raihan.png'
 import { useTimeInvterval } from '../context/TimeIntervalContext'
+import { AiOutlineMenu } from 'react-icons/ai'
+import { useSidebarContext } from '../context/SidebarContext'
 
 
 
 const Navbar = () => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
     const { user, handleSignOut } = useAuth();
     const { timeInterval, setTimeInterval } = useTimeInvterval();
+    const { isCollapsed, setIsCollapsed } = useSidebarContext();
 
-
+    console.log(user);
 
 
     return (
-        <div>
-            <div className="navbar bg-base-100 shadow-sm">
-                <div className="flex-1">
-                    <Link href='/' className='btn  bg-white text-gray-700 border-none text-xl font-bold '>
-                        <p>
-                            <span className='text-[#5a66f1]'>CN </span><span className='hidden lg:inline-block'> Computer & Networks</span>
-                        </p>
-                    </Link>
+        <div className="navbar justify-between bg-base-100 shadow-b-md">
+            <div className="">
+                <button onClick={() => setIsCollapsed(!isCollapsed)}>
+                    <AiOutlineMenu className='text-2xl mr-2' />
+                </button>
 
-                </div>
-                <div className="flex-none">
-                    <div className="dropdown dropdown-end mr-4 flex items-center">
-
-
-                        <label tabIndex={0} className="mr-2" onClick={() => { }} title='See All Invoices'>
-                            <select
-                                className="select select-bordered w-full max-w-xs"
-                                value={timeInterval}
-                                onChange={(e) => setTimeInterval(e.target.value)}>
-                                <option value="daily">Daily</option>
-                                <option value="weekly">Weekly</option>
-                                <option value="monthly">Monthly</option>
-                                <option value="yearly">Yearly</option>
-                                <option disabled value="all">All</option>
-                            </select>
-                        </label>
-
-                        <Link href='/pages/invoice' >
-                            <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='See All Invoices'>
-                                <FaFileInvoice className='text-2xl text-[#5a66f1]' />
-                            </label>
-                        </Link>
-                        <Link href='/pages/invoice/new' >
-                            <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='Create Invoice'>
-                                <HiOutlineDocumentPlus className='text-2xl text-[#5a66f1]' />
-                            </label>
-                        </Link>
-                        <Link href='/pages/products'>
-                            <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='See All Products'>
-                                <BsBagCheckFill className='text-xl text-[#5a66f1]' />
-                            </label>
-                        </Link>
-                        <Link href='/pages/products/new'>
-                            <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => { }} title='Add Product'>
-
-                                <TbShoppingBagPlus className='text-2xl text-[#5a66f1]' />
-
-                            </label>
-                        </Link>
-
-                        <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={() => setIsDarkMode(!isDarkMode)}>
-                            {
-                                !isDarkMode ?
-                                    <BsSun className='text-2xl text-[#5a66f1]' /> :
-
-                                    <BsMoon className='text-2xl text-[#5a66f1]' />
-                            }
-                        </label>
-                        <label tabIndex={0} className=" bg-[#5A66F1] mr-4 rounded-md hidden lg:block" onClick={() => { }}>
-                            <input type="text" className='bg-[#c5c9f2] rounded-s-md h-8' />
-                            <button className='px-2 text-white'>
-                                <BsSearch className='' />
-                            </button>
-                        </label>
-
-
-                    </div>
-
-                    <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar border-2">
-
-                            {
-                                !user?.email ? <FaUser className='text-gray-500 text-2xl rounded-full' /> :
-                                    <Image src={user?.photoURL} alt='DP' width={100} height={100} className='rounded-full' />
-                            }
-
-                        </label>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-[250px]">
-                            <li>
-                                <a className="justify-between">
-                                    <p className='flex items-center gap-2'>
-                                        <FaCircleUser className='text-[#5a66f1]' />
-                                        Profile
-                                    </p>
-                                    <span className="badge text-[#5a66f1]">New</span>
-                                </a>
-                            </li>
-                            <li><a><FaGear className='text-[#5a66f1]' />Settings</a></li>
-                            {
-                                !user?.email ? <li><a><FaRightFromBracket className={` text-gray-700`} />Logout</a></li> :
-                                    <li onClick={handleSignOut}><a><FaRightFromBracket className={`${!user?.email && 'disable'} text-[#5a66f1]`} />Logout</a></li>
-                            }
-                        </ul>
-                    </div>
-                </div>
             </div>
+
+            {
+                user.email ? <div className="dropdown dropdown-end">
+                    <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                        <div className="w-10 rounded-full border">
+                            <Image src={user.photoURL} alt='DP' width={100} height={100} />
+                        </div>
+                    </label>
+                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        <li>
+                            <a className="justify-between">
+                                Profile
+                                <span className="badge">New</span>
+                            </a>
+                        </li>
+                        <li><a>Settings</a></li>
+                        <li onClick={handleSignOut}><a>Logout</a></li>
+
+                    </ul>
+                </div> :
+                    <Link href='/auth/login' className='btn btn-md btn-outline border-[#5a66f1] text-[#5166f1]'>Login</Link>
+            }
+
         </div>
+
+
     )
 }
 

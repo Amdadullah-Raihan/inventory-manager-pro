@@ -11,13 +11,13 @@ const IndexPage = () => {
 
     return (
 
-        <div className='bg-[#F7F7F9] min-h-[100vh]  '>
 
-            <div className='flex'>
-                <HomePage />
-            </div>
 
+        <div className='w-full bg-[#F7F7F9] min-h-[100vh]  '>
+            <HomePage />
         </div>
+
+
 
     )
 }

@@ -9,6 +9,8 @@ import { Inter } from 'next/font/google'
 import { InvoiceContextProvider } from './components/context/InvoiceContext'
 import 'react-toastify/dist/ReactToastify.css';
 import { TimeIntervalContextProvider } from './components/context/TimeIntervalContext'
+import SidebarPro from './components/SideBar/Sidebar'
+import SidebarContextProvider from './components/context/SidebarContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,24 +22,29 @@ const metadata = {
 export default function RootLayout({ children }) {
   const router = useRouter();
 
+
   return (
     <html lang="en">
 
       <body className={inter.className}>
         <AuthContextProvider>
-          <TimeIntervalContextProvider>
+          <SidebarContextProvider>
+            <TimeIntervalContextProvider>
+              <InvoiceContextProvider>
+                <ProtectedRoute router={router}>
+                  <div className='flex'>
+                    <SidebarPro />
+                    <div className='w-full '>
+                      <Navbar />
+                      {children}
+                    </div>
+                  </div>
 
-            <InvoiceContextProvider>
-              <ProtectedRoute router={router}>
-                <Navbar />
 
-                {children}
-
-
-              </ProtectedRoute>
-            </InvoiceContextProvider>
-          </TimeIntervalContextProvider>
-
+                </ProtectedRoute>
+              </InvoiceContextProvider>
+            </TimeIntervalContextProvider>
+          </SidebarContextProvider>
         </AuthContextProvider>
       </body>
     </html>

@@ -146,7 +146,6 @@ router.post('/new', async (req, res) => {
 });
 
 router.get('/latest/invoiceNumber', async (req, res) => {
-    console.log("api hitted");
     try {
         const currentDate = new Date().toISOString().split('T')[0];
         const invoices = await Invoice.find({ issuedDate: currentDate }).select('invoiceNumber');
