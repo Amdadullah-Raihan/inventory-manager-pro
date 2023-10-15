@@ -32,15 +32,13 @@ export default function RootLayout({ children }) {
             <TimeIntervalContextProvider>
               <InvoiceContextProvider>
                 <ProtectedRoute router={router}>
-                  <div className='flex'>
+                  <div className="grid grid-cols-[auto,1fr] h-screen">
                     <SidebarPro />
-                    <div className='w-full '>
+                    <div className="col-span-1 overflow-auto">
                       <Navbar />
                       {children}
                     </div>
                   </div>
-
-
                 </ProtectedRoute>
               </InvoiceContextProvider>
             </TimeIntervalContextProvider>

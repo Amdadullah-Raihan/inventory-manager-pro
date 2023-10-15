@@ -3,16 +3,18 @@ import Link from 'next/link';
 import React, { useState } from 'react'
 import { Sidebar, Menu, MenuItem, SubMenu, sidebarClasses } from 'react-pro-sidebar';
 import { useSidebarContext } from '../context/SidebarContext';
-import { BsBagFill, BsFillBagPlusFill } from 'react-icons/bs';
-import { FaFileInvoice, FaFileMedical } from 'react-icons/fa6';
+import { BsBag, BsBagFill, BsBagPlus, BsFillBagPlusFill } from 'react-icons/bs';
+import { FaFileInvoice, FaFileMedical, FaRegFile } from 'react-icons/fa6';
 import Image from 'next/image';
 import logo from '../../assests/logo/cn-computer-logo.jpg'
+import { AiOutlineHome } from 'react-icons/ai';
+import { TbShoppingBag, TbShoppingBagPlus } from 'react-icons/tb';
 
 
 
 
 const SidebarPro = () => {
-    const { isCollapsed, setIsCollapsed } = useSidebarContext()
+    const { isCollapsed, setCollapsed } = useSidebarContext()
     return (
         <Sidebar
             collapsed={isCollapsed}
@@ -23,10 +25,11 @@ const SidebarPro = () => {
                     color: 'rgb(148, 163, 184)',
                 },
                 [`.${sidebarClasses.menuItem}:hover`]: {
-                    backgroundColor: '#FF5733',
-                    color: '#FFF',
+                    backgroundColor: '#5a66f1',
+                    color: 'red',
                 },
             }}
+
         >
             <Link href='/'>
                 <div className='w-full justify-center  items-center p-4 flex gap-x-2 uppercase border-b border-gray-500 mb-6'>
@@ -36,15 +39,21 @@ const SidebarPro = () => {
             </Link>
             <Menu>
 
+                <MenuItem component={<Link href='/' />}>
+                    <p className='flex gap-3 items-center'>
+                        <AiOutlineHome className='text-lg font-bold' />
+                        <span className={isCollapsed && `hidden`}>Dashboard</span>
+                    </p>
+                </MenuItem>
                 <MenuItem component={<Link href='/pages/products' />}>
                     <p className='flex gap-3 items-center'>
-                        <BsBagFill className='' />
+                        <TbShoppingBag className='' />
                         <span className={isCollapsed && `hidden`}>Products</span>
                     </p>
                 </MenuItem>
                 <MenuItem component={<Link href='/pages/products/new' />}>
                     <p className='flex gap-3 items-center'>
-                        <BsFillBagPlusFill className='' />
+                        <TbShoppingBagPlus className='text-lg' />
                         <span className={isCollapsed && `hidden`}>Add Product</span>
                     </p>
                 </MenuItem>

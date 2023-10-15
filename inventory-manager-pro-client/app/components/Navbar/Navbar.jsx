@@ -2,7 +2,7 @@
 'use client'
 
 //external imports
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -36,17 +36,19 @@ import { useSidebarContext } from '../context/SidebarContext'
 const Navbar = () => {
     const { user, handleSignOut } = useAuth();
     const { timeInterval, setTimeInterval } = useTimeInvterval();
-    const { isCollapsed, setIsCollapsed } = useSidebarContext();
+    const { isCollapsed, setCollapsed } = useSidebarContext();
 
-    console.log(user);
 
 
     return (
         <div className="navbar justify-between bg-base-100 shadow-b-md">
             <div className="">
-                <button onClick={() => setIsCollapsed(!isCollapsed)}>
+
+                <button onClick={() => setCollapsed(!isCollapsed)}>
                     <AiOutlineMenu className='text-2xl mr-2' />
                 </button>
+
+
 
             </div>
 

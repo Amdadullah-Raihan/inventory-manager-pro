@@ -6,11 +6,11 @@ const SidebarContext = createContext();
 
 
 const useSidebar = () => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isCollapsed, setCollapsed] = useState(false);
 
     return {
         isCollapsed,
-        setIsCollapsed
+        setCollapsed
     }
 }
 

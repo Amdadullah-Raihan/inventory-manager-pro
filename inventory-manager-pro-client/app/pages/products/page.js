@@ -5,7 +5,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { AiOutlineFolderView, AiOutlinePlus } from 'react-icons/ai';
-import { TbTrash } from 'react-icons/tb';
+import { TbShoppingBagEdit, TbTrash } from 'react-icons/tb';
 import { RotatingLines } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -100,10 +100,11 @@ const Products = () => {
                                                 <input type="checkbox" className="checkbox" />
                                             </label>
                                         </th>
-                                        <th>Serial Number</th>
-                                        <th>Product Name</th>
+                                        <th>Product</th>
                                         <th>Stock</th>
+                                        <th>Warranty</th>
                                         <th>Purchased From</th>
+                                        <th>Purchasing/Selling Price</th>
                                         <th>Actions</th>
 
                                     </tr>
@@ -123,15 +124,17 @@ const Products = () => {
                                                         <input type="checkbox" className="checkbox" />
                                                     </label>
                                                 </td>
-                                                <td className='text-[#5A5FE0] font-semibold'>
-                                                    #{product.barCode}
-                                                </td>
-
 
                                                 <td>
-                                                    {product.productName}
+                                                    <div className="flex items-center space-x-3">
+                                                        <div>
+                                                            <div className="font-bold text-[#5A5FE0] ">{product.productName}</div>
+                                                            <div className="text-sm opacity-50 ">#{product.barCode}</div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td>{product.stock}</td>
+                                                <td>{product.warranty}</td>
                                                 <td>
                                                     <div className="flex items-center space-x-3">
                                                         <div>
@@ -140,6 +143,15 @@ const Products = () => {
                                                         </div>
                                                     </div>
                                                 </td>
+                                                <td>
+                                                    <div className="flex items-center space-x-3">
+                                                        <div>
+                                                            <div className="font-bold">{product.purchasedFrom.purchasingPrice}</div>
+                                                            <div className="text-sm opacity-50">{product.purchasedFrom.sellingPrice}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
                                                 <td>
                                                     <button
                                                         className="btn btn-ghost btn-xs"
@@ -151,7 +163,7 @@ const Products = () => {
                                                         <TbTrash className='text-2xl text-rose-500' />
                                                     </button>
                                                     <button className="btn btn-ghost btn-xs">
-                                                        <AiOutlineFolderView className='text-2xl text-[#5A5FE0]' />
+                                                        <TbShoppingBagEdit className='text-2xl text-[#5A5FE0]' />
                                                     </button>
                                                 </td>
                                                 {/* delete confirmation modal */}
