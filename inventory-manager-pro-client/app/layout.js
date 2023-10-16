@@ -3,14 +3,14 @@ import { useRouter } from 'next/navigation'
 import Navbar from './components/Navbar/Navbar'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import Sidebar from './components/SideBar/Sidebar'
-import { AuthContextProvider } from './components/context/AuthContext'
+import { AuthContextProvider } from './context/AuthContext'
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { InvoiceContextProvider } from './components/context/InvoiceContext'
+import { InvoiceContextProvider } from './context/InvoiceContext'
 import 'react-toastify/dist/ReactToastify.css';
-import { TimeIntervalContextProvider } from './components/context/TimeIntervalContext'
+import { TimeIntervalContextProvider } from './context/TimeIntervalContext'
 import SidebarPro from './components/SideBar/Sidebar'
-import SidebarContextProvider from './components/context/SidebarContext'
+import SidebarContextProvider from './context/SidebarContext'
 
 const inter = Inter({ subsets: ['latin'] })
 

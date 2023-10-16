@@ -3,8 +3,8 @@ import { FaBangladeshiTakaSign, FaChartLine, FaChartSimple, FaCircleDot, FaDolla
 import LineChartDemo from '../Charts/LineChart';
 import axios from 'axios';
 import useApiUrl from '@/app/hooks/useApiUrl';
-import { useAuth } from '../context/AuthContext';
-import { useTimeInterval } from '../context/TimeIntervalContext';
+import { useAuth } from '../../context/AuthContext';
+import { useTimeInterval } from '../../context/TimeIntervalContext';
 
 const HomePage = () => {
     const [apiUrl] = useApiUrl();

@@ -1,6 +1,6 @@
 'use client'
 import ProtectedRoute from '@/app/components/ProtectedRoute/ProtectedRoute';
-import { useAuth } from '@/app/components/context/AuthContext';
+import { useAuth } from '@/app/context/AuthContext';
 import useApiUrl from '@/app/hooks/useApiUrl';
 import useFirebase from '@/app/hooks/useFirebase';
 import axios from 'axios';

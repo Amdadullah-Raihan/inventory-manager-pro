@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect } from 'react'
-import { useInvoiceContext } from '../../context/InvoiceContext';
-import { useAuth } from '../../context/AuthContext';
+import { useInvoiceContext } from '../../../context/InvoiceContext';
+import { useAuth } from '../../../context/AuthContext';
 import axios from 'axios';
 import useApiUrl from '@/app/hooks/useApiUrl';
 

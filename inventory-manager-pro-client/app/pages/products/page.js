@@ -1,5 +1,5 @@
 'use client'
-import { useAuth } from '@/app/components/context/AuthContext';
+import { useAuth } from '@/app/context/AuthContext';
 import useApiUrl from '@/app/hooks/useApiUrl';
 import axios from 'axios';
 import Link from 'next/link';

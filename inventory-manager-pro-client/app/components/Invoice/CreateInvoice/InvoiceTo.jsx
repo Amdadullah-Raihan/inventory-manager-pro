@@ -1,5 +1,5 @@
 import React from 'react'
-import { useInvoiceContext } from '../../context/InvoiceContext'
+import { useInvoiceContext } from '../../../context/InvoiceContext'
 
 const InvoiceTo = () => {
     const { invoice, setInvoice } = useInvoiceContext();

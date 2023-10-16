@@ -4,21 +4,22 @@ const SidebarContext = createContext();
 
 const useSidebar = () => {
     const [isCollapsed, setCollapsed] = useState(false);
-    const [width, setWidth] = useState(window.innerWidth);
+    const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
     const handleResize = () => {
-        const newWidth = window.innerWidth;
+        const newWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
         setWidth(newWidth);
         setCollapsed(newWidth < 576);
     };
 
     useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Initialize based on the current width
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
+        if (typeof window !== 'undefined') {
+            window.addEventListener('resize', handleResize);
+            handleResize(); // Initialize based on the current width
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        }
     }, []);
 
     return {

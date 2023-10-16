@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useInvoiceContext } from '../../context/InvoiceContext'
+import { useInvoiceContext } from '../../../context/InvoiceContext'
 
 const ProductDetailsPreview = ({ invoice }) => {
 

@@ -8,7 +8,7 @@ import ProtectedRoute from '@/app/components/ProtectedRoute/ProtectedRoute';
 import { useRouter } from 'next/navigation';
 import { ToWords } from 'to-words';
 import useInvoice from '@/app/hooks/useInvoice';
-import { useInvoiceContext } from '@/app/components/context/InvoiceContext';
+import { useInvoiceContext } from '@/app/context/InvoiceContext';
 import Link from 'next/link';
 import InvoiceHeader from '@/app/components/Invoice/CreateInvoice/InvoiceHeader';
 import InvoiceTo from '@/app/components/Invoice/CreateInvoice/InvoiceTo';

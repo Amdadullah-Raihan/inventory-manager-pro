@@ -25,11 +25,11 @@ import { TbShoppingBagPlus } from 'react-icons/tb'
 
 //internal imports
 import useFirebase from '@/app/hooks/useFirebase'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 import dp from '../../assests/raihan.png'
-import { AiOutlineMenu } from 'react-icons/ai'
-import { useSidebarContext } from '../context/SidebarContext'
-import { useTimeInterval } from '../context/TimeIntervalContext'
+import { AiOutlineMenu, AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai'
+import { useSidebarContext } from '../../context/SidebarContext'
+import { useTimeInterval } from '../../context/TimeIntervalContext'
 
 
 
@@ -42,9 +42,16 @@ const Navbar = () => {
     return (
         <div className="navbar justify-between bg-base-100 shadow-b-md">
             <div className="">
-                <button className='' onClick={() => setCollapsed(!isCollapsed)}>
-                    <AiOutlineMenu className='text-2xl mr-2' />
-                </button>
+                {
+                    isCollapsed ?
+                        <button className='' onClick={() => setCollapsed(!isCollapsed)}>
+                            <AiOutlineMenuUnfold className='text-2xl mr-2 text-primary' />
+                        </button>
+                        :
+                        <button className='' onClick={() => setCollapsed(!isCollapsed)}>
+                            <AiOutlineMenuFold className='text-2xl mr-2 text-primary' />
+                        </button>
+                }
             </div>
 
 
