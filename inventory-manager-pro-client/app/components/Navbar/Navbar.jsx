@@ -30,6 +30,7 @@ import dp from '../../assests/raihan.png'
 import { AiOutlineMenu, AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai'
 import { useSidebarContext } from '../../context/SidebarContext'
 import { useTimeInterval } from '../../context/TimeIntervalContext'
+import { usePathname } from 'next/navigation'
 
 
 
@@ -37,6 +38,7 @@ const Navbar = () => {
     const { user, handleSignOut } = useAuth();
     const { timeInterval, setTimeInterval } = useTimeInterval();
     const { isCollapsed, setCollapsed, width } = useSidebarContext();
+    const pathname = usePathname();
 
 
     return (
@@ -57,7 +59,7 @@ const Navbar = () => {
 
             <div>
                 {
-                    user.email && <div className="dropdown dropdown-end mr-2">
+                    user.email && pathname === '/' && <div className="dropdown dropdown-end mr-2">
                         <select
                             className="select  select-bordered select-sm w-full  max-w-xs"
                             value={timeInterval}

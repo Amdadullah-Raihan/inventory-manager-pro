@@ -19,7 +19,7 @@ const SidebarPro = () => {
             collapsed={isCollapsed}
             rootStyles={{
                 [`.${sidebarClasses.container}`]: {
-                    backgroundColor: '#1E293B',
+                    backgroundColor: '#282A42',
                     color: 'rgb(148, 163, 184)',
                 },
             }}
