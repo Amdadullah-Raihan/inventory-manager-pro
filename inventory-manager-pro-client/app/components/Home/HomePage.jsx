@@ -32,38 +32,38 @@ const HomePage = () => {
     const cardData = [
         {
             title: 'Sales Overview',
-            icon: <FaChartSimple className='text-[#5A66F1] text-2xl' />,
+            icon: <FaChartSimple className='text-primary text-2xl' />,
             value: totalSold,
             label: 'Total Sales: ',
         },
         {
             title: 'Purchase Overview',
-            icon: <FaDollarSign className='text-[#5A66F1] text-2xl' />,
+            icon: <FaDollarSign className='text-primary text-2xl' />,
             value: totalPurchased,
             label: 'Total Purchased: ',
         },
         {
             title: 'Revenue Overview',
-            icon: <FaChartLine className='text-[#5A66F1] text-2xl' />,
+            icon: <FaChartLine className='text-primary text-2xl' />,
             value: totalSold,
             label: 'Total Revenue: ',
         },
         {
             title: 'Profit Overview',
-            icon: <FaSackDollar className='text-[#5A66F1] text-2xl' />,
+            icon: <FaSackDollar className='text-primary text-2xl' />,
             value: totalSold - totalPurchased,
             label: 'Total Profit:',
         },
     ];
 
     return (
-        <div className='overflow-hidden w-full min-h-[100vh] p-2 lg:p-6 '>
+        <div className='bg-[#F7F7F9]  overflow-hidden w-full min-h-[100vh] p-2 lg:p-6  dark:text-accent '>
             <div className='grid gap-2 lg:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mb-2 lg:mb-6'>
                 {cardData.map((data, index) => (
-                    <div key={index} className='bg-white shadow p-4 rounded-md'>
+                    <div key={index} className='bg-white dark:bg-neutral shadow p-4 rounded-md'>
                         <div className='flex flex-col gap-6'>
                             <div className='flex gap-2 items-center justify-between'>
-                                <h3 className='text-xl font-bold'>{data.title}</h3>
+                                <h3 className='text-xl font-bold '>{data.title}</h3>
                                 {data.icon}
                             </div>
                             <div className='flex justify-between'>
@@ -82,10 +82,10 @@ const HomePage = () => {
             </div>
 
             {/* Chart */}
-            <div className='w-[100%] bg-white p-2 lg:p-6 shadow-md rounded-lg pr-4'>
+            <div className='w-[100%] bg-white dark:bg-neutral p-2 lg:p-6 shadow-md rounded-lg pr-4'>
                 <div className='flex gap-6 mb-6 ml-6'>
                     <div className='flex gap-2 items-center'>
-                        <FaCircleDot className='text-[#5A66F1]' />
+                        <FaCircleDot className='text-primary' />
                         <p>Total Sales</p>
                     </div>
                     <div className='flex gap-2 items-center'>

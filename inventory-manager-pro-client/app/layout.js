@@ -32,11 +32,20 @@ export default function RootLayout({ children }) {
             <TimeIntervalContextProvider>
               <InvoiceContextProvider>
                 <ProtectedRoute router={router}>
-                  <div className="grid grid-cols-[auto,1fr] h-screen">
-                    <SidebarPro />
-                    <div className="col-span-1 overflow-auto">
+                  <div className="drawer lg:drawer-open">
+                    <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+                    <div className="drawer-content flex flex-col items-center justify-center">
+                      {/* Page content here */}
+
                       <Navbar />
                       {children}
+                    </div>
+                    <div className="drawer-side">
+                      <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
+                      <ul className="menu p-4 w-80 min-h-full bg-secondary  text-accent">
+                        <Sidebar />
+                      </ul>
+
                     </div>
                   </div>
                 </ProtectedRoute>

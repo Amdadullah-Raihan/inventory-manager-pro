@@ -100,13 +100,13 @@ const CreateProduct = () => {
 
     return (
         <ProtectedRoute router={router}>
-            <div className='lg:p-6 p-2 relative min-h-[100vh] w-full bg-[#F7F7F9] '>
+            <div className='lg:p-6 p-2 relative min-h-[100vh] w-full bg-[#F7F7F9] dark:bg-secondary  '>
                 <form onSubmit={(e) => handleAddProduct(e)}>
-                    <div className="bg-white shadow lg:p-6 p-2 rounded-lg max-w-[900px] mx-auto">
-                        <p className='uppercase font-bold text-2xl w-full text-center text-[#5A66F1] flex justify-center gap-2'><BsFillBagPlusFill /> Add a New Product </p>
+                    <div className="bg-white dark:bg-neutral dark:text-accent shadow lg:p-6 p-2 rounded-lg max-w-[900px] mx-auto">
+                        <p className='uppercase font-bold text-2xl w-full text-center text-primary flex justify-center gap-2'><BsFillBagPlusFill /> Add a New Product </p>
 
                         <div className='mt-6'>
-                            <p className='border-b font-bold mb-4 text-lg'>Products Details</p>
+                            <p className='border-b dark:border-b-accent font-bold mb-4 text-lg'>Products Details</p>
                             <div className=' grid lg:grid-cols-2 gap-y-3 gap-x-4
                 '>
 
@@ -119,7 +119,7 @@ const CreateProduct = () => {
                                         placeholder="Product's Name"
                                         value={product.productName}
                                         required
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, productName: e.target.value })} />
 
                                 </div>
@@ -131,7 +131,7 @@ const CreateProduct = () => {
                                         placeholder="Product's Brand"
                                         value={product.brand}
                                         required
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, brand: e.target.value })}
                                     />
                                 </div>
@@ -144,10 +144,10 @@ const CreateProduct = () => {
                                             placeholder="Write Serial No."
                                             value={product.barCode}
                                             required
-                                            className='border rounded-md  h-[48px]  w-full px-4'
+                                            className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                             onChange={(e) => setProduct({ ...product, barCode: e.target.value })} />
 
-                                        <AiOutlineScan className='absolute text-3xl text-[#5A66F1] right-2 bg-white' />
+                                        <AiOutlineScan className='absolute text-3xl text-primary right-2 bg-white' />
                                     </div>
                                 </div>
                                 <div>
@@ -158,7 +158,7 @@ const CreateProduct = () => {
                                         placeholder="Product's Stock"
                                         value={product.stock}
                                         required
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, stock: e.target.value })}
                                     />
                                 </div>
@@ -170,7 +170,7 @@ const CreateProduct = () => {
                                         placeholder="Product's Warranty (ex: 2 years, 3 months etc.)"
                                         value={product.warranty}
                                         required
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, warranty: e.target.value })}
                                     />
                                 </div>
@@ -180,7 +180,7 @@ const CreateProduct = () => {
 
                         {/* Puchasing Details */}
                         <div className='mt-6'>
-                            <p className='border-b mb-4 font-bold text-lg'>Purchasing Details</p>
+                            <p className='border-b dark:border-b-accent mb-4 font-bold text-lg'>Purchasing Details</p>
                             <div className='grid lg:grid-cols-2 gap-4'>
                                 <div>
                                     <p>Shop Name </p>
@@ -189,7 +189,7 @@ const CreateProduct = () => {
                                         placeholder="Shop Name"
                                         value={product.purchasedFrom.shopName}
                                         required
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, shopName: e.target.value } })}
                                     />
                                 </div>
@@ -201,7 +201,7 @@ const CreateProduct = () => {
                                         placeholder="Shop Number"
                                         value={product.purchasedFrom.shopNumber}
                                         required
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, shopNumber: e.target.value } })}
                                     />
                                 </div>
@@ -212,7 +212,7 @@ const CreateProduct = () => {
                                         placeholder="Shop Address"
                                         value={product.purchasedFrom.shopAddress}
                                         required
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, shopAddress: e.target.value } })}
                                     />
                                 </div>
@@ -224,7 +224,7 @@ const CreateProduct = () => {
                                         placeholder="Purchasing Price in Taka"
                                         value={product.purchasedFrom.purchasingPrice}
                                         required
-                                        className='border rounded-md  h-[48px]  w-full px-4'
+                                        className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, purchasingPrice: e.target.value } })}
                                     />
                                 </div>
@@ -235,12 +235,12 @@ const CreateProduct = () => {
                                         placeholder="Selling Price in Taka"
                                         value={product.purchasedFrom.sellingPrice}
                                         required
-                                        className='border rounded-md h-[48px]  w-full px-4'
+                                        className='border rounded-md h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, sellingPrice: e.target.value } })}
                                     />
                                 </div>
                                 <div>
-                                    <p className='text-white hidden lg:block'>.</p>
+                                    <p className='text-white hidden lg:block dark:text-neutral'>.</p>
                                     <button type='submit' className='btn w-full bg-[#5A66F1] text-white  hover:bg-blue-400'><BsBagPlus className='' />Add Product</button>
                                     <ToastContainer />
                                 </div>

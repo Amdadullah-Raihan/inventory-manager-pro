@@ -76,9 +76,9 @@ const InvoicePreview = () => {
 
 
     return (
-        <div className='w-full bg-[#F7F7F9] lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
+        <div className='w-full bg-[#F7F7F9] dark:bg-secondary dark:text-accent lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
             {/* start invoice */}
-            <div ref={componentRef} id="printable-content" className='max-w-[700px]  bg-white shadow p-2 lg:p-4 rounded-md'>
+            <div ref={componentRef} id="printable-content" className='max-w-[700px]  bg-white dark:bg-neutral dark:text-accent shadow p-2 lg:p-4 rounded-md'>
                 <ToastContainer />
                 <InvoiceHeader invoice={invoice} />
                 <ProductDetailsPreview invoice={invoice} />
@@ -88,10 +88,10 @@ const InvoicePreview = () => {
             </div>
 
             {/* right btns */}
-            <div className='max-h-[300px] w-full lg:max-w-[400px] bg-white rounded-md shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'>
+            <div className='max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral dark:text-accent rounded-lg shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'>
 
                 <button
-                    className={`btn w-full bg-[#5a66f1] text-white hover:text-black`}
+                    className={`btn w-full bg-[#5a66f1] border-none text-white hover:text-black`}
                     disabled={isSuccess}
                     onClick={handleSaveInvoice}
                 >
@@ -99,7 +99,7 @@ const InvoicePreview = () => {
                     Save Invoice
                 </button>
                 <button
-                    className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'
+                    className='btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white'
                     disabled={true}
                 >
                     <RiFileEditFill className='text-xl' />
@@ -108,7 +108,7 @@ const InvoicePreview = () => {
                 <ReactToPrint
                     trigger={() => {
                         return <button
-                            className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'
+                            className='btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white'
                             disabled={!isSuccess}
 
 
@@ -125,7 +125,7 @@ const InvoicePreview = () => {
 
 
                 <button
-                    className='btn btn-outline w-full border-[#5a66f1] text-[#5a66f1] hover:text-white'
+                    className='btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white'
                     disabled={!isSuccess}
                     onClick={handleDownloadPDF}
 

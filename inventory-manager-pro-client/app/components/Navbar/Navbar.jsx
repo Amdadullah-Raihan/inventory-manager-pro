@@ -24,9 +24,9 @@ import { GrSettingsOption } from 'react-icons/gr'
 import { TbShoppingBagPlus } from 'react-icons/tb'
 
 //internal imports
+import logo from '../../assests/logo/cn-computer-logo-removebg-preview.png'
 import useFirebase from '@/app/hooks/useFirebase'
 import { useAuth } from '../../context/AuthContext'
-import dp from '../../assests/raihan.png'
 import { AiOutlineMenu, AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai'
 import { useSidebarContext } from '../../context/SidebarContext'
 import { useTimeInterval } from '../../context/TimeIntervalContext'
@@ -42,26 +42,20 @@ const Navbar = () => {
 
 
     return (
-        <div className="navbar justify-between bg-base-100 shadow-b-md">
+        <div className="navbar justify-between bg-base-100 shadow-b-md dark:bg-secondary">
             <div className="">
-                {
-                    isCollapsed ?
-                        <button className='' onClick={() => setCollapsed(!isCollapsed)}>
-                            <AiOutlineMenuUnfold className='text-2xl mr-2 text-primary' />
-                        </button>
-                        :
-                        <button className='' onClick={() => setCollapsed(!isCollapsed)}>
-                            <AiOutlineMenuFold className='text-2xl mr-2 text-primary' />
-                        </button>
-                }
+
+                <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
+                    <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent dark:text-accent' />
+                </label>
             </div>
 
 
             <div>
                 {
-                    user.email && pathname === '/' && <div className="dropdown dropdown-end mr-2">
+                    user.email && pathname === '/' && <div className="dropdown dropdown-end mr-2 ">
                         <select
-                            className="select  select-bordered select-sm w-full  max-w-xs"
+                            className="select  select-bordered select-sm w-full  max-w-xs dark:bg-secondary dark:text-accent dark:border-accent"
                             value={timeInterval}
                             onChange={(e) => setTimeInterval(e.target.value)}>
                             <option value="daily">Daily</option>

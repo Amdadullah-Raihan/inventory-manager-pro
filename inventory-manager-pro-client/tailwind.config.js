@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'media',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -21,11 +22,11 @@ module.exports = {
 
           "primary": "#5a66f1",
 
-          "secondary": "#f000b8",
+          "secondary": "#282A42",
 
-          "accent": "#1dcdbc",
+          "accent": "rgba(234, 234, 255, 0.87)",
 
-          "neutral": "#2b3440",
+          "neutral": "#30334E",
 
           "base-100": "#ffffff",
 
