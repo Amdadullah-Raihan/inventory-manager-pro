@@ -6,10 +6,10 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { FaFileInvoice, FaFileMedical } from 'react-icons/fa';
 import { TbShoppingBag, TbShoppingBagPlus } from 'react-icons/tb';
 
-import { useSidebarContext } from '../../context/SidebarContext';
 
 import logo from '../../assests/logo/cn-computer-logo.jpg';
 import { usePathname, useRouter } from 'next/navigation';
+import { useSidebarContext } from '@/app/context/SidebarContext';
 
 const Sidebar = () => {
     const { isCollapsed } = useSidebarContext();

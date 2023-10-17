@@ -57,7 +57,7 @@ const HomePage = () => {
     ];
 
     return (
-        <div className='bg-[#F7F7F9]  overflow-hidden w-full min-h-[100vh] p-2 lg:p-6  dark:text-accent '>
+        <div className='bg-[#F7F7F9] dark:bg-secondary overflow-hidden w-full min-h-[100vh] p-2 lg:p-6  dark:text-accent '>
             <div className='grid gap-2 lg:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mb-2 lg:mb-6'>
                 {cardData.map((data, index) => (
                     <div key={index} className='bg-white dark:bg-neutral shadow p-4 rounded-md'>
