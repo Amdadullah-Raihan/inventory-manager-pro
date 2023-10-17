@@ -16,7 +16,7 @@ const InvoiceHeader = ({ invoice }) => {
 
 
     return (
-        <div className='invoice-header grid grid-cols-1 lg:grid-cols-2 justify-between gap-x-4 pb-2 border-b '>
+        <div className='w-full invoice-header grid grid-cols-1 lg:grid-cols-2 justify-between gap-x-4 pb-2 border-b '>
             {/* top left */}
             <div className='invoice-header-left'>
                 <div>

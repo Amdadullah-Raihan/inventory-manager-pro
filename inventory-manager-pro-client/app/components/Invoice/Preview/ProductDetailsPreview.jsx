@@ -5,7 +5,8 @@ const ProductDetailsPreview = ({ invoice }) => {
 
 
     return (
-        <div>
+
+        <div className='w-full'>
             <div className="overflow-x-auto border-b mb-4 lg:mb-8 ">
                 <table className="table">
                     {/* head */}
@@ -38,6 +39,7 @@ const ProductDetailsPreview = ({ invoice }) => {
                     </tbody>
                 </table>
             </div>
+
         </div>
     )
 }

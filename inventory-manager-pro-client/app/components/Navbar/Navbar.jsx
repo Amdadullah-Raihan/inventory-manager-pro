@@ -69,9 +69,9 @@ const Navbar = () => {
 
 
                 {
-                    user.email ? <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full border">
+                    user.email ? <div className="dropdown dropdown-end ">
+                        <label tabIndex={0} className="btn border-none btn-ghost  btn-circle avatar">
+                            <div className="w-12 rounded-full border">
                                 <Image src={user.photoURL} alt='DP' width={100} height={100} />
                             </div>
                         </label>
@@ -87,7 +87,7 @@ const Navbar = () => {
 
                         </ul>
                     </div> :
-                        <Link href='/auth/login' className='btn btn-md btn-outline border-[#5a66f1] text-[#5166f1]'>Login</Link>
+                        <Link href='/auth/login' className='btn border-none btn-md btn-outline border-[#5a66f1] text-[#5166f1]'>Login</Link>
                 }
 
 

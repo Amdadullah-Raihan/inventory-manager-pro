@@ -31,6 +31,6 @@
     "to-words": "^3.6.1"
   },
   "devDependencies": {
-    "daisyui": "^3.7.6"
+    "daisyui": "^3.9.3"
   }
 }

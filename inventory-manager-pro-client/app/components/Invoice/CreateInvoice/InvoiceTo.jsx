@@ -6,12 +6,12 @@ const InvoiceTo = () => {
     return (
         <div className="py-4 border-b">
             {/* left */}
-            <div className="text-gray-500">
-                <h5 className='text-gray-600'>Invoice To: </h5>
+            <div className="text-gray-500 dark:text-accent">
+                <h5 className='text-gray-600 dark:text-accent'>Invoice To: </h5>
                 <div className='grid grid-cols-2 lg:grid-cols-4 gap-2'>
                     <input
                         type="text"
-                        className='input w-full input-bordered '
+                        className='input w-full input-bordered  dark:bg-secondary'
                         placeholder="Customer's Name"
                         value={invoice.customerDetails.customerName}
                         onChange={(e) => setInvoice({
@@ -25,7 +25,7 @@ const InvoiceTo = () => {
                     />
                     <input
                         type="text"
-                        className='input w-full input-bordered'
+                        className='input w-full input-bordered  dark:bg-secondary'
                         placeholder="Customer's Address"
                         value={invoice.customerDetails.customerAddress}
                         onChange={(e) => setInvoice({
@@ -39,7 +39,7 @@ const InvoiceTo = () => {
                     />
                     <input
                         type="text"
-                        className='input w-full input-bordered '
+                        className='input w-full input-bordered  dark:bg-secondary'
                         placeholder="Customer's Phone No."
                         value={invoice.customerDetails.customerPhoneNo}
                         onChange={(e) => setInvoice({
@@ -53,7 +53,7 @@ const InvoiceTo = () => {
                     />
                     <input
                         type="text"
-                        className='input w-full input-bordered'
+                        className='input w-full input-bordered  dark:bg-secondary'
                         placeholder="Customer's Email"
                         value={invoice.customerDetails.customerEmail}
                         onChange={(e) => setInvoice({

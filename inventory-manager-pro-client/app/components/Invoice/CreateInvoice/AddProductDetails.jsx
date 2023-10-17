@@ -45,12 +45,12 @@ const AddProductDetails = () => {
             <div className='h-full w-full'>
                 {
                     invoice?.productDetails?.products && invoice.productDetails.products.map((product, idx) =>
-                        <div key={idx} className='flex items-center gap-1 border rounded-md mb-2 p-1 lg:border-none lg:mb-0'>
+                        <div key={idx} className='flex items-center gap-1  rounded-md mb-2 lg:border-none lg:mb-0'>
                             <div className='hidden lg:block'>{idx + 1}.</div>
                             <div className='grid grid-cols-2 lg:grid-cols-4 gap-2 '>
                                 <input
                                     type="text"
-                                    className='w-full input input-bordered '
+                                    className='input w-full input-bordered  dark:bg-secondary'
                                     placeholder="Product's Name"
                                     value={invoice.productDetails.products[idx].productName}
                                     onChange={(e) => handleProductChange(e, idx, 'productName')}
@@ -58,7 +58,7 @@ const AddProductDetails = () => {
                                 />
                                 <input
                                     type="text"
-                                    className='w-full input input-bordered '
+                                    className='input w-full input-bordered  dark:bg-secondary'
                                     placeholder="Warranty"
                                     value={invoice.productDetails.products[idx].warranty}
                                     onChange={(e) => handleProductChange(e, idx, 'warranty')}
@@ -66,7 +66,7 @@ const AddProductDetails = () => {
                                 />
                                 <input
                                     type="number"
-                                    className='w-full input input-bordered '
+                                    className='input w-full input-bordered  dark:bg-secondary'
                                     placeholder="Quantity"
                                     value={invoice.productDetails.products[idx].quantity === 0 ? '' : invoice.productDetails.products[idx].quantity}
                                     onChange={(e) => handleProductChange(e, idx, 'quantity')}
@@ -74,7 +74,7 @@ const AddProductDetails = () => {
                                 />
                                 <input
                                     type="number"
-                                    className='w-full input input-bordered '
+                                    className='input w-full input-bordered  dark:bg-secondary'
                                     placeholder="Unit Price"
                                     value={invoice.productDetails.products[idx].unitPrice === 0 ? '' : invoice.productDetails.products[idx].unitPrice}
                                     onChange={(e) => handleProductChange(e, idx, 'unitPrice')}
@@ -87,7 +87,7 @@ const AddProductDetails = () => {
             </div>
             <div className='w-full text-right'>
                 <button
-                    className='btn  mr-1 mt-1 bg-[#5a66f1] text-white rounded-md hover:text-black'
+                    className='btn border-none  mr-1 mt-1 bg-[#5a66f1] text-white rounded-md hover:text-black'
                     onClick={handleAddItem}
                 >
                     <FaPlus className='inline' />

@@ -74,7 +74,7 @@ const Invoice = () => {
                     <div className='flex  gap-2 lg:flex-row items-center'>
                         <input type="text" className='w-full input input-bordered lg:mr-2 dark:bg-secondary' placeholder='Search Invoice' onChange={(e) => setPartialQuery(e.target.value)} />
 
-                        <Link href='/pages/invoice/new' className='btn bg-[#5A5FE0] text-white border-none hover:text-gray-700'>
+                        <Link href='/pages/invoice/new' className='btn border-none bg-[#5A5FE0] text-white  hover:text-gray-700'>
                             <AiOutlinePlus className='' /> <span className='hidden lg:inline'>Create Invoice</span>
                         </Link>
                     </div>
@@ -137,7 +137,7 @@ const Invoice = () => {
                                                 </td>
                                                 <td>
                                                     <button
-                                                        className="btn btn-ghost btn-xs"
+                                                        className="btn border-none btn-ghost btn-xs"
                                                         onClick={() => {
                                                             document.getElementById('my_modal_3').showModal()
                                                             setId(invoice._id)
@@ -146,7 +146,7 @@ const Invoice = () => {
                                                         <TbTrash className='text-2xl text-rose-500' />
                                                     </button>
                                                     <Link href={`/pages/invoice/${invoice._id}`}>
-                                                        <button className="btn btn-ghost btn-xs" >
+                                                        <button className="btn border-none btn-ghost btn-xs" >
                                                             <AiOutlineFolderView className='text-2xl text-[#5A5FE0]' />
                                                         </button>
                                                     </Link>
@@ -157,15 +157,15 @@ const Invoice = () => {
                                                     <div className="modal-box">
                                                         <form method="dialog">
                                                             {/* if there is a button in form, it will close the modal */}
-                                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                            <button className="btn border-none btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                                         </form>
                                                         <h3 className="font-bold text-l uppercase">Are you sure want to <span className='text-rose-500'>delete</span> the invoice?</h3>
                                                         <div>
                                                             <div className="modal-action">
                                                                 <form method="dialog">
 
-                                                                    <button className="btn bg-green-500 text-white mr-2 hover:text-green-500" >Cancel</button>
-                                                                    <button className='btn bg-rose-500 text-white hover:text-rose-500' onClick={() => handleDeleteInvoice(id)}>Delete</button>
+                                                                    <button className="btn border-none bg-green-500 text-white mr-2 hover:text-green-500" >Cancel</button>
+                                                                    <button className='btn border-none bg-rose-500 text-white hover:text-rose-500' onClick={() => handleDeleteInvoice(id)}>Delete</button>
                                                                 </form>
                                                             </div>
                                                         </div>

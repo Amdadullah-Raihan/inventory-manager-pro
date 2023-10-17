@@ -63,7 +63,7 @@ const Products = () => {
     };
 
     return (
-        <div className='p-2 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-accent min-h-[100vh] '>
+        <div className='w-full p-2 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-accent min-h-[100vh] '>
             <ToastContainer />
             <div className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg ">
                 <div className='flex flex-col lg:flex-row gap-2  lg:justify-between py-6 px-4'>
@@ -74,8 +74,9 @@ const Products = () => {
                     <div className='flex gap-2  items-center'>
                         <input type="text" className='w-full input input-bordered lg:mr-2 dark:bg-secondary' placeholder='Search products' onChange={(e) => setPartialQuery(e.target.value)} />
 
-                        <Link href='/pages/products/new' className='btn bg-[#5A5FE0] border-none dark:text-accent text-white hover:text-gray-700'>
-                            <AiOutlinePlus className='' /> <span className="hidden lg:inline">Add product</span>
+                        <Link href='/pages/products/new' className='btn btn-primary'>
+                            <AiOutlinePlus className='' />
+                            <p className="hidden lg:inline">Add product</p>
                         </Link>
                     </div>
                 </div>
@@ -155,7 +156,7 @@ const Products = () => {
 
                                                 <td>
                                                     <button
-                                                        className="btn btn-ghost btn-xs"
+                                                        className="btn border-none btn-ghost btn-xs"
                                                         onClick={() => {
                                                             document.getElementById('my_modal_3').showModal();
                                                             setId(product._id);
@@ -163,7 +164,7 @@ const Products = () => {
                                                     >
                                                         <TbTrash className='text-2xl text-rose-500' />
                                                     </button>
-                                                    <button className="btn btn-ghost btn-xs">
+                                                    <button className="btn border-none btn-ghost btn-xs">
                                                         <TbShoppingBagEdit className='text-2xl text-[#5A5FE0]' />
                                                     </button>
                                                 </td>
@@ -172,15 +173,15 @@ const Products = () => {
                                                     <div className="modal-box">
                                                         <form method="dialog">
                                                             {/* if there is a button in form, it will close the modal */}
-                                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                            <button className="btn border-none btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                                         </form>
                                                         <h3 className="font-bold text-l uppercase">Are you sure want to <span className='text-rose-500'>delete</span> the invoice?</h3>
                                                         <div>
                                                             <div className="modal-action">
                                                                 <form method="dialog">
 
-                                                                    <button className="btn bg-green-500 text-white mr-2 hover:text-green-500" >Cancel</button>
-                                                                    <button className='btn bg-rose-500 text-white hover:text-rose-500' onClick={() => handleDeleteProduct(id)}>Delete</button>
+                                                                    <button className="btn border-none bg-green-500 text-white mr-2 hover:text-green-500" >Cancel</button>
+                                                                    <button className='btn border-none bg-rose-500 text-white hover:text-rose-500' onClick={() => handleDeleteProduct(id)}>Delete</button>
                                                                 </form>
                                                             </div>
                                                         </div>

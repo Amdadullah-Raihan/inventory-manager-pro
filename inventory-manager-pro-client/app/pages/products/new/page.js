@@ -241,7 +241,7 @@ const CreateProduct = () => {
                                 </div>
                                 <div>
                                     <p className='text-white hidden lg:block dark:text-neutral'>.</p>
-                                    <button type='submit' className='btn w-full bg-[#5A66F1] text-white  hover:bg-blue-400'><BsBagPlus className='' />Add Product</button>
+                                    <button type='submit' className='btn border-none w-full bg-[#5A66F1] text-white  hover:bg-blue-400'><BsBagPlus className='' />Add Product</button>
                                     <ToastContainer />
                                 </div>
 
