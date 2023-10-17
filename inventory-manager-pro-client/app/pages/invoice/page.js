@@ -62,7 +62,7 @@ const Invoice = () => {
     };
 
     return (
-        <div className='py-4 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-accent min-h-[100vh] '>
+        <div className='w-full py-4 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-accent min-h-[100vh] '>
             <ToastContainer />
 
             <div className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg ">

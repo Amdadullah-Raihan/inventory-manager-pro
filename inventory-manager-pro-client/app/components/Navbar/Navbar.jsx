@@ -45,7 +45,9 @@ const Navbar = () => {
         <div className="navbar justify-between bg-base-100 shadow-b-md dark:bg-secondary">
             <div className="">
 
-                <Image src={logo} alt='Logo' className='w-12 lg:hidden' />
+                <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
+                    <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent dark:text-accent' />
+                </label>
             </div>
 
 
@@ -88,12 +90,7 @@ const Navbar = () => {
                         <Link href='/auth/login' className='btn btn-md btn-outline border-[#5a66f1] text-[#5166f1]'>Login</Link>
                 }
 
-                <div className="">
 
-                    <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
-                        <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent dark:text-accent' />
-                    </label>
-                </div>
             </div>
 
 
