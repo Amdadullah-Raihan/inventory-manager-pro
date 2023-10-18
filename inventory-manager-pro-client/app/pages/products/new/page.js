@@ -10,6 +10,8 @@ import { AiOutlineScan } from 'react-icons/ai'
 import { BsBagPlus, BsFillBagPlusFill } from 'react-icons/bs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import BarcodeReader from 'react-barcode-reader'
+
 
 const CreateProduct = () => {
     const [apiUrl] = useApiUrl();
@@ -38,6 +40,13 @@ const CreateProduct = () => {
 
     });
 
+    //hande barcode scanning 
+    const handleScan = (barCode) => {
+        setProduct({ ...product, barCode: barCode })
+    }
+
+
+
     // Use useEffect to update the product state when user data becomes available
     useEffect(() => {
 
@@ -58,7 +67,7 @@ const CreateProduct = () => {
         e.preventDefault()
         setIsLoading(true);
 
-        axios.post(`${apiURL}/api/products/new`, product)
+        axios.post(`${apiUrl}/api/products/new`, product)
             .then((result) => {
 
                 if (result.data.success) {
@@ -100,6 +109,7 @@ const CreateProduct = () => {
 
     return (
         <ProtectedRoute router={router}>
+            <BarcodeReader onScan={handleScan} />
             <div className='lg:p-6 p-2 relative min-h-[100vh] w-full bg-[#F7F7F9] dark:bg-secondary  '>
                 <form onSubmit={(e) => handleAddProduct(e)}>
                     <div className="bg-white dark:bg-neutral dark:text-accent shadow lg:p-6 p-2 rounded-lg max-w-[900px] mx-auto">
@@ -222,7 +232,7 @@ const CreateProduct = () => {
                                         type="number"
                                         name="purchasingPrice"
                                         placeholder="Purchasing Price in Taka"
-                                        value={product.purchasedFrom.purchasingPrice}
+                                        value={product.purchasedFrom.purchasingPrice === 0 ? '' : product.purchasedFrom.purchasingPrice}
                                         required
                                         className='border rounded-md  h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, purchasingPrice: e.target.value } })}
@@ -233,7 +243,7 @@ const CreateProduct = () => {
                                     <input
                                         type="number" name="sellingPrice"
                                         placeholder="Selling Price in Taka"
-                                        value={product.purchasedFrom.sellingPrice}
+                                        value={product.purchasedFrom.sellingPrice === 0 ? '' : product.purchasedFrom.sellingPrice}
                                         required
                                         className='border rounded-md h-[48px]  w-full px-4 dark:bg-secondary dark:border-none'
                                         onChange={(e) => setProduct({ ...product, purchasedFrom: { ...product.purchasedFrom, sellingPrice: e.target.value } })}

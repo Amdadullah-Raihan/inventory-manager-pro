@@ -74,7 +74,7 @@ const Products = () => {
                     <div className='flex gap-2  items-center'>
                         <input type="text" className='w-full input input-bordered lg:mr-2 dark:bg-secondary' placeholder='Search products' onChange={(e) => setPartialQuery(e.target.value)} />
 
-                        <Link href='/pages/products/new' className='btn btn-primary'>
+                        <Link href='/pages/products/new' className='btn btn-primary text-white'>
                             <AiOutlinePlus className='' />
                             <p className="hidden lg:inline">Add product</p>
                         </Link>
