@@ -59,7 +59,7 @@ const BillingDetailsPreview = ({ invoice }) => {
                 </div>
 
                 <div>
-                    <p className='inline border-t text-gray-700 dark:text-gray-400          '>Sales Person&apos;s Signature</p>
+                    <p className='inline border-t dark:boder-t-gray-500 text-gray-700 dark:text-gray-400          '>Sales Person&apos;s Signature</p>
                 </div>
             </div>
 
@@ -79,7 +79,7 @@ const BillingDetailsPreview = ({ invoice }) => {
                         {invoice.paymentDetails.discount}
                     </p>
                 </div>
-                <div className='flex justify-between border-b mb-2'>
+                <div className='flex justify-between border-b dark:border-b-gray-500  mb-2'>
                     <p>Tax/Vat:</p>
                     <p className='flex items-center text-gray-700 dark:text-gray-400          '>0%</p>
                 </div>
@@ -92,7 +92,7 @@ const BillingDetailsPreview = ({ invoice }) => {
                 </div>
                 <div className='mt-8 '>
                     <p>{totalInWords}</p>
-                    <div className='flex justify-between border-t'>
+                    <div className='flex justify-between border-t dark:border-t-gray-500'>
                         <p>Total In Words</p>
                         <TbCurrencyTaka />
                     </div>

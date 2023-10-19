@@ -17,6 +17,7 @@ module.exports = {
   },
   daisyui: {
     themes: [
+
       {
         mytheme: {
 
@@ -39,6 +40,7 @@ module.exports = {
           "error": "#f87272",
         },
       },
+
     ],
   },
   plugins: [require("daisyui")],

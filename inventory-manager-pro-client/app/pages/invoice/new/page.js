@@ -109,7 +109,7 @@ const CreateInvoice = () => {
 
     return (
         <ProtectedRoute router={router}>
-            <div className='w-full bg-[#F7F7F9] dark:bg-secondary lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
+            <div className='w-full bg-[#F7F7F9] dark:bg-secondary lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize'>
 
                 {/* Invoice Starts */}
                 <div className='max-w-[700px]  bg-white dark:bg-neutral dark:text-gray-400          shadow p-2 lg:p-4 rounded-md'>

@@ -62,19 +62,19 @@ const Invoice = () => {
     };
 
     return (
-        <div className='w-full py-4 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400          min-h-[100vh] '>
+        <div className='w-full py-4 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400 min-h-[100vh] capitalize'>
             <ToastContainer />
 
             <div className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg ">
                 <div className='flex flex-col-reverse lg:flex-row gap-2 lg:justify-between py-6 px-4'>
-                    <select className="select select-bordered w-full lg:max-w-xs dark:bg-secondary" disabled>
+                    <select className="select select-bordered w-full lg:max-w-xs dark:bg-secondary dark:border-none" disabled>
                         <option disabled selected>Actions</option>
 
                     </select>
                     <div className='flex  gap-2 lg:flex-row items-center'>
                         <input type="text" className='w-full input input-bordered lg:mr-2 dark:bg-secondary' placeholder='Search Invoice' onChange={(e) => setPartialQuery(e.target.value)} />
 
-                        <Link href='/pages/invoice/new' className='btn border-none bg-[#5A5FE0] text-white  hover:text-gray-700'>
+                        <Link href='/pages/invoice/new' className='btn border-none bg-[#5A5FE0] text-white hover:bg-secondary'>
                             <AiOutlinePlus className='' /> <span className='hidden lg:inline'>Create Invoice</span>
                         </Link>
                     </div>

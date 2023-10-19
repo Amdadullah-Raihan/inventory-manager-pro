@@ -68,8 +68,8 @@ const HomePage = () => {
                             </div>
                             <div className='flex justify-between'>
                                 <div className='leading-3'>
-                                    <p className='font-bold text-lg'>{data.label}</p>
-                                    <small className='text-gray-500 '>In Last Week</small>
+                                    <p className=' dark:text-gray-400 mb-1'>{data.label}</p>
+                                    <small className='text-gray-500'>In Last Week</small>
                                 </div>
                                 <div className='flex items-center'>
                                     <FaBangladeshiTakaSign className='text-lg' />

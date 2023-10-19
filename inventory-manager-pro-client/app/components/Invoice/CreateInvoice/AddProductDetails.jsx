@@ -40,14 +40,14 @@ const AddProductDetails = () => {
     // console.log('Invoice updated', invoice);
 
     return (
-        <div className='border-b py-4'>
+        <div className='border-b dark:border-b-gray-500  py-4'>
             <h4 className=''>Add Product&apos;s Details</h4>
             <div className='h-full w-full'>
                 {
                     invoice?.productDetails?.products && invoice.productDetails.products.map((product, idx) =>
-                        <div key={idx} className='flex items-center gap-1  rounded-md mb-2 lg:border-none lg:mb-0'>
-                            <div className='hidden lg:block'>{idx + 1}.</div>
-                            <div className='grid grid-cols-2 lg:grid-cols-4 gap-2 mb-2'>
+                        <div key={idx} className='flex lg:items-center gap-1  rounded-md  lg:border-none '>
+                            <div className='mt-3 sm:mt-0'>{idx + 1}.</div>
+                            <div className='grid grid-cols-2 lg:grid-cols-4 gap-2 mb-2  '>
                                 <input
                                     type="text"
                                     className='input w-full input-bordered  dark:bg-secondary'
@@ -87,7 +87,7 @@ const AddProductDetails = () => {
             </div>
             <div className='w-full text-right'>
                 <button
-                    className='btn border-none  mr-1 mt-1 bg-[#5a66f1] text-white rounded-md hover:text-black'
+                    className='btn border-none  mr-1  bg-[#5a66f1] text-white rounded-md hover:bg-secondary'
                     onClick={handleAddItem}
                 >
                     <FaPlus className='inline' />

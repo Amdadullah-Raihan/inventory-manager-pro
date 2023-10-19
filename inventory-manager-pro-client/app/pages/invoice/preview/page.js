@@ -76,7 +76,7 @@ const InvoicePreview = () => {
 
 
     return (
-        <div className='w-full h-screen bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400          lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
+        <div className='w-full h-screen bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400          lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize'>
             <ToastContainer />
             {/* start invoice */}
             <div ref={componentRef} id="printable-content" className='max-w-[700px]  bg-white dark:bg-neutral dark:text-gray-400          shadow p-2 lg:p-4 rounded-md '>
@@ -88,7 +88,7 @@ const InvoicePreview = () => {
             </div>
 
             {/* right btns */}
-            <div className='max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral dark:text-gray-400          rounded-lg shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'>
+            <div className='max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral dark:text-gray-400 rounded-lg shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4 '>
 
                 <button
                     className={`btn border-none w-full bg-[#5a66f1] text-white hover:text-black dark:disabled:bg-gray-500 dark:disabled:text-gray-400`}

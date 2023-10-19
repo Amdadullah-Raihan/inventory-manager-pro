@@ -32,10 +32,10 @@ const Login = () => {
     }, [user, router]);
 
     return (
-        <div className='bg-[#F7F7F9] w-full h-[100vh] p-4 flex justify-center'>
-            <div className='bg-white w-full max-w-[500px] h-[50%] border shadow p-3 lg:p-6 flex items-center justify-center rounded-lg'>
+        <div className='bg-[#F7F7F9] dark:bg-secondary w-full h-[100vh] p-4 flex justify-center'>
+            <div className='bg-white dark:bg-neutral dark:border-none w-full max-w-[500px] h-[50%] border shadow p-3 lg:p-6 flex items-center justify-center rounded-lg'>
                 <button
-                    className='flex items-center justify-center gap-2 h-12 border w-full rounded-full border-[#5A66F1] font-semibold hover:bg-[#5A66F1] hover:text-white transition-colors'
+                    className='flex items-center justify-center gap-2 h-12 border w-full rounded-full border-[#5A66F1] font-semibold hover:bg-[#5A66F1] hover:text-white transition-colors dark:bg-primary dark:text-gray-800'
                     onClick={handleGoogleLogin}
                 >
                     <FcGoogle className='text-xl' />

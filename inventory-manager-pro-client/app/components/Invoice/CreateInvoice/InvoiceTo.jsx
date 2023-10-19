@@ -4,7 +4,7 @@ import { useInvoiceContext } from '../../../context/InvoiceContext'
 const InvoiceTo = () => {
     const { invoice, setInvoice } = useInvoiceContext();
     return (
-        <div className="py-4 border-b">
+        <div className="py-4 border-b dark:border-b-gray-500 ">
             {/* left */}
             <div className="text-gray-500 dark:text-gray-400          ">
                 <h5 className='text-gray-600 dark:text-gray-400          '>Invoice To: </h5>

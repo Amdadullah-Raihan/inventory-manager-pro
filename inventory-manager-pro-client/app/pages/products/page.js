@@ -67,14 +67,14 @@ const Products = () => {
             <ToastContainer />
             <div className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg ">
                 <div className='flex flex-col lg:flex-row gap-2  lg:justify-between py-6 px-4'>
-                    <select className="select select-bordered w-full dark:bg-secondary lg:max-w-xs" disabled>
+                    <select className="select select-bordered w-full dark:bg-secondary lg:max-w-xs dark:border-none" disabled>
                         <option disabled selected>Actions</option>
 
                     </select>
                     <div className='flex gap-2  items-center'>
                         <input type="text" className='w-full input input-bordered lg:mr-2 dark:bg-secondary' placeholder='Search products' onChange={(e) => setPartialQuery(e.target.value)} />
 
-                        <Link href='/pages/products/new' className='btn btn-primary text-white'>
+                        <Link href='/pages/products/new' className='btn border-none btn-primary text-white hover:bg-secondary'>
                             <AiOutlinePlus className='' />
                             <p className="hidden lg:inline">Add product</p>
                         </Link>
@@ -93,13 +93,13 @@ const Products = () => {
                     </div> :
                         <div className="overflow-x-auto ">
 
-                            <table className="table capitalize">
+                            <table className="table capitalize ">
                                 {/* head */}
-                                <thead className='bg-base-200 dark:bg-neutral dark:text-white'>
+                                <thead className='bg-base-200 dark:bg-secondary dark:text-gray-300'>
                                     <tr>
-                                        <th>
+                                        <th >
                                             <label>
-                                                <input type="checkbox" className="checkbox" />
+                                                <input type="checkbox" className="checkbox dark:border-gray-500" />
                                             </label>
                                         </th>
                                         <th>Product</th>
@@ -123,7 +123,7 @@ const Products = () => {
                                             <tr key={product._id}>
                                                 <td>
                                                     <label>
-                                                        <input type="checkbox" className="checkbox" />
+                                                        <input type="checkbox" className="checkbox dark:border-gray-500" />
                                                     </label>
                                                 </td>
 

@@ -11,6 +11,19 @@
     color: #6b7280;
 }
 
+tr {
+    border-bottom: rgba(0, 0, 0, 0.1) 1px solid !important;
+}
+
+table tr:last-child {
+    border: none !important;
+}
+
+thead tr {
+    border: none !important;
+}
+
+
 @media print {
 
     @page {
@@ -23,6 +36,7 @@
         margin: 0;
         padding: 0;
     }
+
 
     /* Use styles for desktop-sized screens */
     #printable-content {

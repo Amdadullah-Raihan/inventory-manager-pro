@@ -34,9 +34,11 @@ const useFirebase = () => {
 
     // Remember the user state
     useEffect(() => {
+        setIsLoading(true);
         onAuthStateChanged(auth, (user) => {
             if (user) setUser(user);
             else setUser({});
+            setIsLoading(false)
         });
     }, [user, auth]);
 
@@ -46,6 +48,7 @@ const useFirebase = () => {
         error,
         handleGoogleSignIn,
         handleSignOut,
+        isLoading
     };
 };
 

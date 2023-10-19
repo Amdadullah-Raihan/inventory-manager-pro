@@ -40,14 +40,17 @@ const Navbar = ({ isDark, setIsDark }) => {
     const { timeInterval, setTimeInterval } = useTimeInterval();
     const { isCollapsed, setCollapsed, width } = useSidebarContext();
     const pathname = usePathname();
-
+    console.log("navbar isDark: " + isDark);
     return (
-        <div className="navbar justify-between bg-base-100 shadow-b-md dark:bg-secondary">
+        <div className="navbar justify-between bg-base-100 shadow-b-md lg:dark:bg-secondary dark:bg-neutral">
             <div className="">
+                <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
+                    <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent' />
+                </label>
                 {
                     user.email && pathname === '/' && <div className="dropdown dropdown-end mr-2 ">
                         <select
-                            className="select  select-bordered select-sm w-full  max-w-xs dark:bg-secondary dark:text-gray-400          dark:border-accent"
+                            className="select  select-bordered select-sm w-full  max-w-xs dark:bg-secondary dark:text-gray-400          dark:border-gray-500 "
                             value={timeInterval}
                             onChange={(e) => setTimeInterval(e.target.value)}>
                             <option value="daily">Daily</option>
@@ -59,9 +62,7 @@ const Navbar = ({ isDark, setIsDark }) => {
                     </div>
                 }
 
-                <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
-                    <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent dark:text-gray-400          ' />
-                </label>
+
 
             </div>
 
@@ -70,7 +71,7 @@ const Navbar = ({ isDark, setIsDark }) => {
                 {
                     <button onClick={() => setIsDark(!isDark)} className='text-2xl mr-4'>
                         {
-                            isDark ? <span className='text-gray-300'><BsSun /></span> : <span className='text-gray-600'><BsMoon /></span>
+                            isDark ? <span className='text-accent'><BsSun /></span> : <span className='text-gray-600'><BsMoon /></span>
                         }
                     </button>
                 }
@@ -78,7 +79,7 @@ const Navbar = ({ isDark, setIsDark }) => {
                 {
                     user.email ? <div className="dropdown dropdown-end ">
                         <label tabIndex={0} className="btn border-none btn-ghost  btn-circle avatar">
-                            <div className="w-10 rounded-full border">
+                            <div className="w-10 rounded-full ">
                                 <Image src={user.photoURL} alt='DP' width={100} height={100} />
                             </div>
                         </label>
@@ -94,7 +95,7 @@ const Navbar = ({ isDark, setIsDark }) => {
 
                         </ul>
                     </div> :
-                        <Link href='/auth/login' className='btn border-none btn-md btn-outline border-[#5a66f1] text-[#5166f1]'>Login</Link>
+                        <Link href='/auth/login' className='btn btn-outline border-[#5a66f1] text-[#5166f1]'>Login</Link>
                 }
 
 

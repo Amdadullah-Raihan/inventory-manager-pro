@@ -110,7 +110,7 @@ const CreateProduct = () => {
                         <p className='uppercase font-bold text-2xl w-full text-center text-primary flex justify-center gap-2'><BsFillBagPlusFill /> Add a New Product </p>
 
                         <div className='mt-6'>
-                            <p className='border-b dark:border-b-accent font-bold mb-4 text-lg'>Products Details</p>
+                            <p className='border-b dark:border-b-gray-500   font-bold mb-4 text-lg'>Products Details</p>
                             <div className=' grid lg:grid-cols-2 gap-y-3 gap-x-4
                 '>
 
@@ -184,7 +184,7 @@ const CreateProduct = () => {
 
                         {/* Puchasing Details */}
                         <div className='mt-6'>
-                            <p className='border-b dark:border-b-accent mb-4 font-bold text-lg'>Purchasing Details</p>
+                            <p className='border-b dark:border-b-gray-500 mb-4 font-bold text-lg'>Purchasing Details</p>
                             <div className='grid lg:grid-cols-2 gap-4'>
                                 <div>
                                     <p>Shop Name </p>
@@ -245,7 +245,7 @@ const CreateProduct = () => {
                                 </div>
                                 <div>
                                     <p className='text-white hidden lg:block dark:text-neutral'>.</p>
-                                    <button type='submit' className='btn border-none w-full bg-[#5A66F1] text-white  hover:bg-blue-400'><BsBagPlus className='' />Add Product</button>
+                                    <button type='submit' className='btn  border-none w-full bg-[#5A66F1] text-white  hover:bg-secondary'><BsBagPlus className='' />Add Product</button>
                                     <ToastContainer />
                                 </div>
 
