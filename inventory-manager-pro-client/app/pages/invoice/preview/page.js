@@ -76,10 +76,10 @@ const InvoicePreview = () => {
 
 
     return (
-        <div className='w-full h-screen bg-[#F7F7F9] dark:bg-secondary dark:text-accent lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
+        <div className='w-full h-screen bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400          lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4'>
             <ToastContainer />
             {/* start invoice */}
-            <div ref={componentRef} id="printable-content" className='max-w-[700px]  bg-white dark:bg-neutral dark:text-accent shadow p-2 lg:p-4 rounded-md '>
+            <div ref={componentRef} id="printable-content" className='max-w-[700px]  bg-white dark:bg-neutral dark:text-gray-400          shadow p-2 lg:p-4 rounded-md '>
                 <InvoiceHeader invoice={invoice} />
                 <ProductDetailsPreview invoice={invoice} />
                 <BillingDetailsPreview invoice={invoice} />
@@ -87,11 +87,11 @@ const InvoicePreview = () => {
 
             </div>
 
-            {/* right btn border-nones */}
-            <div className='max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral dark:text-accent rounded-lg shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'>
+            {/* right btns */}
+            <div className='max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral dark:text-gray-400          rounded-lg shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'>
 
                 <button
-                    className={`btn border-none w-full bg-[#5a66f1] text-white hover:text-black`}
+                    className={`btn border-none w-full bg-[#5a66f1] text-white hover:text-black dark:disabled:bg-gray-500 dark:disabled:text-gray-400`}
                     disabled={isSuccess}
                     onClick={handleSaveInvoice}
                 >
@@ -99,7 +99,7 @@ const InvoicePreview = () => {
                     Save Invoice
                 </button>
                 <button
-                    className='btn border-none btn border-none-outline w-full border-[#5a66f1] text-primary hover:text-white'
+                    className='btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400'
                     disabled={true}
                 >
                     <RiFileEditFill className='text-xl' />
@@ -108,10 +108,8 @@ const InvoicePreview = () => {
                 <ReactToPrint
                     trigger={() => {
                         return <button
-                            className='btn border-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white'
+                            className='btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400'
                             disabled={!isSuccess}
-
-
                         >
                             <AiFillPrinter className='text-xl' />
                             Print
@@ -125,7 +123,7 @@ const InvoicePreview = () => {
 
 
                 <button
-                    className='btn border-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white'
+                    className='btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400'
                     disabled={!isSuccess}
                     onClick={handleDownloadPDF}
 

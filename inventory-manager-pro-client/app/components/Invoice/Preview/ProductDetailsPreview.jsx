@@ -10,7 +10,7 @@ const ProductDetailsPreview = ({ invoice }) => {
             <div className="overflow-x-auto border-b mb-4 lg:mb-8 ">
                 <table className="table">
                     {/* head */}
-                    <thead className='text-gray-800'>
+                    <thead className='text-gray-800 dark:text-white'>
                         <tr>
                             <th></th>
                             <th>Product Name</th>
@@ -20,7 +20,7 @@ const ProductDetailsPreview = ({ invoice }) => {
                             <th>Total Price </th>
                         </tr>
                     </thead>
-                    <tbody className='text-gray-700'>
+                    <tbody className='text-gray-700 dark:text-gray-400          '>
                         {/* row  */}
                         {
                             invoice?.productDetails?.products && invoice.productDetails.products.map((product, idx) => <tr key={idx}>

@@ -7,7 +7,9 @@
     box-sizing: border-box;
 }
 
-
+.dark ::placeholder {
+    color: #6b7280;
+}
 
 @media print {
 

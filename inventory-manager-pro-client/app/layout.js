@@ -24,7 +24,9 @@ const metadata = {
 
 export default function RootLayout({ children }) {
   const router = useRouter();
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(null);
+
+
 
 
   return (

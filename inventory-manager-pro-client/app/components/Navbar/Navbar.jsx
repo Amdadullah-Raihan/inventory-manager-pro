@@ -47,7 +47,7 @@ const Navbar = ({ isDark, setIsDark }) => {
                 {
                     user.email && pathname === '/' && <div className="dropdown dropdown-end mr-2 ">
                         <select
-                            className="select  select-bordered select-sm w-full  max-w-xs dark:bg-secondary dark:text-accent dark:border-accent"
+                            className="select  select-bordered select-sm w-full  max-w-xs dark:bg-secondary dark:text-gray-400          dark:border-accent"
                             value={timeInterval}
                             onChange={(e) => setTimeInterval(e.target.value)}>
                             <option value="daily">Daily</option>
@@ -60,7 +60,7 @@ const Navbar = ({ isDark, setIsDark }) => {
                 }
 
                 <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
-                    <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent dark:text-accent' />
+                    <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent dark:text-gray-400          ' />
                 </label>
 
             </div>
@@ -70,7 +70,7 @@ const Navbar = ({ isDark, setIsDark }) => {
                 {
                     <button onClick={() => setIsDark(!isDark)} className='text-2xl mr-4'>
                         {
-                            isDark ? <span className='text-gray-400'><BsSun /></span> : <span className='text-gray-700'><BsMoon /></span>
+                            isDark ? <span className='text-gray-300'><BsSun /></span> : <span className='text-gray-600'><BsMoon /></span>
                         }
                     </button>
                 }

@@ -93,11 +93,11 @@ const BillingDetails = () => {
 
 
     return (
-        <div className='flex flex-col-reverse lg:flex-row lg:justify-between gap-6  py-2 dark:text-accent'>
+        <div className='flex flex-col-reverse lg:flex-row lg:justify-between gap-6  py-2 dark:text-gray-400          '>
             {/* left */}
-            <div className="w-full text-gray-500 dark:text-accent">
+            <div className="w-full text-gray-500 dark:text-gray-400          ">
                 <div className='mb-[150px]'>
-                    <h4 className='text-gray-700 mb-2 dark:text-accent'>Billing&apos;s Details</h4>
+                    <h4 className='text-gray-700 mb-2 dark:text-gray-400          '>Billing&apos;s Details</h4>
                     <div className='flex flex-col gap-y-2'>
                         <div className='flex gap-2'>
                             <p>Total Paid:</p>
@@ -110,7 +110,7 @@ const BillingDetails = () => {
                         </div>
                         <div className='flex items-center gap-2'>
                             <p>Total Due:</p>
-                            <div className='text-gray-700 flex items-center dark:text-accent'>
+                            <div className='text-gray-700 flex items-center dark:text-gray-400          '>
                                 <TbCurrencyTaka className='' />
                                 <p>{invoice.paymentDetails.total - invoice.paymentDetails.totalPaid}</p>
                             </div>
@@ -119,22 +119,22 @@ const BillingDetails = () => {
                 </div>
 
                 <div>
-                    <p className='inline border-t text-gray-500 dark:text-accent'>Sales Person&apos;s Signature</p>
+                    <p className='inline border-t text-gray-500 dark:text-gray-400          '>Sales Person&apos;s Signature</p>
                 </div>
             </div>
 
             {/* right */}
-            <div className='w-full text-gray-500 dark:text-accent'>
+            <div className='w-full text-gray-500 dark:text-gray-400          '>
                 <div className='flex justify-between mb-2'>
                     <p>Subtotal:</p>
-                    <p className='flex items-center text-gray-700 dark:text-accent'>
+                    <p className='flex items-center text-gray-700 dark:text-gray-400          '>
                         <TbCurrencyTaka />
                         {invoice.paymentDetails.subtotal}
                     </p>
                 </div>
                 <div className='flex justify-between mb-2'>
                     <p>Discount:</p>
-                    <p className='flex items-center text-gray-700 dark:text-accent'>
+                    <p className='flex items-center text-gray-700 dark:text-gray-400          '>
                         <TbCurrencyTaka />
                         <input
                             type="number"
@@ -146,11 +146,11 @@ const BillingDetails = () => {
                 </div>
                 <div className='flex justify-between border-b mb-2'>
                     <p>Tax/Vat:</p>
-                    <p className='flex items-center text-gray-700 dark:text-accent'>0%</p>
+                    <p className='flex items-center text-gray-700 dark:text-gray-400          '>0%</p>
                 </div>
                 <div className='flex justify-between'>
                     <p>Total:</p>
-                    <p className='flex items-center text-gray-700 dark:text-accent'>
+                    <p className='flex items-center text-gray-700 dark:text-gray-400          '>
                         <TbCurrencyTaka />
                         {invoice.paymentDetails.total}
                     </p>
@@ -159,7 +159,7 @@ const BillingDetails = () => {
                     <p>{totalInWords}</p>
                     <div className='flex  justify-end lg:justify-between border-t'>
                         <p>Total In Words</p>
-                        <p className='flex items-center text-gray-700 dark:text-accent'><TbCurrencyTaka /></p>
+                        <p className='flex items-center text-gray-700 dark:text-gray-400          '><TbCurrencyTaka /></p>
                     </div>
                 </div>
 

@@ -47,7 +47,7 @@ const AddProductDetails = () => {
                     invoice?.productDetails?.products && invoice.productDetails.products.map((product, idx) =>
                         <div key={idx} className='flex items-center gap-1  rounded-md mb-2 lg:border-none lg:mb-0'>
                             <div className='hidden lg:block'>{idx + 1}.</div>
-                            <div className='grid grid-cols-2 lg:grid-cols-4 gap-2 '>
+                            <div className='grid grid-cols-2 lg:grid-cols-4 gap-2 mb-2'>
                                 <input
                                     type="text"
                                     className='input w-full input-bordered  dark:bg-secondary'

@@ -6,8 +6,8 @@ const InvoiceTo = () => {
     return (
         <div className="py-4 border-b">
             {/* left */}
-            <div className="text-gray-500 dark:text-accent">
-                <h5 className='text-gray-600 dark:text-accent'>Invoice To: </h5>
+            <div className="text-gray-500 dark:text-gray-400          ">
+                <h5 className='text-gray-600 dark:text-gray-400          '>Invoice To: </h5>
                 <div className='grid grid-cols-2 lg:grid-cols-4 gap-2'>
                     <input
                         type="text"
