@@ -31,27 +31,19 @@ import { AiOutlineMenu, AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-ico
 import { useSidebarContext } from '../../context/SidebarContext'
 import { useTimeInterval } from '../../context/TimeIntervalContext'
 import { usePathname } from 'next/navigation'
+import { useDarkMode } from '@/app/layout'
 
 
 
-const Navbar = () => {
+const Navbar = ({ isDark, setIsDark }) => {
     const { user, handleSignOut } = useAuth();
     const { timeInterval, setTimeInterval } = useTimeInterval();
     const { isCollapsed, setCollapsed, width } = useSidebarContext();
     const pathname = usePathname();
 
-
     return (
         <div className="navbar justify-between bg-base-100 shadow-b-md dark:bg-secondary">
             <div className="">
-
-                <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
-                    <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent dark:text-accent' />
-                </label>
-            </div>
-
-
-            <div>
                 {
                     user.email && pathname === '/' && <div className="dropdown dropdown-end mr-2 ">
                         <select
@@ -67,11 +59,26 @@ const Navbar = () => {
                     </div>
                 }
 
+                <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
+                    <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent dark:text-accent' />
+                </label>
+
+            </div>
+
+
+            <div>
+                {
+                    <button onClick={() => setIsDark(!isDark)} className='text-2xl mr-4'>
+                        {
+                            isDark ? <span className='text-gray-400'><BsSun /></span> : <span className='text-gray-700'><BsMoon /></span>
+                        }
+                    </button>
+                }
 
                 {
                     user.email ? <div className="dropdown dropdown-end ">
                         <label tabIndex={0} className="btn border-none btn-ghost  btn-circle avatar">
-                            <div className="w-12 rounded-full border">
+                            <div className="w-10 rounded-full border">
                                 <Image src={user.photoURL} alt='DP' width={100} height={100} />
                             </div>
                         </label>

@@ -17,7 +17,6 @@ const Sidebar = () => {
     // A helper function to create menu items with a consistent structure
     function createMenuItem(href, label, icon) {
         const isActive = pathname === href;
-        console.log('href', href, "pathname", pathname, 'isActive', isActive);
         return (
             <p className={`mb-3  hover:bg-neutral p-2 hover:rounded-lg hover:text-white ${isActive && 'bg-primary rounded-lg text-white'}`}>
                 <Link href={href} className="flex gap-3 items-center">
