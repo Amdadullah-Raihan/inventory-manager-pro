@@ -6,6 +6,7 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { FaFileInvoice, FaFileMedical } from 'react-icons/fa';
 import { TbShoppingBag, TbShoppingBagPlus } from 'react-icons/tb';
 import { usePathname, useRouter } from 'next/navigation';
+import { motion } from 'framer-motion'
 
 //internal imports 
 import logo from '../../assests/logo/cn-computer-logo.jpg';
@@ -18,7 +19,12 @@ const Sidebar = () => {
     function createMenuItem(href, label, icon) {
         const isActive = pathname === href;
         return (
-            <p className={`mb-3  hover:bg-secondary p-2 hover:rounded-lg hover:text-gray-300 ${isActive && 'bg-primary rounded-lg text-white'}`}>
+            <p
+                className={`mb-3  hover:bg-secondary p-2 hover:rounded-lg hover:text-gray-300 
+            ${isActive && 'bg-primary rounded-lg text-white'}
+            
+            `
+                }>
                 <Link href={href} className="flex gap-3 items-center">
                     {icon} {label}
                 </Link>
@@ -28,15 +34,41 @@ const Sidebar = () => {
 
     return (
         <div >
-            <Link href="/">
-                <div className="w-full  items-center pb-4 flex gap-x-2 uppercase  border-b dark:border-b-gray-500  border-gray-700 mb-6">
-                    <Image src={logo} alt="" className="max-w-[50px] rounded-full" />
-                    <p className='text-[18px] font-bold text-white dark:text-gray-300'>  CN Computer & Networks</p>
+            <Link href="/" >
+                <div
+                    className="
+                        w-full  
+                        items-center
+                        pb-3
+                        pt-1
+                        px-4
+                        flex 
+                        gap-x-2
+                        uppercase 
+                        border-b
+                      dark:border-b-gray-500 
+                      border-gray-700 
+                        mb-4"
+                >
+                    <Image
+                        src={logo}
+                        alt=""
+                        className="w-10 rounded-full"
+                    />
+
+                    <p
+                        className='text-[16px]
+                            font-bold 
+                          text-white 
+                            dark:text-accent'
+                    >
+                        CN Computer & Networks
+                    </p>
                 </div>
 
             </Link>
 
-            <div className='text-[16px] '>
+            <div className='text-[16px] px-4'>
                 {createMenuItem('/', 'Dashboard', <AiOutlineHome className="text-lg font-bold" />)}
 
                 {createMenuItem('/pages/products', 'Products', <TbShoppingBag className="text-xl" />)}

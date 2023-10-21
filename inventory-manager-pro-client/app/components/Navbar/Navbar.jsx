@@ -18,10 +18,10 @@ import {
     FaSunPlantWilt,
     FaUser
 } from 'react-icons/fa6'
-import { BsBagCheckFill, BsMoon, BsSearch, BsSun } from 'react-icons/bs'
+import { BsBagCheckFill, BsMoon, BsMoonStars, BsSearch, BsSun } from 'react-icons/bs'
 import { HiOutlineDocument, HiOutlineDocumentPlus } from 'react-icons/hi2'
 import { GrSettingsOption } from 'react-icons/gr'
-import { TbShoppingBagPlus } from 'react-icons/tb'
+import { TbMoonStars, TbShoppingBagPlus } from 'react-icons/tb'
 
 //internal imports
 import logo from '../../assests/logo/cn-computer-logo-removebg-preview.png'
@@ -32,6 +32,8 @@ import { useSidebarContext } from '../../context/SidebarContext'
 import { useTimeInterval } from '../../context/TimeIntervalContext'
 import { usePathname } from 'next/navigation'
 import { useDarkMode } from '@/app/layout'
+import { motion } from 'framer-motion'
+import { PiMoonStars, } from 'react-icons/pi'
 
 
 
@@ -43,14 +45,14 @@ const Navbar = ({ isDark, setIsDark }) => {
     console.log("navbar isDark: " + isDark);
     return (
         <div className="navbar justify-between bg-base-100 shadow-b-md lg:dark:bg-secondary dark:bg-neutral">
-            <div className="">
+            <div >
                 <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
                     <AiOutlineMenuUnfold className='bg-primary p-1 w-8 h-8 rounded-lg text-2xl mr-2 text-accent' />
                 </label>
                 {
                     user.email && pathname === '/' && <div className="dropdown dropdown-end mr-2 ">
                         <select
-                            className="select  select-bordered select-sm w-full  max-w-xs dark:bg-secondary dark:text-gray-400          dark:border-gray-500 "
+                            className="select  select-bordered select-sm w-full  max-w-xs dark:bg-secondary dark:text-accent         dark:border-gray-500 ml-1"
                             value={timeInterval}
                             onChange={(e) => setTimeInterval(e.target.value)}>
                             <option value="daily">Daily</option>
@@ -69,11 +71,21 @@ const Navbar = ({ isDark, setIsDark }) => {
 
             <div>
                 {
-                    <button onClick={() => setIsDark(!isDark)} className='text-2xl mr-4'>
-                        {
-                            isDark ? <span className='text-accent'><BsSun /></span> : <span className='text-gray-600'><BsMoon /></span>
-                        }
-                    </button>
+                    <label className="swap swap-rotate">
+
+                        {/* this hidden checkbox controls the state */}
+                        <input type="checkbox"
+                            onChange={() => setIsDark(isDark === 'dark' ? 'light' : 'dark')}
+                            checked={isDark === 'dark' ? true : false}
+                        />
+
+                        {/* sun icon */}
+                        <BsSun className="text-accent font-bold swap-on fill-current w-8 h-8 mr-4 " />
+
+                        {/* moon icon */}
+                        <PiMoonStars className="text-gray-600  swap-off fill-current w-8 h-8 mr-4 " />
+
+                    </label>
                 }
 
                 {
@@ -83,7 +95,7 @@ const Navbar = ({ isDark, setIsDark }) => {
                                 <Image src={user.photoURL} alt='DP' width={100} height={100} />
                             </div>
                         </label>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        <ul id='nav-dropdown' tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 dark:bg-primary dark:text-accent">
                             <li>
                                 <a className="justify-between">
                                     Profile

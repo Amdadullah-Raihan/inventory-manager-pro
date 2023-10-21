@@ -7,14 +7,17 @@ import ProductDetailsPreview from '@/app/components/Invoice/Preview/ProductDetai
 import useApiUrl from '@/app/hooks/useApiUrl';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { AiFillPrinter } from 'react-icons/ai';
 import { RotatingLines } from 'react-loader-spinner';
+import ReactToPrint from 'react-to-print';
 
 const SingleInvoice = () => {
     const apiUrl = useApiUrl()
     const { invoiceId } = useParams()
     const [singleInvoice, setSingleInvoice] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const invoiceRef = useRef()
 
 
     useEffect(() => {
@@ -30,8 +33,12 @@ const SingleInvoice = () => {
             })
     }, []);
 
+    console.log('single inovice', singleInvoice);
+
     return (
-        <InvoicePreview invoice={singleInvoice} isLoading={isLoading} />
+        <div className='mb-2 w-full md:flex gap-x-4 bg-[#F7F7F9] dark:bg-secondary p-2 lg:p-6'>
+            <InvoicePreview ref={invoiceRef} invoice={singleInvoice} isLoading={isLoading} />
+        </div>
     )
 }
 

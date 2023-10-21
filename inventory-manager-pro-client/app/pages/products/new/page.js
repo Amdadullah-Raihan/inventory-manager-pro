@@ -11,6 +11,7 @@ import { BsBagPlus, BsFillBagPlusFill } from 'react-icons/bs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BarcodeReader from 'react-barcode-reader'
+import { motion } from 'framer-motion'
 
 
 const CreateProduct = () => {
@@ -104,9 +105,18 @@ const CreateProduct = () => {
     return (
         <ProtectedRoute router={router}>
             <BarcodeReader onScan={handleScan} />
-            <div className='lg:p-6 p-2 relative min-h-[100vh] w-full bg-[#F7F7F9] dark:bg-secondary  '>
-                <form onSubmit={(e) => handleAddProduct(e)}>
-                    <div className="bg-white dark:bg-neutral dark:text-gray-400          shadow lg:p-6 p-2 rounded-lg max-w-[900px] mx-auto">
+            <motion.div
+                initial={{ opacity: 0.5, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className='lg:p-6 p-2 relative min-h-[100vh] w-full bg-[#F7F7F9] dark:bg-secondary  '
+            >
+                <form
+                    onSubmit={(e) => handleAddProduct(e)}
+                >
+                    <div
+                        className="bg-white dark:bg-neutral dark:text-gray-400   shadow lg:p-6 p-2 rounded-lg max-w-[900px] mx-auto"
+                    >
                         <p className='uppercase font-bold text-2xl w-full text-center text-primary flex justify-center gap-2'><BsFillBagPlusFill /> Add a New Product </p>
 
                         <div className='mt-6'>
@@ -254,7 +264,7 @@ const CreateProduct = () => {
                     </div>
                 </form>
 
-            </div >
+            </motion.div >
         </ProtectedRoute>
     )
 }

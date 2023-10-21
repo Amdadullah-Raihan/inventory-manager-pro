@@ -8,6 +8,9 @@ import { AiOutlineFolderView, AiOutlinePlus } from 'react-icons/ai';
 import { TbShoppingBagEdit, TbTrash } from 'react-icons/tb';
 import { RotatingLines } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
+import { motion } from 'framer-motion'
+
+
 
 const Products = () => {
     const [apiUrl] = useApiUrl();
@@ -16,8 +19,22 @@ const Products = () => {
     const [productsList, setproductsList] = useState([]);
     const [partialQuery, setPartialQuery] = useState('');
     const [id, setId] = useState('');
+    const [pagination, setPagination] = useState({
+        pageSize: 10,
+        pageNum: 1,
+    })
 
-    // console.log("productsList", productsList);
+
+    //animation properties
+    const tableVariants = {
+        hidden: { opacity: 0, height: 0 },
+        visible: { opacity: 1, height: 'auto' },
+    };
+    const rowVariants = {
+        hidden: { opacity: 0, x: -20 },
+        visible: { opacity: 1, x: 0 },
+    };
+
 
     useEffect(() => {
         setIsLoading(true);
@@ -63,18 +80,32 @@ const Products = () => {
     };
 
     return (
-        <div className='w-full p-2 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400          min-h-[100vh] '>
+        <div
+            className='w-full p-2 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400 min-h-[100vh] '
+        >
             <ToastContainer />
-            <div className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg ">
+            <div
+                className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg "
+            >
                 <div className='flex flex-col lg:flex-row gap-2  lg:justify-between py-6 px-4'>
                     <select className="select select-bordered w-full dark:bg-secondary lg:max-w-xs dark:border-none" disabled>
                         <option disabled selected>Actions</option>
 
                     </select>
-                    <div className='flex gap-2  items-center'>
-                        <input type="text" className='w-full input input-bordered lg:mr-2 dark:bg-secondary' placeholder='Search products' onChange={(e) => setPartialQuery(e.target.value)} />
+                    <div
+                        className='flex gap-2  items-center'
+                    >
+                        <input
+                            type="text"
+                            className='w-full input input-bordered lg:mr-2 dark:bg-secondary'
+                            placeholder='Search products'
+                            onChange={(e) => setPartialQuery(e.target.value)}
+                        />
 
-                        <Link href='/pages/products/new' className='btn border-none btn-primary text-white hover:bg-secondary'>
+                        <Link
+                            href='/pages/products/new'
+                            className='btn border-none btn-primary text-white hover:bg-secondary'
+                        >
                             <AiOutlinePlus className='' />
                             <p className="hidden lg:inline">Add product</p>
                         </Link>
@@ -91,9 +122,14 @@ const Products = () => {
                             visible={true}
                         />
                     </div> :
-                        <div className="overflow-x-auto ">
+                        <div>
 
-                            <table className="table capitalize ">
+                            <motion.table
+                                initial="hidden"
+                                animate="visible"
+                                variants={tableVariants}
+                                transition={{ duration: 0.5 }}
+                                className="table capitalize ">
                                 {/* head */}
                                 <thead className='bg-base-200 dark:bg-secondary dark:text-gray-300'>
                                     <tr>
@@ -112,18 +148,16 @@ const Products = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* row 1 */}
-
                                     {
-
-
-
                                         productsList?.length > 0 ? productsList?.map((product, idx) =>
 
-                                            <tr key={product._id}>
+                                            <motion.tr
+                                                variants={rowVariants}
+                                                transition={{ duration: 0.3 }}
+                                                key={product._id}>
                                                 <td>
                                                     <label>
-                                                        <input type="checkbox" className="checkbox dark:border-gray-500" />
+                                                        <input type="checkbox" className="checkbox dark:border-gray-600" />
                                                     </label>
                                                 </td>
 
@@ -168,6 +202,7 @@ const Products = () => {
                                                         <TbShoppingBagEdit className='text-2xl text-[#5A5FE0]' />
                                                     </button>
                                                 </td>
+
                                                 {/* delete confirmation modal */}
                                                 <dialog id="my_modal_3" className="modal">
                                                     <div className="modal-box">
@@ -187,17 +222,50 @@ const Products = () => {
                                                         </div>
                                                     </div>
                                                 </dialog>
-                                            </tr>
+                                            </motion.tr>
 
                                         ) :
                                             <div className='my-16 text-center text-xl uppercase text-rose-500'> No products Found! </div>
                                     }
+                                    {
+                                        <tr >
+                                            <td>
+                                                <select
+                                                    value={pagination.pageSize}
+                                                    onChange={(e) => setPagination({ ...pagination, pageSize: parseInt(e.target.value) })}
+                                                    className='select select-sm dark:bg-neutral dark:border-gray-500'>
+                                                    <option value={10}>10</option>
+                                                    <option value={20}>20</option>
+                                                    <option value={30}>30</option>
+                                                    <option value={40}>40</option>
+                                                    <option value={50}>50</option>
+                                                </select>
+                                            </td>
+                                            <td>Row Per Page</td>
+                                            <td colSpan={5} className='text-end'>
+                                                <div className="join border-none">
+                                                    {
+                                                        productsList.map((btn, idx) => (
+                                                            <button
+                                                                key={idx}
+                                                                className='btn join-item bg-primary text-accent border-none hover:bg-secondary'
+                                                                onClick={() => setPagination({ ...pagination, pageNum: idx + 1 })}
 
+                                                            >
+                                                                {idx + 1}
+                                                            </button>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    }
 
                                 </tbody>
 
 
-                            </table>
+                            </motion.table>
                         </div>
                 }
             </div>

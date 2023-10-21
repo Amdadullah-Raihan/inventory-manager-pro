@@ -30,13 +30,13 @@ const useInvoice = () => {
             products: [{
                 productName: '',
                 warranty: '',
-                quantity: '',
-                unitPrice: '',
+                quantity: 0,
+                unitPrice: 0,
 
             }],
         },
         paymentDetails: {
-            subtotal: '',
+            subtotal: 0,
             discount: 0,
             total: 0,
             totalPaid: 0,

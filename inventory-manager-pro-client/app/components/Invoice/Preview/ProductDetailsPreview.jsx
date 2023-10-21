@@ -11,7 +11,7 @@ const ProductDetailsPreview = ({ invoice }) => {
                 <table className="table">
                     {/* head */}
                     <thead className='text-gray-800 dark:text-white'>
-                        <tr>
+                        <tr className='border-b  dark:border-b-gray-500'>
                             <th></th>
                             <th>Product Name</th>
                             <th>Warranty</th>
@@ -39,6 +39,8 @@ const ProductDetailsPreview = ({ invoice }) => {
                     </tbody>
                 </table>
             </div>
+
+
 
         </div>
     )

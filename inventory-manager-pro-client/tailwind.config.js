@@ -25,7 +25,7 @@ module.exports = {
 
           "secondary": "#282A42",
 
-          "accent": "rgba(234, 234, 255, 0.87)",
+          "accent": "#D2D3E8",
 
           "neutral": "#30334E",
 

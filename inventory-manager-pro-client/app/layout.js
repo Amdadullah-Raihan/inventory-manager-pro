@@ -13,6 +13,10 @@ import SidebarPro from './components/SideBar/Sidebar'
 import SidebarContextProvider from './context/SidebarContext'
 import { useEffect, useState } from 'react'
 import { document } from 'postcss'
+import { motion } from 'framer-motion'
+
+
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,8 +30,8 @@ export default function RootLayout({ children }) {
 
   const router = useRouter();
 
-  const [isDark, setIsDark] = useState(null);
-  const [isLoading, setIsLoading] = useState();
+  const [isDark, setIsDark] = useState('');
+
 
   useEffect(() => {
     const savedMode = localStorage.getItem('isDark');
@@ -44,23 +48,26 @@ export default function RootLayout({ children }) {
 
     <html lang="en">
 
-      <body className={`${inter.className} ${isDark && 'dark'}`}>
+      <body className={`${inter.className} ${isDark === 'dark' && 'dark'}`}>
         <AuthContextProvider>
           <SidebarContextProvider>
             <TimeIntervalContextProvider>
               <InvoiceContextProvider>
                 <ProtectedRoute router={router} >
-                  <div className="drawer lg:drawer-open">
+                  <div className="drawer lg:drawer-open dark:bg-secondary">
                     <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                    <div className=" overflow-hidden drawer-content flex flex-col items-center justify-center">
+                    <div className=" overflow-hidden drawer-content flex flex-col items-center justify-center dark:bg-secondary">
                       {/* Page content here */}
 
                       <Navbar isDark={isDark} setIsDark={setIsDark} />
                       {children}
                     </div>
-                    <div className="drawer-side ">
+                    <div
+                      className="drawer-side"
+                    >
                       <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                      <ul className="menu p-4 w-80 min-h-full bg-secondary dark:bg-neutral   text-gray-400 ">
+
+                      <ul className="menu  w-80 min-h-full bg-secondary dark:bg-neutral   text-accent ">
                         <Sidebar />
                       </ul>
 

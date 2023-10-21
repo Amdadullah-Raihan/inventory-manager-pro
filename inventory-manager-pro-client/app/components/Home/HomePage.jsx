@@ -5,6 +5,7 @@ import axios from 'axios';
 import useApiUrl from '@/app/hooks/useApiUrl';
 import { useAuth } from '../../context/AuthContext';
 import { useTimeInterval } from '../../context/TimeIntervalContext';
+import { motion } from "framer-motion"
 
 const HomePage = () => {
     const [apiUrl] = useApiUrl();
@@ -57,10 +58,21 @@ const HomePage = () => {
     ];
 
     return (
-        <div className='bg-[#F7F7F9] dark:bg-secondary overflow-hidden w-full min-h-[100vh] p-2 lg:p-6  dark:text-gray-400           '>
-            <div className='grid gap-2 lg:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mb-2 lg:mb-6'>
+        <motion.div
+
+            className='bg-[#F7F7F9] dark:bg-secondary overflow-hidden w-full min-h-[100vh] p-2 lg:p-6  dark:text-accent'
+        >
+            <motion.div
+                className='grid gap-2 lg:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mb-2 lg:mb-6'
+            >
                 {cardData.map((data, index) => (
-                    <div key={index} className='bg-white dark:bg-neutral shadow p-4 rounded-md'>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3 }}
+                        key={index}
+                        className='bg-white dark:bg-neutral shadow p-4 rounded-md'
+                    >
                         <div className='flex flex-col gap-6'>
                             <div className='flex gap-2 items-center justify-between'>
                                 <h3 className='text-xl font-bold '>{data.title}</h3>
@@ -68,7 +80,7 @@ const HomePage = () => {
                             </div>
                             <div className='flex justify-between'>
                                 <div className='leading-3'>
-                                    <p className=' dark:text-gray-400 mb-1'>{data.label}</p>
+                                    <p className=' dark:text-accent mb-1'>{data.label}</p>
                                     <small className='text-gray-500'>In Last Week</small>
                                 </div>
                                 <div className='flex items-center'>
@@ -77,12 +89,18 @@ const HomePage = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
-            </div>
+            </motion.div>
 
             {/* Chart */}
-            <div className='w-[100%] bg-white dark:bg-neutral p-2 lg:p-6 shadow-md rounded-lg pr-4'>
+            <motion.div
+                initial={{ opacity: 0.5, y: -100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+
+                className='w-[100%] bg-white dark:bg-neutral p-2 lg:p-6 shadow-md rounded-lg pr-4'
+            >
                 <div className='flex gap-6 mb-6 ml-6'>
                     <div className='flex gap-2 items-center'>
                         <FaCircleDot className='text-primary' />
@@ -94,8 +112,8 @@ const HomePage = () => {
                     </div>
                 </div>
                 <LineChartDemo />
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 

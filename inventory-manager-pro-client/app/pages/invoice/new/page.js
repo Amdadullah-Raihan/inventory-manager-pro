@@ -16,14 +16,13 @@ import AddProductDetails from '@/app/components/Invoice/CreateInvoice/AddProduct
 import BillingDetails from '@/app/components/Invoice/CreateInvoice/BillingDetails';
 import { GrPowerReset } from 'react-icons/gr';
 import NotePreview from '@/app/components/Invoice/Preview/NotePreview';
+import { motion } from 'framer-motion';
 
 
 const CreateInvoice = () => {
 
     const { invoice, setInvoice } = useInvoiceContext()
     const router = useRouter()
-
-
 
     // console.log('customerDetails', invoice.customerDetails);
     // console.log('invoice', invoice);
@@ -107,25 +106,70 @@ const CreateInvoice = () => {
 
     }
 
+
+    // Form validation
+    const isFormFilled =
+        typeof invoice.userEmail === 'string' && invoice.userEmail.trim() !== '' &&
+        typeof invoice.invoiceNumber === 'string' && invoice.invoiceNumber.trim() !== '' &&
+        typeof invoice.customerDetails?.customerName === 'string' && invoice.customerDetails?.customerName.trim() !== '' &&
+        typeof invoice.customerDetails?.customerAddress === 'string' && invoice.customerDetails?.customerAddress.trim() !== '' &&
+        typeof invoice.customerDetails?.customerPhoneNo === 'string' && invoice.customerDetails?.customerPhoneNo.trim() !== '' &&
+        Array.isArray(invoice.productDetails?.products) && invoice.productDetails.products.every(
+            (product) =>
+                typeof product.productName === 'string' && product.productName.trim() !== '' &&
+                (typeof product.quantity === 'number' && product.quantity >= 0) &&
+                (typeof product.unitPrice === 'number' && product.unitPrice >= 0)
+        ) &&
+        (typeof invoice.paymentDetails?.subtotal === 'number' && invoice.paymentDetails.subtotal >= 0) &&
+        (typeof invoice.paymentDetails?.discount === 'number' && invoice.paymentDetails.discount >= 0);
+
+
+
+
+
+    console.log('isFormfilled', isFormFilled);
+    console.log('invoice', invoice);
+
     return (
         <ProtectedRoute router={router}>
             <div className='w-full bg-[#F7F7F9] dark:bg-secondary lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize'>
 
                 {/* Invoice Starts */}
-                <div className='max-w-[700px]  bg-white dark:bg-neutral dark:text-gray-400          shadow p-2 lg:p-4 rounded-md'>
+                <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+
+
+                    className='max-w-[700px]  bg-white dark:bg-neutral dark:text-gray-400  shadow p-2 lg:p-4 rounded-md'
+                >
                     <InvoiceHeader invoice={invoice} />
                     <InvoiceTo />
                     <AddProductDetails />
                     <BillingDetails />
                     <NotePreview />
-                </div>
+                </motion.div>
                 {/* Invoice ends */}
 
                 {/* right btn  */}
-                <div className='max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral rounded-md shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'>
-                    <Link href='/pages/invoice/preview'>
-                        <button className='btn border-none w-full bg-[#5a66f1] text-white hover:text-black'><RiSave3Fill className='text-xl' />See Preview</button>
-                    </Link>
+                <motion.div
+                    initial={{ opacity: 0.5, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+
+
+                    className='max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral rounded-md shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'
+                >
+                    <button
+                        // disabled={isFormFilled ? false : true}
+                        className='btn border-none w-full bg-[#5a66f1] text-white hover:text-black disabled:dark:bg-base-200'
+                    >
+                        <Link
+                            href='/pages/invoice/preview'
+                            className='flex items-center gap-2'
+                        >
+                            <RiSave3Fill className='text-xl' />
+                            See Preview
+                        </Link>
+                    </button>
 
                     {
                         process.env.NODE_ENV === 'development' && <>
@@ -158,7 +202,7 @@ const CreateInvoice = () => {
 
 
 
-                </div>
+                </motion.div>
             </div>
         </ProtectedRoute>
     )
