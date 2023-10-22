@@ -1,6 +1,9 @@
 import React from 'react'
 import { FaPlus, FaTrash } from 'react-icons/fa6'
 import { useInvoiceContext } from '../../../context/InvoiceContext'
+import { toast, ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 const AddProductDetails = () => {
@@ -8,23 +11,38 @@ const AddProductDetails = () => {
 
     //handel add item
     const handleAddItem = () => {
-        setInvoice({
-            ...invoice,
-            productDetails: {
-                ...invoice.productDetails,
-                products: [
-                    ...invoice.productDetails.products,
-                    {
-                        productName: '',
-                        warranty: '',
-                        quantity: 0,
-                        unitPrice: 0,
+        const lastItem = invoice?.productDetails?.products[invoice.productDetails.products.length - 1];
 
-                    }
-                ]
-            }
-        });
-    }
+        if (
+            lastItem?.productName !== '' &&
+            lastItem?.warranty !== '' &&
+            lastItem?.quantity !== 0 &&
+            lastItem?.unitPrice !== 0
+        ) {
+            setInvoice({
+                ...invoice,
+                productDetails: {
+                    ...invoice.productDetails,
+                    products: [
+                        ...invoice.productDetails.products,
+                        {
+                            productName: '',
+                            warranty: '',
+                            quantity: 0,
+                            unitPrice: 0,
+                        },
+                    ],
+                },
+            });
+        } else {
+
+            toast.warn("Please fill in all required fields")
+        }
+    };
+
+
+
+    //Handle product change events
     const handleProductChange = (e, idx, field) => {
         const updatedProducts = [...invoice.productDetails.products];
         updatedProducts[idx][field] = e.target.value;
@@ -38,7 +56,7 @@ const AddProductDetails = () => {
         });
     };
 
-    // Remove the item at the specified index
+    //handle => Remove the item at the specified index
     const handleDeleteItem = (idx) => {
         const updatedProducts = [...invoice.productDetails.products];
         updatedProducts.splice(idx, 1);
@@ -54,6 +72,7 @@ const AddProductDetails = () => {
 
     return (
         <div className='border-b dark:border-b-gray-500  py-4'>
+            <ToastContainer />
             <h4 className=''>Add Product&apos;s Details</h4>
             <div className='h-full w-full'>
                 {
