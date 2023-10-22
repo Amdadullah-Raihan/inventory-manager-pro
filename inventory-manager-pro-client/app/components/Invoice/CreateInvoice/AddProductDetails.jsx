@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaPlus } from 'react-icons/fa6'
+import { FaPlus, FaTrash } from 'react-icons/fa6'
 import { useInvoiceContext } from '../../../context/InvoiceContext'
 
 
@@ -37,7 +37,20 @@ const AddProductDetails = () => {
             },
         });
     };
-    // console.log('Invoice updated', invoice);
+
+    // Remove the item at the specified index
+    const handleDeleteItem = (idx) => {
+        const updatedProducts = [...invoice.productDetails.products];
+        updatedProducts.splice(idx, 1);
+        setInvoice({
+            ...invoice,
+            productDetails: {
+                ...invoice.productDetails,
+                products: updatedProducts,
+            },
+        });
+    };
+
 
     return (
         <div className='border-b dark:border-b-gray-500  py-4'>
@@ -45,9 +58,9 @@ const AddProductDetails = () => {
             <div className='h-full w-full'>
                 {
                     invoice?.productDetails?.products && invoice.productDetails.products.map((product, idx) =>
-                        <div key={idx} className='flex lg:items-center gap-1  rounded-md  lg:border-none '>
+                        <div key={idx} className='flex lg:items-center gap-1    border-b border-b-secondary  mb-2 lg:mb-0 lg:border-none '>
                             <div className='mt-3 sm:mt-0'>{idx + 1}.</div>
-                            <div className='grid grid-cols-2 lg:grid-cols-4 gap-2 mb-2  '>
+                            <div className='relative grid grid-cols-2 lg:grid-cols-4 gap-2 mb-2  '>
                                 <input
                                     type="text"
                                     className='input w-full input-bordered  dark:bg-secondary'
@@ -80,6 +93,9 @@ const AddProductDetails = () => {
                                     onChange={(e) => handleProductChange(e, idx, 'unitPrice')}
                                 />
                             </div>
+                            <button className='ml-1' onClick={() => handleDeleteItem(idx)}>
+                                x
+                            </button>
                         </div>
                     )
                 }

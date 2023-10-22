@@ -107,28 +107,7 @@ const CreateInvoice = () => {
     }
 
 
-    // Form validation
-    const isFormFilled =
-        typeof invoice.userEmail === 'string' && invoice.userEmail.trim() !== '' &&
-        typeof invoice.invoiceNumber === 'string' && invoice.invoiceNumber.trim() !== '' &&
-        typeof invoice.customerDetails?.customerName === 'string' && invoice.customerDetails?.customerName.trim() !== '' &&
-        typeof invoice.customerDetails?.customerAddress === 'string' && invoice.customerDetails?.customerAddress.trim() !== '' &&
-        typeof invoice.customerDetails?.customerPhoneNo === 'string' && invoice.customerDetails?.customerPhoneNo.trim() !== '' &&
-        Array.isArray(invoice.productDetails?.products) && invoice.productDetails.products.every(
-            (product) =>
-                typeof product.productName === 'string' && product.productName.trim() !== '' &&
-                (typeof product.quantity === 'number' && product.quantity >= 0) &&
-                (typeof product.unitPrice === 'number' && product.unitPrice >= 0)
-        ) &&
-        (typeof invoice.paymentDetails?.subtotal === 'number' && invoice.paymentDetails.subtotal >= 0) &&
-        (typeof invoice.paymentDetails?.discount === 'number' && invoice.paymentDetails.discount >= 0);
 
-
-
-
-
-    console.log('isFormfilled', isFormFilled);
-    console.log('invoice', invoice);
 
     return (
         <ProtectedRoute router={router}>
