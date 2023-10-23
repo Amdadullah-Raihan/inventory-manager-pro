@@ -42,7 +42,9 @@ const Navbar = ({ isDark, setIsDark }) => {
     const { timeInterval, setTimeInterval } = useTimeInterval();
     const { isCollapsed, setCollapsed, width } = useSidebarContext();
     const pathname = usePathname();
-    console.log("navbar isDark: " + isDark);
+
+
+
     return (
         <div className="navbar justify-between bg-base-100 shadow-b-md lg:dark:bg-secondary dark:bg-neutral">
             <div >

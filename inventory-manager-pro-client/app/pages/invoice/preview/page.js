@@ -18,6 +18,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import NotePreview from '@/app/components/Invoice/Preview/NotePreview';
 import { motion } from 'framer-motion'
+import Link from 'next/link';
 
 const InvoicePreview = () => {
     //states will go here
@@ -109,13 +110,15 @@ const InvoicePreview = () => {
                     <RiSave3Fill className='text-xl' />
                     Save Invoice
                 </button>
-                <button
-                    className='btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400'
-                    disabled={true}
-                >
-                    <RiFileEditFill className='text-xl' />
-                    Edit Invoice
-                </button>
+                <Link href='/pages/invoice/new'>
+                    <button
+                        className='btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400'
+
+                    >
+                        <RiFileEditFill className='text-xl' />
+                        Edit Invoice
+                    </button>
+                </Link>
                 <ReactToPrint
                     trigger={() => {
                         return <button

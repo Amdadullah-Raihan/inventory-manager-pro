@@ -9,6 +9,7 @@ import { TbShoppingBagEdit, TbTrash } from 'react-icons/tb';
 import { RotatingLines } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import { motion } from 'framer-motion'
+import { FaTrash } from 'react-icons/fa6';
 
 
 
@@ -22,8 +23,9 @@ const Products = () => {
     const [pagination, setPagination] = useState({
         pageSize: 10,
         pageNum: 1,
-    })
-
+    });
+    const [selectAll, setSelectAll] = useState(false);
+    const [selectedItems, setSelectedItems] = useState([]);
 
     //animation properties
     const tableVariants = {
@@ -33,6 +35,47 @@ const Products = () => {
     const rowVariants = {
         hidden: { opacity: 0, x: -20 },
         visible: { opacity: 1, x: 0 },
+    };
+
+    const handleSelectAll = () => {
+        setSelectAll(!selectAll);
+        if (!selectAll) {
+            setSelectedItems(productsList.map(item => item._id));
+        } else {
+            setSelectedItems([]);
+        }
+    };
+
+    const handleCheckboxChange = (itemId) => {
+        const updatedSelectedItems = [...selectedItems];
+        if (updatedSelectedItems.includes(itemId)) {
+            updatedSelectedItems.splice(updatedSelectedItems.indexOf(itemId), 1);
+        } else {
+            updatedSelectedItems.push(itemId);
+        }
+        setSelectedItems(updatedSelectedItems);
+    };
+
+    const handleDeleteSelected = () => {
+
+        axios.delete(`${apiUrl}/api/products/delete/many`, {
+            data: { ids: selectedItems },
+        })
+            .then((response) => {
+
+                if (response.data.success) {
+                    toast.success(response.data.message);
+                    const newData = productsList.filter(item => !selectedItems.includes(item._id));
+                    setproductsList(newData);
+                    setSelectedItems([]);
+                }
+
+            })
+            .catch((error) => {
+                console.error('Error deleting invoices:', error);
+
+            });
+
     };
 
 
@@ -87,11 +130,20 @@ const Products = () => {
             <div
                 className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg "
             >
-                <div className='flex flex-col lg:flex-row gap-2  lg:justify-between py-6 px-4'>
-                    <select className="select select-bordered w-full dark:bg-secondary lg:max-w-xs dark:border-none" disabled>
-                        <option disabled selected>Actions</option>
+                <div className='flex flex-col lg:flex-row gap-2  lg:justify-between py-6 px-4 '>
+                    {
+                        selectedItems.length > 0 ?
+                            <div className='w-full lg:max-w-xs flex items-center justify-between bg-base-200 text-gray-500 dark:bg-secondary px-4 rounded-lg'>
+                                <p>Actions</p>
+                                <button onClick={handleDeleteSelected}>
+                                    <FaTrash className='text-rose-400' />
+                                </button>
+                            </div>
+                            : <select className="select select-bordered w-full dark:bg-secondary lg:max-w-xs dark:border-none" disabled>
+                                <option disabled selected>Actions</option>
 
-                    </select>
+                            </select>
+                    }
                     <div
                         className='flex gap-2  items-center'
                     >
@@ -135,7 +187,11 @@ const Products = () => {
                                     <tr>
                                         <th >
                                             <label>
-                                                <input type="checkbox" className="checkbox dark:border-gray-500" />
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectAll} onChange={handleSelectAll}
+                                                    className="checkbox dark:border-gray-500"
+                                                />
                                             </label>
                                         </th>
                                         <th>Product</th>
@@ -157,7 +213,12 @@ const Products = () => {
                                                 key={product._id}>
                                                 <td>
                                                     <label>
-                                                        <input type="checkbox" className="checkbox dark:border-gray-600" />
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={selectedItems.includes(product._id)}
+                                                            onChange={() => handleCheckboxChange(product._id)}
+                                                            className="checkbox dark:border-gray-600"
+                                                        />
                                                     </label>
                                                 </td>
 

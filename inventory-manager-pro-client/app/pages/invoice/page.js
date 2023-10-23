@@ -9,6 +9,7 @@ import { TbTrash } from 'react-icons/tb';
 import { RotatingLines } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import { motion } from 'framer-motion'
+import { FaTrash } from 'react-icons/fa6';
 
 const Invoice = () => {
     const [apiUrl] = useApiUrl();
@@ -17,7 +18,49 @@ const Invoice = () => {
     const [invoiceList, setInvoiceList] = useState([]);
     const [partialQuery, setPartialQuery] = useState('');
     const [id, setId] = useState('');
+    const [selectAll, setSelectAll] = useState(false);
+    const [selectedItems, setSelectedItems] = useState([]);
 
+    const handleSelectAll = () => {
+        setSelectAll(!selectAll);
+        if (!selectAll) {
+            setSelectedItems(invoiceList.map(item => item._id));
+        } else {
+            setSelectedItems([]);
+        }
+    };
+
+    const handleCheckboxChange = (itemId) => {
+        const updatedSelectedItems = [...selectedItems];
+        if (updatedSelectedItems.includes(itemId)) {
+            updatedSelectedItems.splice(updatedSelectedItems.indexOf(itemId), 1);
+        } else {
+            updatedSelectedItems.push(itemId);
+        }
+        setSelectedItems(updatedSelectedItems);
+    };
+
+    const handleDeleteSelected = () => {
+
+        axios
+            .delete(`${apiUrl}/api/invoice/delete/many`, {
+                data: { ids: selectedItems },
+            })
+            .then((response) => {
+                if (response.data.success) {
+                    toast.success(response.data.message);
+                    const newData = invoiceList.filter(item => !selectedItems.includes(item._id));
+                    setInvoiceList(newData);
+                    setSelectedItems([]);
+                }
+            })
+            .catch((error) => {
+                console.error('Error deleting invoices:', error);
+                toast.error(error.message)
+                // Handle any errors
+            });
+
+    };
 
 
     useEffect(() => {
@@ -72,10 +115,19 @@ const Invoice = () => {
                 className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg "
             >
                 <div className='flex flex-col-reverse lg:flex-row gap-2 lg:justify-between py-6 px-4'>
-                    <select className="select select-bordered w-full lg:max-w-xs dark:bg-secondary dark:border-none" disabled>
-                        <option disabled selected>Actions</option>
+                    {
+                        selectedItems.length > 0 ?
+                            <div className='w-full lg:max-w-xs flex items-center justify-between bg-base-200 text-gray-500 dark:bg-secondary px-4 rounded-lg'>
+                                <p>Actions</p>
+                                <button onClick={handleDeleteSelected}>
+                                    <FaTrash className='text-rose-400' />
+                                </button>
+                            </div>
+                            : <select className="select select-bordered w-full dark:bg-secondary lg:max-w-xs dark:border-none" disabled>
+                                <option disabled selected>Actions</option>
 
-                    </select>
+                            </select>
+                    }
                     <div className='flex  gap-2 lg:flex-row items-center'>
                         <input type="text" className='w-full input input-bordered lg:mr-2 dark:bg-secondary' placeholder='Search Invoice' onChange={(e) => setPartialQuery(e.target.value)} />
 
@@ -100,7 +152,7 @@ const Invoice = () => {
                         <div className="overflow-x-auto ">
 
                             <motion.table
-                                initial={{ opacity: 0.5 }}
+                                initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5 }}
                                 className="table"
@@ -109,7 +161,11 @@ const Invoice = () => {
                                     <tr>
                                         <th>
                                             <label>
-                                                <input type="checkbox" className="checkbox dark:border-gray-500" />
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectAll} onChange={handleSelectAll}
+                                                    className="checkbox dark:border-gray-500"
+                                                />
                                             </label>
                                         </th>
                                         <th>Invoic ID</th>
@@ -133,7 +189,11 @@ const Invoice = () => {
 
                                                 <td>
                                                     <label>
-                                                        <input type="checkbox" className="checkbox dark:border-gray-600" />
+                                                        <input type="checkbox"
+                                                            checked={selectedItems.includes(invoice._id)}
+                                                            onChange={() => handleCheckboxChange(invoice._id)}
+                                                            className="checkbox dark:border-gray-600"
+                                                        />
                                                     </label>
                                                 </td>
                                                 <td className='text-[#5A5FE0] font-semibold'>
@@ -191,7 +251,7 @@ const Invoice = () => {
 
                                         ) :
                                             <motion.div
-                                                initial={{ opacity: 0.5, height: 0 }}
+                                                initial={{ opacity: 0, height: 0 }}
                                                 animate={{ opacity: 1, height: '100%' }}
                                                 transition={{ duration: 0.5 }}
                                                 className='w-full my-16 text-center text-xl uppercase text-rose-500 dark:text-rose-400'

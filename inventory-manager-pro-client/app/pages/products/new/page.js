@@ -106,7 +106,7 @@ const CreateProduct = () => {
         <ProtectedRoute router={router}>
             <BarcodeReader onScan={handleScan} />
             <motion.div
-                initial={{ opacity: 0.5, y: 50 }}
+                initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 className='lg:p-6 p-2 relative min-h-[100vh] w-full bg-[#F7F7F9] dark:bg-secondary  '

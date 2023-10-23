@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaPlus, FaTrash } from 'react-icons/fa6'
 import { useInvoiceContext } from '../../../context/InvoiceContext'
 import { toast, ToastContainer } from 'react-toastify'
@@ -7,10 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 const AddProductDetails = () => {
-    const { invoice, setInvoice } = useInvoiceContext()
+    const { invoice, setInvoice } = useInvoiceContext();
+
+
+
 
     //handel add item
-    const handleAddItem = () => {
+    const handleAddItem = (e) => {
+        e.preventDefault();
         const lastItem = invoice?.productDetails?.products[invoice.productDetails.products.length - 1];
 
         if (
@@ -41,7 +45,6 @@ const AddProductDetails = () => {
     };
 
 
-
     //Handle product change events
     const handleProductChange = (e, idx, field) => {
         const updatedProducts = [...invoice.productDetails.products];
@@ -70,8 +73,10 @@ const AddProductDetails = () => {
     };
 
 
+
+
     return (
-        <div className='border-b dark:border-b-gray-500  py-4'>
+        <form onSubmit={handleAddItem} className='border-b dark:border-b-gray-500  py-4'>
             <ToastContainer />
             <h4 className=''>Add Product&apos;s Details</h4>
             <div className='h-full w-full'>
@@ -112,7 +117,10 @@ const AddProductDetails = () => {
                                     onChange={(e) => handleProductChange(e, idx, 'unitPrice')}
                                 />
                             </div>
-                            <button className='ml-1' onClick={() => handleDeleteItem(idx)}>
+                            <button
+                                className='ml-1 disabled:text-secondary' onClick={() => handleDeleteItem(idx)}
+
+                            >
                                 x
                             </button>
                         </div>
@@ -123,13 +131,13 @@ const AddProductDetails = () => {
             <div className='w-full text-right'>
                 <button
                     className='btn border-none  mr-1  bg-[#5a66f1] text-white rounded-md hover:bg-secondary'
-                    onClick={handleAddItem}
+                    type='submit'
                 >
                     <FaPlus className='inline' />
                     Add Item
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 

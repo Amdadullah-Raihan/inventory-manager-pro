@@ -67,7 +67,7 @@ export default function RootLayout({ children }) {
                     >
                       <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
 
-                      <ul className="menu  w-80 min-h-full bg-secondary dark:bg-neutral   text-accent ">
+                      <ul className="menu  w-72 min-h-full bg-secondary dark:bg-neutral   text-accent ">
                         <Sidebar />
                       </ul>
 

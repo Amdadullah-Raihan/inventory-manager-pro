@@ -120,6 +120,44 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// Delete invoices by IDs => /api/invoice/delete
+router.delete('/delete/many', async (req, res) => {
+
+    const invoiceIds = req.body.ids;
+
+    try {
+        if (!Array.isArray(invoiceIds) || invoiceIds.length === 0) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid or empty array of invoice IDs provided',
+            });
+        }
+
+        // Use the deleteMany method to remove invoices by their IDs
+        const deletedInvoices = await Invoice.deleteMany({ _id: { $in: invoiceIds } });
+
+        if (deletedInvoices.deletedCount === 0) {
+            // If no invoices were deleted
+            return res.status(404).json({
+                success: false,
+                error: 'No invoices found for the provided IDs',
+            });
+        }
+
+        // If invoices were successfully deleted
+        res.status(200).json({
+            success: true,
+            message: 'Invoices deleted successfully',
+        });
+    } catch (err) {
+        // Handle errors, e.g., database errors
+        res.status(500).json({
+            success: false,
+            error: err.message,
+        });
+    }
+});
+
 
 
 //create invoice => /api/invoices/new

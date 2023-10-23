@@ -135,5 +135,44 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// Delete products by IDs => /api/products/delete
+router.delete('/delete/many', async (req, res) => {
+
+    const productIds = req.body.ids; // Assuming the IDs are in the request body
+
+    try {
+        if (!Array.isArray(productIds) || productIds.length === 0) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid or empty array of product IDs provided',
+            });
+        }
+
+        // Use the deleteMany method to remove products by their IDs
+        const deletedProducts = await Product.deleteMany({ _id: { $in: productIds } });
+
+        if (deletedProducts.deletedCount === 0) {
+            // If no products were deleted
+            return res.status(404).json({
+                success: false,
+                error: 'No products found for the provided IDs',
+            });
+        }
+
+        // If products were successfully deleted
+        res.status(200).json({
+            success: true,
+            message: 'Products deleted successfully',
+        });
+    } catch (err) {
+        // Handle errors, e.g., database errors
+        res.status(500).json({
+            success: false,
+            error: err.message,
+        });
+    }
+});
+
+
 module.exports = router;
 

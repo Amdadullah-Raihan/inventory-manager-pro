@@ -55,6 +55,7 @@ const InvoicePreview = ({ invoice, isLoading }) => {
                                         >
                                             <AiFillPrinter className='text-xl' />
                                             Print
+
                                         </button>
                                     }}
                                     content={() => invoiceRef.current}

@@ -31,7 +31,7 @@ const SingleInvoice = () => {
                 console.log('error', error);
                 // setIsLoading(false)
             })
-    }, []);
+    }, []); //do not add api url or invoice id here
 
     console.log('single inovice', singleInvoice);
 
