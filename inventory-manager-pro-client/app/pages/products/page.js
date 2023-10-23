@@ -20,14 +20,15 @@ const Products = () => {
     const [productsList, setproductsList] = useState([]);
     const [partialQuery, setPartialQuery] = useState('');
     const [id, setId] = useState('');
+    const [selectAll, setSelectAll] = useState(false);
+    const [selectedItems, setSelectedItems] = useState([]);
     const [pagination, setPagination] = useState({
         pageSize: 10,
         pageNum: 1,
     });
-    const [selectAll, setSelectAll] = useState(false);
-    const [selectedItems, setSelectedItems] = useState([]);
 
-    //animation properties
+
+    // Animation properties for the table and rows.
     const tableVariants = {
         hidden: { opacity: 0, height: 0 },
         visible: { opacity: 1, height: 'auto' },
@@ -37,6 +38,8 @@ const Products = () => {
         visible: { opacity: 1, x: 0 },
     };
 
+
+    // Function to select or deselect all items.
     const handleSelectAll = () => {
         setSelectAll(!selectAll);
         if (!selectAll) {
@@ -46,6 +49,8 @@ const Products = () => {
         }
     };
 
+
+    // Function to handle changes in checkbox selection.
     const handleCheckboxChange = (itemId) => {
         const updatedSelectedItems = [...selectedItems];
         if (updatedSelectedItems.includes(itemId)) {
@@ -56,69 +61,64 @@ const Products = () => {
         setSelectedItems(updatedSelectedItems);
     };
 
-    const handleDeleteSelected = () => {
 
+    // Function to delete selected items.
+    const handleDeleteSelected = () => {
         axios.delete(`${apiUrl}/api/products/delete/many`, {
             data: { ids: selectedItems },
         })
             .then((response) => {
-
                 if (response.data.success) {
                     toast.success(response.data.message);
                     const newData = productsList.filter(item => !selectedItems.includes(item._id));
                     setproductsList(newData);
                     setSelectedItems([]);
+                    setSelectAll(false);
                 }
-
             })
             .catch((error) => {
-                console.error('Error deleting invoices:', error);
-
+                console.error('Error deleting products:', error);
             });
-
     };
 
 
+    // Effect for loading product data.
     useEffect(() => {
         setIsLoading(true);
         let url;
         if (partialQuery) {
             url = `${apiUrl}/api/products/${user?.email}?partialQuery=${partialQuery}`
-        }
-        else {
+        } else {
             url = `${apiUrl}/api/products/${user?.email}`
         }
         if (user?.email) {
             axios.get(url)
                 .then((products) => {
-                    // console.log(products.data);
                     setproductsList(products.data.products);
-                    setIsLoading(false)
+                    setIsLoading(false);
                 })
                 .catch((error) => {
                     console.log(error);
-                })
+                });
         }
-
     }, [user?.email, apiUrl, partialQuery]);
 
 
+    // Function to delete a single product by ID.
     const handleDeleteProduct = (productId) => {
-
         axios.delete(`${apiUrl}/api/products/${productId}`)
             .then(res => {
-                console.log("deleted product", res);
                 if (res.data.success) {
                     toast.success("Product deleted successfully", {
                         position: toast.POSITION.TOP_RIGHT
                     })
-
                 }
                 const newproductsList = productsList.filter(products => products._id !== productId)
-                setproductsList(newproductsList)
+                setproductsList(newproductsList);
             })
             .catch(err => {
-
+                console.log(err);
+                toast.error("Product deletion failed");
             });
     };
 
@@ -133,10 +133,10 @@ const Products = () => {
                 <div className='flex flex-col lg:flex-row gap-2  lg:justify-between py-6 px-4 '>
                     {
                         selectedItems.length > 0 ?
-                            <div className='w-full lg:max-w-xs flex items-center justify-between bg-base-200 text-gray-500 dark:bg-secondary px-4 rounded-lg'>
-                                <p>Actions</p>
+                            <div className='w-full lg:max-w-xs flex items-center justify-between bg-base-200 text-gray-700 dark:text-accent dark:bg-secondary px-4 rounded-lg'>
+                                <p className='text-[14px]'>Actions</p>
                                 <button onClick={handleDeleteSelected}>
-                                    <FaTrash className='text-rose-400' />
+                                    <FaTrash className='text-rose-500' />
                                 </button>
                             </div>
                             : <select className="select select-bordered w-full dark:bg-secondary lg:max-w-xs dark:border-none" disabled>
@@ -259,8 +259,8 @@ const Products = () => {
                                                     >
                                                         <TbTrash className='text-2xl text-rose-500' />
                                                     </button>
-                                                    <button className="btn border-none btn-ghost btn-xs">
-                                                        <TbShoppingBagEdit className='text-2xl text-[#5A5FE0]' />
+                                                    <button disabled className="btn border-none btn-ghost btn-xs ">
+                                                        <TbShoppingBagEdit className='text-2xl text-secondary ' />
                                                     </button>
                                                 </td>
 

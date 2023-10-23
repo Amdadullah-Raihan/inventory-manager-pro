@@ -52,6 +52,7 @@ const Invoice = () => {
                     const newData = invoiceList.filter(item => !selectedItems.includes(item._id));
                     setInvoiceList(newData);
                     setSelectedItems([]);
+                    setSelectAll(false);
                 }
             })
             .catch((error) => {
@@ -117,10 +118,10 @@ const Invoice = () => {
                 <div className='flex flex-col-reverse lg:flex-row gap-2 lg:justify-between py-6 px-4'>
                     {
                         selectedItems.length > 0 ?
-                            <div className='w-full lg:max-w-xs flex items-center justify-between bg-base-200 text-gray-500 dark:bg-secondary px-4 rounded-lg'>
-                                <p>Actions</p>
+                            <div className='w-full lg:max-w-xs flex items-center justify-between bg-base-200 text-gray-700 dark:text-accent dark:bg-secondary px-4 rounded-lg'>
+                                <p className='text-[14px]'>Actions</p>
                                 <button onClick={handleDeleteSelected}>
-                                    <FaTrash className='text-rose-400' />
+                                    <FaTrash className='text-rose-500' />
                                 </button>
                             </div>
                             : <select className="select select-bordered w-full dark:bg-secondary lg:max-w-xs dark:border-none" disabled>
