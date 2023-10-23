@@ -11,8 +11,7 @@ const AddProductDetails = () => {
 
 
 
-
-    //handel add item
+    // Function to add product details to the invoice.
     const handleAddItem = (e) => {
         e.preventDefault();
         const lastItem = invoice?.productDetails?.products[invoice.productDetails.products.length - 1];
@@ -45,7 +44,7 @@ const AddProductDetails = () => {
     };
 
 
-    //Handle product change events
+    // Function to handle changes in product details within an invoice.
     const handleProductChange = (e, idx, field) => {
         const updatedProducts = [...invoice.productDetails.products];
         updatedProducts[idx][field] = e.target.value;
@@ -59,7 +58,7 @@ const AddProductDetails = () => {
         });
     };
 
-    //handle => Remove the item at the specified index
+    // Function to remove the item at the specified index
     const handleDeleteItem = (idx) => {
         const updatedProducts = [...invoice.productDetails.products];
         updatedProducts.splice(idx, 1);

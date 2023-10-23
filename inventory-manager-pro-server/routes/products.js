@@ -85,7 +85,8 @@ router.post('/new', async (req, res) => {
 });
 
 //get a product by id => /api/products/:id
-router.get('/:id', async (req, res) => {
+router.get('/product/:id', async (req, res) => {
+
     try {
 
         const product = await Product.findById(req.params.id);
@@ -101,19 +102,24 @@ router.get('/:id', async (req, res) => {
 });
 
 //update a product by id => /api/products/:id
-router.put('/:id', async (req, res) => {
-    try {
+router.put('/update/:id', async (req, res) => {
+    console.log('api hitted');
+    let productId = req.params.id;
+    const updatedProductData = req.body;
 
-        await Product.findByIdAndUpdate(req.params.id, {
-            //updated body: req.body
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(productId, updatedProductData, { new: true });
+
+        if (!updatedProduct) {
+            return res.status(404).json({ success: false, message: 'Product not found' });
         }
-        )
-    }
-    catch (err) {
-        console.log(err);
-        res.status(err.status).json({
-            message: err.message
-        })
+
+        res.status(200).json({ success: true, message: 'Product updated successfully', product: updatedProduct });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+
     }
 });
 

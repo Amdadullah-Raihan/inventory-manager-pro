@@ -78,6 +78,7 @@ const Products = () => {
             })
             .catch((error) => {
                 console.error('Error deleting products:', error);
+                toast.error("Error deleting products");
             });
     };
 
@@ -99,6 +100,7 @@ const Products = () => {
                 })
                 .catch((error) => {
                     console.log(error);
+
                 });
         }
     }, [user?.email, apiUrl, partialQuery]);
@@ -259,9 +261,11 @@ const Products = () => {
                                                     >
                                                         <TbTrash className='text-2xl text-rose-500' />
                                                     </button>
-                                                    <button disabled className="btn border-none btn-ghost btn-xs ">
-                                                        <TbShoppingBagEdit className='text-2xl text-secondary ' />
-                                                    </button>
+                                                    <Link href={`/pages/products/update/${product._id}`} className='dark:text-accent'>
+                                                        <button className="btn border-none btn-ghost btn-xs ">
+                                                            <TbShoppingBagEdit className='text-2xl ' />
+                                                        </button>
+                                                    </Link>
                                                 </td>
 
                                                 {/* delete confirmation modal */}
