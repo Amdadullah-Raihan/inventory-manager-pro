@@ -33,7 +33,7 @@ const SingleInvoice = () => {
             })
     }, []); //do not add api url or invoice id here
 
-    console.log('single inovice', singleInvoice);
+    // console.log('single inovice', singleInvoice);
 
     return (
         <div className='mb-2 w-full md:flex gap-x-4 bg-[#F7F7F9] dark:bg-secondary p-2 lg:p-6'>

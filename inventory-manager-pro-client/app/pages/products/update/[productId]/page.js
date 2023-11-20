@@ -55,7 +55,7 @@ const UpdateProduct = () => {
     useEffect(() => {
         axios.get(`${apiUrl}/api/products/product/${productId}`)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 setProduct(res.data.product)
             })
             .catch(err => {

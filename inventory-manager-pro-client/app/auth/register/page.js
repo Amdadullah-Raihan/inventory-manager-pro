@@ -1,21 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "@/app/context/AuthContext";
 import useFirebase from "@/app/hooks/useFirebase";
 import Link from "next/link";
-import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { ToastContainer } from "react-toastify";
 
-const Login = () => {
-  const { handleGoogleSignIn, setUser, user, handleEmailSignIn, error } =
-    useAuth();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [isHidden, setIsHidden] = useState(false);
+const Register = () => {
+  const { handleGoogleSignIn, setUser, user } = useAuth();
   const router = useRouter();
-  const path = usePathname();
 
   // Function to handle Google login
   const handleGoogleLogin = async () => {
@@ -30,33 +23,23 @@ const Login = () => {
     }
   };
 
-  // Reference Function to handle login with email and password
-  const handleSignIn = (e) => {
-    e.preventDefault();
-    handleEmailSignIn(email, password);
-  };
-  // console.log(error);
-  // if (error.length > 0) {
-  //   toastr.error(error);
-  // }
-
   // Check if the user is already logged in, and if so, redirect to the home page
   useEffect(() => {
     if (user?.email) {
-      router.push("/");
+      router.back();
     }
-  }, [router, user]);
+  }, [user, router]);
 
   return (
     <div className="bg-[#F7F7F9] dark:bg-secondary w-full h-[100vh] p-4 ">
       <div className="bg-white dark:bg-neutral dark:border-none w-full max-w-[400px] border shadow  p-3 flex flex-col   rounded-lg mx-auto">
-        <form className=" w-full flex flex-col gap-y-3" onSubmit={handleSignIn}>
+        <form className="block w-full flex flex-col gap-y-3">
           <div className="w-full text-start mb-4 ">
             <h1 className="dark:text-white text-xl text-gray-700">
               Welcome to Inventory Manager Pro!!
             </h1>
             <p className="text-xs text-gray-500">
-              Please login to your account and start the adventure
+              Please create an account to your account and start the adventure
             </p>
           </div>
 
@@ -65,41 +48,32 @@ const Login = () => {
             <input
               type="email"
               name=""
-              onChange={(e) => setEmail(e.target.value)}
               className="w-full dark:text-gray-400  input input-bordered dark:bg-secondary"
               placeholder="Write Your Email"
-              required
             />
           </div>
-          <div className="relative">
+          <div className="">
             <label className="text-sm text-gray-500 ">Password</label>
             <input
-              type={isHidden ? "password" : "text"}
+              type="email"
               name=""
-              onChange={(e) => setPassword(e.target.value)}
               className="w-full dark:text-gray-400 input input-bordered dark:bg-secondary"
               placeholder="Enter Your Password"
-              required
             />
-
-            <button
-              type="button"
-              className="absolute top-[54%] right-2"
-              onClick={() => setIsHidden(!isHidden)}
-            >
-              {isHidden ? <FaEye /> : <FaEyeSlash />}
-            </button>
+            <input
+              type="email"
+              name=""
+              className="w-full dark:text-gray-400 input input-bordered dark:bg-secondary mt-3"
+              placeholder="Confirm Your Password "
+            />
           </div>
-          <div className="flex gap-4 my-3">
-            <p className="text-gray-500">Don&apos;t have an account? </p>
-            <Link href="/auth/register" className="text-primary">
-              Create a New Account
+          <div className="flex  gap-4 my-3">
+            <p className="text-gray-500">Already have an account? </p>
+            <Link href="/auth/login" className="text-primary ">
+              Login
             </Link>
           </div>
-          <button
-            type="submit"
-            className="btn btn-primary  border-none hover:bg-secondary "
-          >
+          <button className="btn btn-primary  border-none hover:bg-secondary ">
             Login
           </button>
         </form>
@@ -112,9 +86,8 @@ const Login = () => {
           Log in with Google
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 };
 
-export default Login;
+export default Register;
