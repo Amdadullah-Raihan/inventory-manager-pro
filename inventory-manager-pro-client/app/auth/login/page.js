@@ -13,7 +13,7 @@ const Login = () => {
     useAuth();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [isHidden, setIsHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
   const router = useRouter();
   const path = usePathname();
 
@@ -46,6 +46,8 @@ const Login = () => {
       router.push("/");
     }
   }, [router, user]);
+
+  console.log(path);
 
   return (
     <div className="bg-[#F7F7F9] dark:bg-secondary w-full h-[100vh] p-4 ">
@@ -84,10 +86,10 @@ const Login = () => {
 
             <button
               type="button"
-              className="absolute top-[54%] right-2"
+              className="absolute top-[54%] right-2 dark:text-accent"
               onClick={() => setIsHidden(!isHidden)}
             >
-              {isHidden ? <FaEye /> : <FaEyeSlash />}
+              {!isHidden ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
           <div className="flex gap-4 my-3">

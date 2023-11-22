@@ -22,7 +22,7 @@ const CreateProduct = () => {
   const router = useRouter();
 
   const [product, setProduct] = useState({
-    user: "",
+    user: user?.email,
     productName: "",
     barCode: "",
     brand: "",
@@ -44,11 +44,11 @@ const CreateProduct = () => {
   };
 
   // Use useEffect to update the product state when user data becomes available
-  useEffect(() => {
-    if (user && user.email) {
-      setProduct({ ...product, user: user.email });
-    }
-  }, [product, user, user.email]);
+  // useEffect(() => {
+  //   if (user && user.email) {
+  //     setProduct({ ...product, user: user.email });
+  //   }
+  // }, [product, user, user.email, setProduct]);
 
   const handleAddProduct = (e) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ const CreateProduct = () => {
           setIsLoading(false);
           // Reset the form after a successful submission
           setProduct({
-            user: user.email,
+            user: user?.email,
             productName: "",
             barCode: "",
             brand: "",
@@ -92,8 +92,8 @@ const CreateProduct = () => {
   };
 
   return (
-    <>
-      <BarcodeReader onScan={handleScan} />
+    <ProtectedRoute router={router}>
+      {/* <BarcodeReader onScan={handleScan} /> */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -324,7 +324,7 @@ const CreateProduct = () => {
           </div>
         </form>
       </motion.div>
-    </>
+    </ProtectedRoute>
   );
 };
 

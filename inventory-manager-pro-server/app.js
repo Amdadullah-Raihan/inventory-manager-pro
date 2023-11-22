@@ -22,15 +22,18 @@ app.use(express.json());
 app.use(cors());
 
 //database connection
-if (process.env.NODE_ENV === 'development') {
+let dbUrl = process.env.DB_ATLAS;
 
-    dbUrl = process.env.DB_LOCAL
+// if (process.env.NODE_ENV === 'development') {
 
-}
-else {
-    dbUrl = process.env.DB_ATLAS
-}
+//     dbUrl = process.env.DB_LOCAL
 
+// }
+// else {
+//     dbUrl = process.env.DB_ATLAS
+// }
+
+console.log("db url ", dbUrl);
 
 
 mongoose.connect(dbUrl)

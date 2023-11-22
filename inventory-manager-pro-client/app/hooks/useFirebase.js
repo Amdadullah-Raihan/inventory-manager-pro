@@ -80,7 +80,7 @@ const useFirebase = () => {
       // Unsubscribe when the component unmounts
       unsubscribe();
     };
-  }, []);
+  }, [auth]);
 
   return {
     user,

@@ -134,7 +134,7 @@ const CreateInvoice = () => {
   console.log("isDisabled", isDisabled);
 
   return (
-    <>
+    <ProtectedRoute router={router}>
       <div className="w-full bg-[#F7F7F9] dark:bg-secondary lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize">
         {/* Invoice Starts */}
         <motion.div
@@ -198,7 +198,7 @@ const CreateInvoice = () => {
           </button>
         </motion.div>
       </div>
-    </>
+    </ProtectedRoute>
   );
 };
 
