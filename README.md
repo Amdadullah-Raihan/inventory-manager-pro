@@ -42,12 +42,12 @@ Before you begin, ensure you have met the following requirements:
 ### Install dependencies:
 
 ```bash
-npm install
+  npm install
 
 ### Start the application:
 
 ```bash
-npm start
+  npm start
 
 
 
