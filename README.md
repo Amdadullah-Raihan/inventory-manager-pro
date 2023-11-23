@@ -41,27 +41,27 @@ Before you begin, ensure you have met the following requirements:
 
    Install dependencies:
 
-bash
+```bash
 Copy code
 npm install
 Start the application:
 
-bash
+```bash
 Copy code
 npm start
 The application will be accessible at http://localhost:3000 by default.
 
-Usage
+###Usage
 Open your web browser and navigate to http://localhost:3000.
 Log in with your credentials.
 Start managing your inventory using the intuitive interface.
 For detailed usage instructions and additional features, refer to the User Guide.
 
-Contributing
+###Contributing
 We welcome contributions from the community! If you'd like to contribute to Inventory Manager Pro, please follow our Contribution Guidelines.
 
-License
+###License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Acknowledgments
-Special thanks to [Name of a contributor or library] for [specific contribution or inspiration].
+###Acknowledgments
+
