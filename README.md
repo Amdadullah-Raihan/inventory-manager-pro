@@ -46,9 +46,10 @@ npm install
 
 ### Start the application:
 
-
 ```bash
 npm start
+
+
 
 
 The application will be accessible at http://localhost:3000 by default.
