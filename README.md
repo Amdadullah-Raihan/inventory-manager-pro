@@ -38,19 +38,18 @@ Before you begin, ensure you have met the following requirements:
 
    ```bash
    git clone https://github.com/your-username/project-name.git
-```bash
+
 ### Install dependencies:
 
 ```bash
-
 npm install
-```bash
+
 ### Start the application:
 
 
 ```bash
 npm start
-```bash
+
 
 The application will be accessible at http://localhost:3000 by default.
 
