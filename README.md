@@ -42,13 +42,16 @@ Before you begin, ensure you have met the following requirements:
    Install dependencies:
 
 ```bash
-Copy code
+
 npm install
-Start the application:
+```bash
+###Start the application:
+
 
 ```bash
-Copy code
 npm start
+```bash
+
 The application will be accessible at http://localhost:3000 by default.
 
 ###Usage
