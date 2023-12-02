@@ -66,7 +66,11 @@ The application will be accessible at http://localhost:3000 by default.
 We welcome contributions from the community! If you'd like to contribute to Inventory Manager Pro, please follow our Contribution Guidelines.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+# MIT License
+
+Copyright (c) [2023] [Amdadul Islam]
+
+
 
 ## Acknowledgments
 
