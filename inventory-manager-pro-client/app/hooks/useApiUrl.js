@@ -1,11 +1,10 @@
-import React from 'react'
-
 const useApiUrl = () => {
-    let apiUrl;
-    if (process.env.NODE_ENV == 'development') apiUrl = 'http://localhost:5000';
-    else apiUrl = "https://inventory-management-server-rho.vercel.app"
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000"
+      : "https://inventory-management-server-cx01ppgc0.vercel.app";
 
-    return [apiUrl]
-}
+  return [apiUrl];
+};
 
 export default useApiUrl;
