@@ -22,7 +22,7 @@ export function validate(schema: ZodSchema, target: ValidationTarget = "body") {
         return next({
           statusCode: 400,
           message: "Validation Error",
-          details: err.errors.map((e) => ({
+          details: err.issues.map((e) => ({
             field: e.path.join("."),
             message: e.message,
           })),

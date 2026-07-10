@@ -2,16 +2,19 @@ import { type Request, type Response } from "express";
 import { invoiceService } from "../services/invoiceService";
 import { productService } from "../services/productService";
 import { paginationSchema, createInvoiceSchema } from "../validators/schemas";
+import { getUser } from "../utils/getUser";
 
 export const invoiceController = {
   async getLatestNumber(req: Request, res: Response) {
-    const number = await invoiceService.getLatestInvoiceNumber(req.user!.email);
+    const number = await invoiceService.getLatestInvoiceNumber(
+      getUser(req).email,
+    );
     res.status(200).json({ success: true, greatestInvoiceNumber: number });
   },
 
   async list(req: Request, res: Response) {
     const params = paginationSchema.parse(req.query);
-    const result = await invoiceService.list(req.user!.email, params);
+    const result = await invoiceService.list(getUser(req).email, params);
 
     res.status(200).json({
       success: true,
@@ -26,10 +29,8 @@ export const invoiceController = {
   },
 
   async getById(req: Request, res: Response) {
-    const invoice = await invoiceService.getById(
-      req.user!.email,
-      req.params.id,
-    );
+    const id = req.params.id as string;
+    const invoice = await invoiceService.getById(getUser(req).email, id);
 
     if (!invoice) {
       return res
@@ -42,13 +43,14 @@ export const invoiceController = {
 
   async create(req: Request, res: Response) {
     const data = createInvoiceSchema.parse(req.body);
-    const invoice = await invoiceService.create(req.user!.email, data);
+    const invoice = await invoiceService.create(getUser(req).email, data);
 
     res.status(201).json({ success: true, data: invoice });
   },
 
   async delete(req: Request, res: Response) {
-    const invoice = await invoiceService.delete(req.user!.email, req.params.id);
+    const id = req.params.id as string;
+    const invoice = await invoiceService.delete(getUser(req).email, id);
 
     if (!invoice) {
       return res
@@ -68,7 +70,7 @@ export const invoiceController = {
         .json({ success: false, error: "No invoice IDs provided" });
     }
 
-    const result = await invoiceService.deleteMany(req.user!.email, ids);
+    const result = await invoiceService.deleteMany(getUser(req).email, ids);
 
     res.status(200).json({
       success: true,
@@ -78,7 +80,7 @@ export const invoiceController = {
   },
 
   async getSales(req: Request, res: Response) {
-    const { timeInterval } = req.params;
+    const timeInterval = req.params.timeInterval as string;
     const validIntervals = ["daily", "weekly", "monthly", "yearly", "all"];
 
     if (!validIntervals.includes(timeInterval)) {
@@ -87,7 +89,7 @@ export const invoiceController = {
         .json({ success: false, error: "Invalid timeInterval" });
     }
 
-    const userEmail = req.user!.email;
+    const userEmail = getUser(req).email;
 
     const [totalSold, totalPurchased] = await Promise.all([
       invoiceService.getSalesData(userEmail, timeInterval),

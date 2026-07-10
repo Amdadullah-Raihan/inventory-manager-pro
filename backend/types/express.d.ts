@@ -1,17 +1,14 @@
-import { type Request } from "express";
+// Ambient type augmentation for Express Request
+// No top-level imports - must be purely ambient for global application
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: {
-        uid: string;
-        email: string;
-        emailVerified?: boolean;
-        name?: string | null;
-        picture?: string | null;
-      };
-    }
+declare namespace Express {
+  interface Request {
+    user?: {
+      uid: string;
+      email: string;
+      emailVerified?: boolean;
+      name?: string | null;
+      picture?: string | null;
+    };
   }
 }
-
-export {};

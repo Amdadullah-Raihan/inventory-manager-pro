@@ -5,11 +5,12 @@ import {
   createProductSchema,
   updateProductSchema,
 } from "../validators/schemas";
+import { getUser } from "../utils/getUser";
 
 export const productController = {
   async list(req: Request, res: Response) {
     const params = paginationSchema.parse(req.query);
-    const result = await productService.list(req.user!.email, params);
+    const result = await productService.list(getUser(req).email, params);
 
     res.status(200).json({
       success: true,
@@ -25,16 +26,14 @@ export const productController = {
 
   async create(req: Request, res: Response) {
     const data = createProductSchema.parse(req.body);
-    const product = await productService.create(req.user!.email, data);
+    const product = await productService.create(getUser(req).email, data);
 
     res.status(201).json({ success: true, data: product });
   },
 
   async getById(req: Request, res: Response) {
-    const product = await productService.getById(
-      req.user!.email,
-      req.params.id,
-    );
+    const id = req.params.id as string;
+    const product = await productService.getById(getUser(req).email, id);
 
     if (!product) {
       return res
@@ -47,11 +46,8 @@ export const productController = {
 
   async update(req: Request, res: Response) {
     const data = updateProductSchema.parse(req.body);
-    const product = await productService.update(
-      req.user!.email,
-      req.params.id,
-      data,
-    );
+    const id = req.params.id as string;
+    const product = await productService.update(getUser(req).email, id, data);
 
     if (!product) {
       return res
@@ -63,7 +59,8 @@ export const productController = {
   },
 
   async delete(req: Request, res: Response) {
-    const product = await productService.delete(req.user!.email, req.params.id);
+    const id = req.params.id as string;
+    const product = await productService.delete(getUser(req).email, id);
 
     if (!product) {
       return res
@@ -83,7 +80,7 @@ export const productController = {
         .json({ success: false, error: "No product IDs provided" });
     }
 
-    const result = await productService.deleteMany(req.user!.email, ids);
+    const result = await productService.deleteMany(getUser(req).email, ids);
 
     res.status(200).json({
       success: true,

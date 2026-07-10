@@ -1,18 +1,17 @@
-const express = require("express");
-const Invoice = require("../models/invoice");
-const Product = require("../models/products");
-const { authMiddleware } = require("../middleware/auth");
-const asyncHandler = require("./asyncHandler");
+import { Router, type Request, type Response } from "express";
+import Invoice from "../models/invoice";
+import Product from "../models/products";
+import { authMiddleware } from "../middleware/auth";
+import { getUser } from "./getUser";
 
-const router = express.Router();
+const router = Router();
 
 router.use(authMiddleware);
 
 // GET /api/features/sales/:timeInterval
-router.get(
-  "/sales/:timeInterval",
-  asyncHandler(async (req, res) => {
-    const { timeInterval } = req.params;
+router.get("/sales/:timeInterval", async (req: Request, res: Response) => {
+  try {
+    const timeInterval = req.params.timeInterval as string;
     const validIntervals = ["daily", "weekly", "monthly", "yearly", "all"];
 
     if (!validIntervals.includes(timeInterval)) {
@@ -28,7 +27,7 @@ router.get(
       today.getDate() + 1,
     );
 
-    let fromDate;
+    let fromDate: Date;
     if (timeInterval === "daily") {
       fromDate = new Date(
         today.getFullYear(),
@@ -48,12 +47,11 @@ router.get(
       fromDate = new Date(0);
     }
 
-    const userEmail = req.user.email;
+    const userEmail = getUser(req).email;
     const dateFilter =
       timeInterval !== "all"
         ? { issuedDate: { $gte: fromDate, $lt: endOfDay } }
         : {};
-
     const productDateFilter =
       timeInterval !== "all"
         ? { "purchasedFrom.purchasingDate": { $gte: fromDate, $lt: endOfDay } }
@@ -69,19 +67,23 @@ router.get(
     ]);
 
     const totalSold = invoices.reduce(
-      (sum, inv) => sum + (inv.paymentDetails?.total || 0),
+      (sum: number, inv: any) => sum + (inv.paymentDetails?.total || 0),
       0,
     );
     const totalPurchased = products.reduce(
-      (sum, p) => sum + (p.purchasedFrom?.purchasingPrice || 0),
+      (sum: number, p: any) => sum + (p.purchasedFrom?.purchasingPrice || 0),
       0,
     );
 
-    res.status(200).json({
-      success: true,
-      data: { totalSold, totalPurchased },
-    });
-  }),
-);
+    res
+      .status(200)
+      .json({ success: true, data: { totalSold, totalPurchased } });
+  } catch (err: any) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ success: false, error: err.message || "Internal Server Error" });
+  }
+});
 
-module.exports = router;
+export default router;

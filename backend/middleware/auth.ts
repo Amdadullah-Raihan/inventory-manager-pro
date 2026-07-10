@@ -27,7 +27,7 @@ export const authMiddleware = async (
 
     const decoded = await admin.auth().verifyIdToken(idToken);
 
-    req.user = {
+    (req as any).user = {
       uid: decoded.uid,
       email: decoded.email!,
       emailVerified: decoded.email_verified,
@@ -57,7 +57,7 @@ export const optionalAuth = async (
       const decoded = await admin
         .auth()
         .verifyIdToken(authHeader.split("Bearer ")[1]);
-      req.user = {
+      (req as any).user = {
         uid: decoded.uid,
         email: decoded.email!,
         emailVerified: decoded.email_verified,
