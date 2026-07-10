@@ -1,8 +1,8 @@
-# Inventory Manager Pro
+# Invoice Maker
 
 ![Project Logo](path/to/logo.png)
 
-**Project Name** is a web-based inventory management application designed to streamline and optimize inventory processes for businesses of all sizes. This tool provides a user-friendly interface to manage, track, and analyze your inventory efficiently.
+**Invoice Maker** is a web-based invoice management application designed to streamline and optimize inventory processes for businesses of all sizes. This tool provides a user-friendly interface to manage, track, and analyze your inventory efficiently.
 
 ## Table of Contents
 
@@ -38,39 +38,37 @@ Before you begin, ensure you have met the following requirements:
 
    ```bash
    git clone https://github.com/your-username/project-name.git
+   ```
 
 ## Install dependencies:
 
-  ```bash
-  npm install
+```bash
+npm install
 ```
 
 ## Start the application:
 
-  ```bash
-  npm start
+```bash
+npm start
 ```
-
-
-
 
 The application will be accessible at http://localhost:3000 by default.
 
 ## Usage
+
 - Open your web browser and navigate to http://localhost:3000.
 - Log in with your credentials.
 - Start managing your inventory using the intuitive interface.
- -For detailed usage instructions and additional features, refer to the User Guide.
+  -For detailed usage instructions and additional features, refer to the User Guide.
 
 ## Contributing
-We welcome contributions from the community! If you'd like to contribute to Inventory Manager Pro, please follow our Contribution Guidelines.
+
+We welcome contributions from the community! If you'd like to contribute to Invoice Maker, please follow our Contribution Guidelines.
 
 ## License
+
 # MIT License
 
 Copyright (c) [2023] [Amdadul Islam]
 
-
-
 ## Acknowledgments
-

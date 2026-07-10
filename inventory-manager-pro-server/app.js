@@ -16,7 +16,7 @@ const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://inventory-manager-pro.vercel.app",
+  "https://invoice-maker.vercel.app",
 ];
 
 if (process.env.CLIENT_ORIGIN) {

@@ -55,7 +55,7 @@ const Login = () => {
         <form className=" w-full flex flex-col gap-y-3" onSubmit={handleSignIn}>
           <div className="w-full text-start mb-4 ">
             <h1 className="dark:text-white text-xl text-gray-700">
-              Welcome to Inventory Manager Pro!!
+              Welcome to Invoice Maker!!
             </h1>
             <p className="text-xs text-gray-500">
               Please login to your account and start the adventure
