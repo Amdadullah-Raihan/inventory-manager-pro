@@ -1,20 +1,24 @@
 const express = require("express");
-const router = express.Router();
 const Invoice = require("../models/invoice");
 const Product = require("../models/products");
+const { authMiddleware } = require("../middleware/auth");
+const asyncHandler = require("./asyncHandler");
 
-router.get("/sales/:userEmail/:timeInterval", async (req, res) => {
-  try {
-    const userEmail = req.params.userEmail;
-    if (!userEmail) {
-      return res.status(400).send("Please provide a valid userEmail");
-    }
+const router = express.Router();
 
-    const timeInterval = req.params.timeInterval;
-    if (
-      !["daily", "weekly", "monthly", "yearly", "all"].includes(timeInterval)
-    ) {
-      return res.status(400).send("Invalid timeInterval");
+router.use(authMiddleware);
+
+// GET /api/features/sales/:timeInterval
+router.get(
+  "/sales/:timeInterval",
+  asyncHandler(async (req, res) => {
+    const { timeInterval } = req.params;
+    const validIntervals = ["daily", "weekly", "monthly", "yearly", "all"];
+
+    if (!validIntervals.includes(timeInterval)) {
+      return res
+        .status(400)
+        .json({ success: false, error: "Invalid timeInterval" });
     }
 
     const today = new Date();
@@ -23,8 +27,8 @@ router.get("/sales/:userEmail/:timeInterval", async (req, res) => {
       today.getMonth(),
       today.getDate() + 1,
     );
-    let fromDate;
 
+    let fromDate;
     if (timeInterval === "daily") {
       fromDate = new Date(
         today.getFullYear(),
@@ -41,39 +45,43 @@ router.get("/sales/:userEmail/:timeInterval", async (req, res) => {
       fromDate = new Date(today);
       fromDate.setFullYear(fromDate.getFullYear() - 1);
     } else {
-      // 'all' - no date filter
       fromDate = new Date(0);
     }
 
-    const invoices = await Invoice.find({
-      userEmail: userEmail,
-      ...(timeInterval !== "all" && {
-        issuedDate: { $gte: fromDate, $lt: endOfDay },
-      }),
-    }).select("paymentDetails.total");
+    const userEmail = req.user.email;
+    const dateFilter =
+      timeInterval !== "all"
+        ? { issuedDate: { $gte: fromDate, $lt: endOfDay } }
+        : {};
 
-    const products = await Product.find({
-      user: userEmail,
-      ...(timeInterval !== "all" && {
-        "purchasedFrom.purchasingDate": { $gte: fromDate, $lt: endOfDay },
-      }),
-    }).select("purchasedFrom.purchasingPrice");
+    const productDateFilter =
+      timeInterval !== "all"
+        ? { "purchasedFrom.purchasingDate": { $gte: fromDate, $lt: endOfDay } }
+        : {};
+
+    const [invoices, products] = await Promise.all([
+      Invoice.find({ userEmail, ...dateFilter })
+        .select("paymentDetails.total")
+        .lean(),
+      Product.find({ user: userEmail, ...productDateFilter })
+        .select("purchasedFrom.purchasingPrice")
+        .lean(),
+    ]);
 
     const totalSold = invoices.reduce(
-      (total, invoice) => total + invoice.paymentDetails.total,
+      (sum, inv) => sum + (inv.paymentDetails?.total || 0),
       0,
     );
-
     const totalPurchased = products.reduce(
-      (total, product) => total + product.purchasedFrom.purchasingPrice,
+      (sum, p) => sum + (p.purchasedFrom?.purchasingPrice || 0),
       0,
     );
 
-    res.json({ totalSold, totalPurchased });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+    res.status(200).json({
+      success: true,
+      data: { totalSold, totalPurchased },
+    });
+  }),
+);
 
 module.exports = router;

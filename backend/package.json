@@ -2,11 +2,12 @@
   "name": "invoice-maker-server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "set NODE_ENV=development && nodemon app.js",
-    "prod": "set NODE_ENV=production && node app.js"
+    "dev": "set NODE_ENV=development && nodemon --exec ts-node app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "prod": "set NODE_ENV=production && ts-node app.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,9 +16,23 @@
     "node": "24.x"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mongoose": "^7.5.1"
+    "express-rate-limit": "^8.5.2",
+    "firebase-admin": "^12.7.0",
+    "helmet": "^8.2.0",
+    "mongoose": "^7.5.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.1",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
   }
 }
