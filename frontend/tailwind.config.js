@@ -1,47 +1,40 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['class',],
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  darkMode: ["class"],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },
   daisyui: {
     themes: [
-
       {
         mytheme: {
+          primary: "#5a66f1",
 
-          "primary": "#5a66f1",
+          secondary: "#282A42",
 
-          "secondary": "#282A42",
+          accent: "#D2D3E8",
 
-          "accent": "#D2D3E8",
-
-          "neutral": "#30334E",
+          neutral: "#30334E",
 
           "base-100": "#ffffff",
 
-          "info": "#3abff8",
+          info: "#3abff8",
 
-          "success": "#36d399",
+          success: "#36d399",
 
-          "warning": "#fbbd23",
+          warning: "#fbbd23",
 
-          "error": "#f87272",
+          error: "#f87272",
         },
       },
-
     ],
   },
   plugins: [require("daisyui")],
-}
+};
