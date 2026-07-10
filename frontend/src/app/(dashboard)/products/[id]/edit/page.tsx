@@ -66,7 +66,7 @@ const UpdateProduct = () => {
   };
 
   return (
-    <ProtectedRoute router={router}>
+    <ProtectedRoute>
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}

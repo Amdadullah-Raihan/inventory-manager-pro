@@ -2,7 +2,6 @@
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import { useAuth } from "@/providers/AuthContext";
 import { useCreateProductMutation } from "@/redux/api/productApi";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { BsBagPlus, BsFillBagPlusFill } from "react-icons/bs";
 import toast, { Toaster } from "react-hot-toast";
@@ -12,7 +11,6 @@ import { AiOutlineScan } from "react-icons/ai";
 const CreateProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
-  const router = useRouter();
   const [createProduct] = useCreateProductMutation();
 
   const [product, setProduct] = useState({
@@ -66,7 +64,7 @@ const CreateProduct = () => {
   };
 
   return (
-    <ProtectedRoute router={router}>
+    <ProtectedRoute>
       {/* <BarcodeReader onScan={handleScan} /> */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}

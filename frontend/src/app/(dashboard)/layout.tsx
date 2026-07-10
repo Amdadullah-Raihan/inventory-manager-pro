@@ -1,15 +1,15 @@
-"use client";
-
-import { useRouter } from "next/navigation";
 import Navbar from "@/components/layouts/Navbar";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import Sidebar from "@/components/layouts/Sidebar";
 
-export default function DashboardLayout({ children }) {
-  const router = useRouter();
+// Metadata for the dashboard section
+export const metadata = {
+  title: "Dashboard",
+};
 
+export default function DashboardLayout({ children }) {
   return (
-    <ProtectedRoute router={router}>
+    <ProtectedRoute>
       <div className="drawer lg:drawer-open dark:bg-secondary">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="overflow-hidden drawer-content flex flex-col items-center justify-center dark:bg-secondary">

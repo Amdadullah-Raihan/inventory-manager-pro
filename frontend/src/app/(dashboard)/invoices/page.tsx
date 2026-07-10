@@ -14,11 +14,9 @@ import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { FaTrash } from "react-icons/fa6";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
-import { useRouter } from "next/navigation";
 
 const Invoice = () => {
   const { user } = useAuth();
-  const router = useRouter();
   const [partialQuery, setPartialQuery] = useState("");
   const [id, setId] = useState("");
   const [selectAll, setSelectAll] = useState(false);
@@ -80,7 +78,7 @@ const Invoice = () => {
   };
 
   return (
-    <ProtectedRoute router={router}>
+    <ProtectedRoute>
       <div className="w-full py-4 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400 min-h-[100vh] capitalize">
         <Toaster />
 

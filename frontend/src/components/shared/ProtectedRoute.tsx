@@ -2,13 +2,14 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect } from "react";
-import { useAuth } from '@/providers/AuthContext';
+import { useAuth } from "@/providers/AuthContext";
 
 // Paths that don't require authentication
 const publicPaths = ["/login", "/register"];
 
-const ProtectedRoute = ({ children, router }) => {
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isLoading } = useAuth();
+  const router = useRouter();
   const pathname = usePathname();
 
   const isPublicPath = publicPaths.includes(pathname);

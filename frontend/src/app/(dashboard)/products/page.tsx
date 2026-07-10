@@ -14,7 +14,6 @@ import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { FaTrash } from "react-icons/fa6";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
-import { useRouter } from "next/navigation";
 
 const Products = () => {
   const { user } = useAuth();
@@ -22,7 +21,6 @@ const Products = () => {
   const [id, setId] = useState("");
   const [selectAll, setSelectAll] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const router = useRouter();
 
   const { data: productsList = [], isLoading } = useGetProductsQuery(
     {
@@ -99,7 +97,7 @@ const Products = () => {
   };
 
   return (
-    <ProtectedRoute router={router}>
+    <ProtectedRoute>
       <div className="w-full p-2 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400 min-h-[100vh] ">
         <Toaster />
         <div className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg ">

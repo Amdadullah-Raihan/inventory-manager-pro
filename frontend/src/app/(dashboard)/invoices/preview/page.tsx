@@ -9,7 +9,6 @@ import ProductDetailsPreview from "../_components/ProductDetailsPreview";
 import BillingDetailsPreview from "../_components/BillingDetailsPreview";
 import { useCreateInvoiceMutation } from "@/redux/api/invoiceApi";
 import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import ReactToPrint from "react-to-print";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -22,7 +21,6 @@ const InvoicePreview = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const { invoice } = useInvoiceContext();
   const [createInvoice] = useCreateInvoiceMutation();
-  const router = useRouter();
   const componentRef = useRef(null);
 
   const handleSaveInvoice = async () => {
@@ -73,7 +71,7 @@ const InvoicePreview = () => {
   };
 
   return (
-    <ProtectedRoute router={router}>
+    <ProtectedRoute>
       <div className="w-full h-screen bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400          lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize">
         <Toaster />
         {/* start invoice */}

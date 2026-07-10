@@ -5,7 +5,6 @@ import { AiFillPrinter, AiOutlineSend } from "react-icons/ai";
 import { RiFileEditFill, RiSave3Fill } from "react-icons/ri";
 import { FaArrowRotateRight, FaPlus } from "react-icons/fa6";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
-import { useRouter } from "next/navigation";
 import { ToWords } from "to-words";
 import useInvoice from "@/hooks/useInvoice";
 import { useInvoiceContext } from "@/providers/InvoiceContext";
@@ -20,7 +19,6 @@ import { motion } from "framer-motion";
 
 const CreateInvoice = () => {
   const { invoice, setInvoice } = useInvoiceContext();
-  const router = useRouter();
   const [isDisabled, setIsDisabled] = useState(true);
 
   // console.log('customerDetails', invoice.customerDetails);
@@ -134,7 +132,7 @@ const CreateInvoice = () => {
   console.log("isDisabled", isDisabled);
 
   return (
-    <ProtectedRoute router={router}>
+    <ProtectedRoute>
       <div className="w-full bg-[#F7F7F9] dark:bg-secondary lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize">
         {/* Invoice Starts */}
         <motion.div
