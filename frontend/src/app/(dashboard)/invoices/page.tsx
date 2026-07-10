@@ -92,8 +92,7 @@ const Invoice = () => {
       .delete(`${apiUrl}/api/invoice/${invoiceId}`)
       .then((res) => {
         if (res.data.success) {
-          toast.success("Invoice deleted successfully", {
-          });
+          toast.success("Invoice deleted successfully", {});
         }
         const newInvoiceList = invoiceList.filter(
           (invoice) => invoice._id !== invoiceId,
@@ -108,10 +107,10 @@ const Invoice = () => {
       <div className="w-full py-4 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400 min-h-[100vh] capitalize">
         <Toaster />
 
-        <div className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg ">
-          <div className="flex flex-col-reverse lg:flex-row gap-2 lg:justify-between py-6 px-4">
+        <div className="max-w-sm mx-auto bg-white rounded-lg shadow-md lg:max-w-none dark:bg-neutral ">
+          <div className="flex flex-col-reverse gap-2 px-4 py-6 lg:flex-row lg:justify-between">
             {selectedItems.length > 0 ? (
-              <div className="w-full lg:max-w-xs flex items-center justify-between bg-base-200 text-gray-700 dark:text-accent dark:bg-secondary px-4 rounded-lg">
+              <div className="flex items-center justify-between w-full px-4 text-gray-700 rounded-lg lg:max-w-xs bg-base-200 dark:text-accent dark:bg-secondary">
                 <p className="text-[14px]">Actions</p>
                 <button onClick={handleDeleteSelected}>
                   <FaTrash className="text-rose-500" />
@@ -119,7 +118,7 @@ const Invoice = () => {
               </div>
             ) : (
               <select
-                className="select select-bordered w-full dark:bg-secondary lg:max-w-xs dark:border-none"
+                className="w-full select select-bordered dark:bg-secondary lg:max-w-xs dark:border-none"
                 disabled
               >
                 <option disabled selected>
@@ -127,7 +126,7 @@ const Invoice = () => {
                 </option>
               </select>
             )}
-            <div className="flex  gap-2 lg:flex-row items-center">
+            <div className="flex items-center gap-2 lg:flex-row">
               <input
                 type="text"
                 className="w-full input input-bordered lg:mr-2 dark:bg-secondary"
@@ -145,7 +144,7 @@ const Invoice = () => {
             </div>
           </div>
           {isLoading ? (
-            <div className="flex gap-1 justify-center pb-8">
+            <div className="flex justify-center gap-1 pb-8">
               <p className="text-lg font-bold">Loading</p>
               <RotatingLines
                 strokeColor="#5A5FE0"
@@ -231,7 +230,7 @@ const Invoice = () => {
                         </td>
                         <td>
                           <button
-                            className="btn border-none btn-ghost btn-xs"
+                            className="border-none btn btn-ghost btn-xs"
                             onClick={() => {
                               (
                                 document.getElementById(
@@ -243,8 +242,8 @@ const Invoice = () => {
                           >
                             <TbTrash className="text-2xl text-rose-500" />
                           </button>
-                          <Link href={`/invoice/${invoice._id}`}>
-                            <button className="btn border-none btn-ghost btn-xs">
+                          <Link href={`/invoices/${invoice._id}`}>
+                            <button className="border-none btn btn-ghost btn-xs">
                               <AiOutlineFolderView className="text-2xl text-[#5A5FE0]" />
                             </button>
                           </Link>
@@ -255,11 +254,11 @@ const Invoice = () => {
                           <div className="modal-box">
                             <form method="dialog">
                               {/* if there is a button in form, it will close the modal */}
-                              <button className="btn border-none btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                              <button className="absolute border-none btn btn-sm btn-circle btn-ghost right-2 top-2">
                                 ✕
                               </button>
                             </form>
-                            <h3 className="font-bold text-l uppercase">
+                            <h3 className="font-bold uppercase text-l">
                               Are you sure want to{" "}
                               <span className="text-rose-500">delete</span> the
                               invoice?
@@ -267,11 +266,11 @@ const Invoice = () => {
                             <div>
                               <div className="modal-action">
                                 <form method="dialog">
-                                  <button className="btn border-none bg-green-500 text-white mr-2 hover:text-green-500">
+                                  <button className="mr-2 text-white bg-green-500 border-none btn hover:text-green-500">
                                     Cancel
                                   </button>
                                   <button
-                                    className="btn border-none bg-rose-500 text-white hover:text-rose-500"
+                                    className="text-white border-none btn bg-rose-500 hover:text-rose-500"
                                     onClick={() => handleDeleteInvoice(id)}
                                   >
                                     Delete
@@ -288,7 +287,7 @@ const Invoice = () => {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "100%" }}
                       transition={{ duration: 0.5 }}
-                      className="w-full my-16 text-center text-xl uppercase text-rose-500 dark:text-rose-400"
+                      className="w-full my-16 text-xl text-center uppercase text-rose-500 dark:text-rose-400"
                     >
                       No Invoice Found!
                     </motion.div>
