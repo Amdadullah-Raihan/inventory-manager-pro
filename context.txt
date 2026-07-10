@@ -1,0 +1,859 @@
+Optimized tool selectionI'll conduct a thorough analysis of this project. Let me start by reading all key files across both frontend and backend.Let me fix the read calls with proper line ranges.
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/next.config.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/README.md)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/package.json)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/app.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/package.json)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/tailwind.config.js#1-1), lines 1 to 30
+
+Let me continue reading all remaining files.
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/tailwind.config.js#30-30), lines 30 to 48
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/models/invoice.js#1-1), lines 1 to 50
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/models/users.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/models/products.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/routes/users.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/routes/products.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/routes/invoice.js#1-1), lines 1 to 200
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/routes/invoice.js#100-100), lines 100 to 200
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/configs/deafult.json)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/configs/development.json)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/configs/production.json)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/configs/custom-environment-variables.json)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/utils/apiFeatures.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/vercel.json)
+
+Now let me read all the frontend source files.
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/page.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/context/AuthContext.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/layout.js#1-1), lines 1 to 50
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/context/InvoiceContext.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/globals.css)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/context/SidebarContext.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/context/TimeIntervalContext.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/hooks/useApiUrl.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/hooks/useFirebase.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/hooks/useInvoice.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/public/firebase/firebase.config.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/public/firebase/firebase.init.js)
+
+Now let me read all the page files and components.
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/auth/login/page.js#1-1), lines 1 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/auth/register/page.js#1-1), lines 1 to 50
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/auth/login/settings/page.js#1-1), lines 1 to 50
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/invoice/page.js#1-1), lines 1 to 200
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/invoice/new/page.js#1-1), lines 1 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/invoice/preview/page.js#1-1), lines 1 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/invoice/%5BinvoiceId%5D/page.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/products/page.js#1-1), lines 1 to 200
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/products/new/page.js#1-1), lines 1 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/products/update/%5BproductId%5D/page.js#1-1), lines 1 to 100
+
+Now let me read the remaining components.
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/CreateInvoice/BillingDetails.jsx#1-1), lines 1 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/CreateInvoice/AddProductDetails.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/CreateInvoice/InvoiceHeader.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/CreateInvoice/InvoiceTo.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/Preview/InvoicePreview.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/Preview/BillingDetailsPreview.jsx#1-1), lines 1 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/Preview/NotePreview.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/Print/PrintInvoice.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/Preview/ProductDetailsPreview.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/ProtectedRoute/ProtectedRoute.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Modals/ConfirmDeleteModal.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Navbar/Navbar.jsx#1-1), lines 1 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/SideBar/Sidebar.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/layout.js#50-50), lines 50 to 81
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/models/invoice.js#50-50), lines 50 to 85
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Home/HomePage.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Charts/LineChart.jsx)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Test/Test.jsx)
+
+Let me read the remaining parts of key files.
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/invoice/new/page.js#100-100), lines 100 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/invoice/preview/page.js#100-100), lines 100 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/pages/products/page.js#200-200), lines 200 to 200
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/auth/login/page.js#100-100), lines 100 to 123
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/readme.md)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/controllers/readme.md)
+
+Let me check for the missing invoice POST route.
+
+Searched for regex `router\.post` (`**/backend/**/*.js`), 2 results
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/routes/invoice.js#80-80), lines 80 to 195
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Navbar/Navbar.jsx#50-50), lines 50 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/jsconfig.json)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/postcss.config.js)
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/routes/invoice.js#60-60), lines 60 to 80
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/Preview/BillingDetailsPreview.jsx#30-30), lines 30 to 100
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/routes/invoice.js#60-60), lines 60 to 210
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/auth/register/page.js#50-50), lines 50 to 50
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/auth/login/settings/page.js#50-50), lines 50 to 50
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/backend/routes/invoice.js#30-30), lines 30 to 229
+
+Read [](file:///c%3A/Users/amdad/pro-projects/invoice-maker/frontend/app/components/Invoice/CreateInvoice/BillingDetails.jsx#60-60), lines 60 to 100
+
+Now I have all the necessary information. Here is the comprehensive technical analysis:
+
+---
+
+# 📋 Technical Context Report — Invoice Maker
+
+---
+
+## 1. Project Overview
+
+**What the application does:** A full-stack invoice management web application for a computer hardware shop (CN Computer & Networks, Dhaka, Bangladesh). It allows creating, previewing, printing, and managing invoices, along with basic inventory/product management.
+
+**Business/domain purpose:** Retail inventory and invoice management for a small computer shop.
+
+**Main user roles:** Single business owner / shop manager (no role differentiation — anyone with Google login can use it).
+
+**Core workflows:**
+1. **Login** via Google OAuth or email/password (Firebase Auth)
+2. **Dashboard** — view sales, purchase, revenue, and profit overview cards with a chart
+3. **Create Invoice** — fill customer details, add product line items, set billing/payments, preview, save, print, or download as PDF
+4. **View Invoices** — list all invoices, search, bulk-delete, view single invoice
+5. **Manage Products** — add, edit, delete, search products with barcode, pricing, and stock
+
+**Primary features:** Invoice creation with preview/print/PDF, product CRUD, dashboard analytics, dark mode, responsive design.
+
+**Overall architecture:** Monorepo with separate frontend (Next.js 13 App Router) and backend (Express.js + MongoDB via Mongoose), deployed on Vercel (both frontend and backend as serverless functions). Firebase Auth handles authentication. No shared code between frontend and backend.
+
+---
+
+## 2. Tech Stack
+
+### Frontend
+
+| Category | Technology | Version |
+|---|---|---|
+| Framework | Next.js (App Router) | 13.5.1 |
+| React | React | 18.2.0 |
+| Routing | Next.js App Router | 13.5.1 |
+| State Management | React Context (4 contexts, no Redux) | — |
+| Data Fetching | Axios (manual fetch, no SWR/React Query/RTK Query) | ^1.5.0 |
+| UI Library | DaisyUI (Tailwind CSS component library) | ^3.9.3 |
+| CSS Framework | Tailwind CSS | 3.3.3 |
+| Form Libraries | None (plain controlled inputs) | — |
+| Validation | None (minimal manual checks) | — |
+| Charts | Recharts | ^2.8.0 |
+| Tables | DaisyUI table + plain HTML | — |
+| Icons | react-icons | ^4.11.0 |
+| Authentication | Firebase Auth (Google + Email/Password) | ^10.4.0 |
+| PDF Generation | html2canvas + jsPDF | ^1.4.1, ^2.5.1 |
+| Printing | react-to-print | ^2.14.15 |
+| Animations | Framer Motion | ^10.16.4 |
+| Toasts | react-toastify | ^9.1.3 |
+| Number-to-words | to-words | ^3.6.1 |
+| Sidebar | react-pro-sidebar | ^1.1.0-alpha.1 |
+| Barcode | react-barcode-reader | ^0.0.2 |
+| Loaders | react-loader-spinner | ^5.4.5 |
+| Firebase Hooks | react-firebase-hooks | ^5.1.1 |
+
+### Backend
+
+| Category | Technology | Version |
+|---|---|---|
+| Runtime | Node.js | 24.x |
+| Framework | Express.js | ^4.18.2 |
+| ODM | Mongoose | ^7.5.1 |
+| Database | MongoDB Atlas (cloud) | — |
+| Authentication | None server-side (relies entirely on Firebase client-side) | — |
+| CORS | cors | ^2.8.5 |
+| Environment | dotenv | ^16.3.1 |
+| Deployment | Vercel Serverless Functions | — |
+
+---
+
+## 3. Folder Structure
+
+```
+invoice-maker/
+├── README.md                          # Project README (generic, outdated)
+├── backend/
+│   ├── app.js                         # Express entry point
+│   ├── package.json
+│   ├── vercel.json                    # Vercel serverless deployment config
+│   ├── configs/                       # Config files (ALL EMPTY)
+│   │   ├── custom-environment-variables.json
+│   │   ├── deafult.json               # (typo: "deafult")
+│   │   ├── development.json
+│   │   └── production.json
+│   ├── controllers/                   # EMPTY (readme says "controllers are in routes")
+│   │   └── readme.md
+│   ├── models/
+│   │   ├── invoice.js                 # Invoice Mongoose schema
+│   │   ├── products.js                # Product Mongoose schema
+│   │   └── users.js                   # User schema (EMPTY — only imports mongoose)
+│   ├── routes/
+│   │   ├── invoice.js                 # All invoice route handlers (gets, posts, deletes)
+│   │   ├── products.js                # All product route handlers
+│   │   └── users.js                   # Empty router
+│   └── utils/
+│       └── apiFeatures.js             # Sales aggregation endpoint (misnamed)
+├── frontend/
+│   ├── package.json
+│   ├── next.config.js
+│   ├── tailwind.config.js
+│   ├── postcss.config.js
+│   ├── jsconfig.json                  # Path alias @/* → ./*
+│   ├── public/
+│   │   └── firebase/
+│   │       ├── firebase.config.js     # Firebase config (HARDCODED CREDENTIALS)
+│   │       └── firebase.init.js       # Firebase init
+│   └── app/
+│       ├── globals.css                # Tailwind + print styles
+│       ├── layout.js                  # Root layout (ALL "use client")
+│       ├── page.js                    # Home page → renders HomePage
+│       ├── assests/                   # (typo: "assests")
+│       ├── auth/
+│       │   ├── login/page.js          # Login page
+│       │   ├── login/settings/page.js # Password change page
+│       │   └── register/page.js       # Register page (Google-only)
+│       ├── components/
+│       │   ├── Charts/LineChart.jsx   # Static line chart (hardcoded data)
+│       │   ├── Home/HomePage.jsx      # Dashboard with 4 stat cards + chart
+│       │   ├── Invoice/
+│       │   │   ├── CreateInvoice/
+│       │   │   │   ├── AddProductDetails.jsx
+│       │   │   │   ├── BillingDetails.jsx
+│       │   │   │   ├── InvoiceHeader.jsx
+│       │   │   │   └── InvoiceTo.jsx
+│       │   │   ├── Preview/
+│       │   │   │   ├── BillingDetailsPreview.jsx
+│       │   │   │   ├── InvoicePreview.jsx
+│       │   │   │   ├── NotePreview.jsx
+│       │   │   │   └── ProductDetailsPreview.jsx
+│       │   │   └── Print/PrintInvoice.jsx  # EMPTY
+│       │   ├── Modals/ConfirmDeleteModal.jsx
+│       │   ├── Navbar/Navbar.jsx
+│       │   ├── ProtectedRoute/ProtectedRoute.jsx
+│       │   ├── SideBar/Sidebar.jsx
+│       │   └── Test/Test.jsx             # Dead/test component
+│       ├── context/
+│       │   ├── AuthContext.js
+│       │   ├── InvoiceContext.js
+│       │   ├── SidebarContext.js
+│       │   └── TimeIntervalContext.js
+│       ├── hooks/
+│       │   ├── useApiUrl.js
+│       │   ├── useFirebase.js
+│       │   └── useInvoice.js
+│       └── pages/
+│           ├── invoice/
+│           │   ├── page.js                # Invoice list
+│           │   ├── [invoiceId]/page.js    # Single invoice view
+│           │   ├── new/page.js            # Create invoice form
+│           │   └── preview/page.js        # Invoice preview before save
+│           └── products/
+│               ├── page.js                # Product list
+│               ├── new/page.js            # Add product form
+│               └── update/[productId]/page.js  # Edit product form
+```
+
+---
+
+## 4. Frontend Architecture
+
+### Router
+- **Next.js 13 App Router** with the `/app` directory
+- All pages use `"use client"` directive — **there are zero Server Components**
+- Pages are under `app/pages/` (not the standard `app/` route convention)
+- Dynamic routes: `[invoiceId]`, `[productId]`
+
+### Rendering Strategy
+- **100% Client-Side Rendering (CSR)** — every single component is marked `"use client"`
+- No SSR, SSG, or ISR utilized despite using Next.js 13 App Router
+- Layout (layout.js) is also a Client Component, which defeats the purpose of layouts
+
+### Layout Structure
+- `RootLayout` wraps everything in context providers → `ProtectedRoute` → drawer layout with `Navbar` + `Sidebar` → `{children}`
+- Sidebar uses DaisyUI drawer pattern (responsive: drawer on mobile, persistent on desktop)
+
+### Context Providers (nested in layout)
+1. **AuthContext** — wraps `useFirebase()` hook, provides: user, Google/email sign-in, sign-out, password update
+2. **SidebarContext** — sidebar collapse state + window width tracking
+3. **TimeIntervalContext** — selected time interval for dashboard ("daily"/"weekly"/"monthly"/"yearly")
+4. **InvoiceContext** — wraps `useInvoice()` hook, provides current invoice state for create/edit flow
+
+### API Layer
+- **No centralized API client** — raw `axios` calls scattered across components
+- API base URL from `useApiUrl()` hook: env var `NEXT_PUBLIC_API_URL` or hardcoded defaults
+- **No request/response interceptors**, no error handling middleware, no retry logic
+- No RTK Query, React Query, or SWR
+
+### Component Organization
+- By feature/domain: `Invoice/CreateInvoice/`, `Invoice/Preview/`, `Charts/`, `Home/`, etc.
+- Some components are in the right place, but there are duplicated concerns (e.g., BillingDetails.jsx and BillingDetailsPreview.jsx have overlapping `toWords` initialization)
+
+### Theme/Styling
+- Tailwind CSS + DaisyUI with a custom theme ("mytheme")
+- Dark mode via class strategy, persisted in `localStorage`
+- Dark mode state lives in `RootLayout` (client component) and is passed as prop to `Navbar`
+- Print styles in globals.css
+
+---
+
+## 5. Backend Architecture
+
+### Folder Organization
+- **Flat structure** — no proper separation of concerns
+- `controllers/` folder is empty; all route logic lives directly in `routes/` files
+- `utils/apiFeatures.js` is misnamed — it's actually a sales aggregation route, not a utility
+- `configs/` folder exists but all 4 JSON files are **empty** (dead config)
+
+### Routes (No Controllers, No Services)
+All business logic is directly in route handlers with no separation:
+
+| File | Route Pattern | Handler |
+|---|---|---|
+| `routes/invoice.js` | `GET /latest/invoiceNumber` | Get latest invoice # for auto-increment |
+| | `GET /singleInvoice/:id` | Get one invoice by ID |
+| | `GET /:userEmail` | List user's invoices (with optional `?partialQuery=` search) |
+| | `DELETE /:id` | Delete one invoice |
+| | `DELETE /delete/many` | Bulk delete invoices |
+| | `POST /new` | Create invoice |
+| `routes/products.js` | `GET /:userEmail` | List user's products (with optional `?partialQuery=`) |
+| | `POST /new` | Create product |
+| | `GET /product/:id` | Get one product |
+| | `PUT /update/:id` | Update product |
+| | `DELETE /:id` | Delete one product |
+| | `DELETE /delete/many` | Bulk delete |
+| `routes/users.js` | *(empty)* | No routes defined |
+| `utils/apiFeatures.js` | `GET /sales/:userEmail/:timeInterval` | Aggregate sales/purchase totals |
+
+### Middleware
+- `express.json()` — body parsing
+- `cors()` — with allowed origins list
+- **No authentication middleware** — the backend blindly trusts the client
+- **No validation middleware** — no Joi, Zod, or express-validator
+- **No error handling middleware** — errors caught per-route with try/catch
+- **No rate limiting, no helmet, no logging**
+
+### Authentication/Authorization
+- **None on the backend** — user email is passed as a URL parameter (`:userEmail`) with zero verification
+- Any client can access any user's data by simply knowing their email
+
+---
+
+## 6. Database
+
+### Type
+- **MongoDB Atlas** (cloud-hosted NoSQL)
+
+### Collections
+
+**1. `invoices`**
+```
+{
+  userEmail: String (required),
+  invoiceNumber: String (required, unique),
+  issuedDate: Date,
+  customerDetails: {
+    customerName: String,
+    customerAddress: String,
+    customerPhoneNo: String,
+    customerEmail: String,
+  },
+  productDetails: {
+    products: [{
+      productName: String,
+      warranty: String,
+      quantity: Number,
+      unitPrice: Number,
+    }]
+  },
+  paymentDetails: {
+    subtotal: Number,
+    discount: Number,
+    total: Number,
+    totalPaid: Number,
+    totalDue: Number,
+  }
+}
+```
+
+**2. `products`**
+```
+{
+  user: String (required),          // user email
+  productName: String,
+  barCode: String,
+  brand: String,
+  purchasedFrom: {
+    shopName: String,
+    shopNumber: String,
+    shopAddress: String,
+    purchasingPrice: Number,
+    sellingPrice: Number,
+    purchasingDate: Date,
+  },
+  stock: Number,
+  warranty: String,
+}
+```
+
+**3. `users`** — Schema exists but is **empty** (no fields defined). Not used.
+
+### Relationships
+- **No relational links** — invoices reference products by inline embedding (no reference to Product collection)
+- Products and invoices are linked only by `userEmail` (soft multi-tenancy)
+- No foreign keys, no population, no joins
+
+### Indexes
+- Only the default `_id` index on all collections
+- `invoiceNumber` has a `unique: true` constraint (creates an index)
+- **No compound indexes** on `userEmail + issuedDate` or `userEmail + invoiceNumber`
+- Search uses `$regex` which **cannot use indexes** efficiently
+
+### Performance Issues
+- Regex-based search on every field will cause full collection scans
+- No pagination on any endpoint — all records are returned at once
+- `GET /sales/:userEmail/:timeInterval` fetches ALL matching invoices just to sum totals (no aggregation pipeline)
+- No result limiting, no cursor-based pagination
+
+---
+
+## 7. Authentication & Authorization
+
+### Login Flow
+1. User visits `/auth/login`
+2. Can login via **Google OAuth** popup or **email/password**
+3. Firebase `onAuthStateChanged` listener tracks auth state
+4. On successful login, `router.push("/")` or `router.back()`
+5. `ProtectedRoute` component checks `user.email` and redirects to `/auth/login` if missing
+
+### Token Handling
+- **Firebase SDK handles tokens client-side automatically**
+- No Firebase ID token is sent to the backend
+- Backend has **zero knowledge of authentication**
+
+### Protected Routes
+- `ProtectedRoute` component wraps every authenticated page individually
+- Uses `useEffect` to check `user.email` and redirect — this causes **flash of unauthenticated content** before redirect
+
+### User Roles / Permissions
+- **None** — single user type, no roles, no admin
+
+### ⚠️ Critical Security Issues
+- Backend has **no authentication at all** — user email is sent as a URL parameter
+- Firebase config (including `apiKey`) is **hardcoded** in `public/firebase/firebase.config.js`
+- Anyone can call `GET /api/invoice/anyone@email.com` and access all invoices
+- No CSRF protection, no rate limiting
+
+---
+
+## 8. API
+
+### API Modules
+| Module | Base Path | Status |
+|---|---|---|
+| Products | `/api/products` | Functional |
+| Users | `/api/user` | Empty router |
+| Invoices | `/api/invoice` | Functional |
+| Features (Sales) | `/api/features` | Functional (misnamed) |
+
+### Endpoints Summary
+
+**Products:**
+- `GET /api/products/:userEmail?partialQuery=` — List/search products
+- `POST /api/products/new` — Create product
+- `GET /api/products/product/:id` — Get single product
+- `PUT /api/products/update/:id` — Update product
+- `DELETE /api/products/:id` — Delete product
+- `DELETE /api/products/delete/many` — Bulk delete
+
+**Invoices:**
+- `GET /api/invoice/latest/invoiceNumber` — Get latest invoice number
+- `GET /api/invoice/singleInvoice/:id` — Get single invoice
+- `GET /api/invoice/:userEmail?partialQuery=` — List/search invoices
+- `POST /api/invoice/new` — Create invoice
+- `DELETE /api/invoice/:id` — Delete invoice
+- `DELETE /api/invoice/delete/many` — Bulk delete
+
+**Features:**
+- `GET /api/features/sales/:userEmail/:timeInterval` — Sales aggregation
+
+### Response Format
+- Inconsistent — some use `{ success, data }`, some use `{ success, result }`, some use `{ success, invoice }`
+- Errors: `{ success: false, error: "message" }` or `{ message: "..." }` — no standard
+
+### Pagination / Filtering / Sorting
+- **None** — all list endpoints return ALL records
+- Search via `partialQuery` query param using `$regex` (basic substring match)
+- No sorting, no field selection from client
+
+---
+
+## 9. State Management
+
+### Context Usage
+| Context | Scope | Data |
+|---|---|---|
+| `AuthContext` | Global | `user`, auth methods, `isLoading` |
+| `InvoiceContext` | Global | Current invoice being created/edited |
+| `SidebarContext` | Global | `isCollapsed`, window `width` |
+| `TimeIntervalContext` | Global | `timeInterval` for dashboard filter |
+
+### Server State
+- **No server state library** — all data fetching is manual `axios.get()` in `useEffect`
+- No caching, no refetching, no optimistic updates
+- Loading/error states managed manually with `useState`
+
+### Local State
+- Form inputs use local `useState`
+- Each page manages its own data list state (invoices, products)
+
+### Issues
+- `InvoiceContext` is global but only used during invoice creation — stays in memory always
+- No data normalization — invoice list and single invoice are separate, unrelated states
+- `SidebarContext` uses `useSidebar()` function called inside the provider which creates new state on every render (potential memory leak)
+
+---
+
+## 10. Reusable Components
+
+### Existing Components by Category
+
+| Category | Components |
+|---|---|
+| **Layout** | `Navbar`, `Sidebar`, `ProtectedRoute` |
+| **Invoice Creation** | `InvoiceHeader`, `InvoiceTo`, `AddProductDetails`, `BillingDetails` |
+| **Invoice Preview** | `InvoicePreview` (wrapper), `ProductDetailsPreview`, `BillingDetailsPreview`, `NotePreview` |
+| **Dashboard** | `HomePage`, `LineChartDemo` |
+| **Modals** | `ConfirmDeleteModal` |
+| **Test/Debug** | `Test` |
+
+### Duplication Issues
+- BillingDetails.jsx and BillingDetailsPreview.jsx **both** initialize `toWords` with identical config — should be extracted to a shared utility
+- InvoiceHeader.jsx is used by both create and preview flows but date formatting is duplicated inline
+- The `toWords` configuration is copy-pasted in 2 files
+- Table rendering patterns in `pages/invoice/page.js` and `pages/products/page.js` are nearly identical (select all, bulk delete, search, loading) — should be a shared `DataTable` component
+- `handleSelectAll`, `handleCheckboxChange`, `handleDeleteSelected` patterns are duplicated between invoice and product list pages
+
+### Missing Abstractions
+- No shared `Button`, `Input`, `Modal`, `Table`, `Card`, `Spinner`, `EmptyState` components
+- No form abstraction despite many forms
+- No `PageHeader`, `PageContainer` layout components
+
+---
+
+## 11. Custom Hooks
+
+| Hook | File | Purpose |
+|---|---|---|
+| `useFirebase` | `hooks/useFirebase.js` | Firebase auth: Google/email sign-in, sign-out, password update, `onAuthStateChanged` listener |
+| `useInvoice` | `hooks/useInvoice.js` | Initializes invoice state, auto-generates invoice number from backend |
+| `useApiUrl` | `hooks/useApiUrl.js` | Returns API base URL from env or defaults, strips trailing slashes |
+
+### Issues
+- `useFirebase` calls `initializeAuthentication()` on every render (should be called once at app level)
+- `useApiUrl` returns `[apiUrl]` as an array (unnecessary tuple pattern)
+- `useInvoice` has a `useEffect` with `eslint-disable-next-line` comment — suppressed dependency warning
+
+---
+
+## 12. Utilities
+
+| Utility | Location | Purpose |
+|---|---|---|
+| apiFeatures.js | Backend `utils/` | **Misnamed** — actually a route handler for sales aggregation, not a utility |
+
+### Missing Utilities
+- No date formatting utility (dates formatted inline in multiple places)
+- No currency formatting utility (uses `toLocaleString` inline)
+- No API client wrapper
+- No validation helpers
+- No string/number formatting utilities
+
+---
+
+## 13. Current Problems
+
+### Critical
+1. **Zero backend authentication/authorization** — user data is completely unprotected
+2. **Hardcoded Firebase credentials** in public directory — exposed to all users
+3. **Empty users.js model and route** — dead code, user collection never used
+4. **`configs/` folder completely empty** — dead directory with typo (`deafult.json`)
+
+### Code Duplication
+5. Bulk selection/deletion logic duplicated between invoice and product list pages (~100 lines each)
+6. `toWords` initialization duplicated in BillingDetails.jsx and BillingDetailsPreview.jsx
+7. Loading spinner pattern repeated across 4+ components
+8. Toast notification pattern copied in multiple pages
+9. Search input + create button row duplicated in invoice and product pages
+
+### Large Components
+10. `pages/invoice/page.js` — ~200+ lines (list, search, select, delete, table rendering all in one)
+11. Navbar.jsx — handles dark mode toggle, time interval select, user menu, mobile sidebar toggle
+
+### Poor Organization
+12. All route logic in route files — no controller/service separation
+13. `utils/apiFeatures.js` is a route handler, not a utility
+14. Pages under `app/pages/` instead of standard `app/` route convention
+15. `assests/` folder typo
+16. `Sidebar` imported twice in layout with different names (`Sidebar` and `SidebarPro`)
+
+### Tight Coupling
+17. Frontend hardcodes specific business info (CN Computer & Networks address, shop details)
+18. Backend models tightly coupled to the specific business domain
+
+### Dead/Unused Code
+19. Test.jsx — test component left in production code
+20. `PrintInvoice.jsx` — empty file
+21. users.js model — empty schema
+22. users.js route — empty router
+23. `configs/` — 4 empty JSON files
+
+### Naming Issues
+24. `deafult.json` — typo for "default"
+25. `assests/` — typo for "assets"
+26. apiFeatures.js — misleading name (it's a route)
+27. `SidebarPro` import — unused duplicate import in layout
+28. `ReferenceToUpdatePassword` — inconsistent camelCase naming
+
+### Performance
+29. No pagination — all records fetched at once
+30. Regex search on every request — no text indexes
+31. `initializeAuthentication()` called every time `useFirebase` renders
+
+---
+
+## 14. Performance Review
+
+| Issue | Impact |
+|---|---|
+| All pages are Client Components — no SSR benefits | Medium |
+| No pagination on any list endpoint — fetches all data | **High** |
+| Regex `$regex` search without text indexes | **High** |
+| `useFirebase` creates new `GoogleAuthProvider` on every render | Low |
+| `SidebarContext` creates `useSidebar()` on every provider render (new state objects) | Medium |
+| No `React.memo`, `useMemo`, or `useCallback` anywhere | Medium |
+| `html2canvas` + `jsPDF` bundled client-side (~200KB+) | Medium |
+| Firebase SDK bundled entirely client-side | Medium |
+| No image optimization — `Image` from Next.js used but only for Google profile pics | Low |
+| LineChart.jsx uses hardcoded static data — chart is decorative, not functional | Low |
+| No lazy loading — all pages/components in main bundle | Medium |
+| `axios` imported but no interceptor for caching/retry | Low |
+
+---
+
+## 15. Code Quality Review
+
+| Area | Assessment |
+|---|---|
+| **Naming consistency** | Poor — mixed patterns (`handleFunc`, `ReferenceToUpdatePassword`), typos (`deafult`, `assests`) |
+| **SOLID principles** | Violated — route handlers do everything (no single responsibility), no dependency injection |
+| **DRY** | Major violations — bulk delete, search, table patterns duplicated; toWords config duplicated |
+| **Separation of concerns** | Poor — business logic in components, route logic in route files, no service layer |
+| **Type safety** | None — pure JavaScript, no TypeScript, no JSDoc |
+| **Error handling** | Inconsistent — some with `.catch()`, some missing; backend uses try/catch but exposes raw error messages |
+| **Testing readiness** | Very low — no tests, no test infrastructure, tightly coupled code hard to mock |
+| **Comments** | Minimal — occasional inline comments, lots of commented-out code left in |
+| **Console.log** | Left in multiple production files (`Login`, `InvoicePreview`, `CreateInvoice`) |
+
+---
+
+## 16. Dependency Review
+
+### Important Dependencies
+| Package | Notes |
+|---|---|
+| `next@13.5.1` | Outdated — latest is 14.x/15.x |
+| `react@18.2.0` | Current, but React 19 is available |
+| `firebase@^10.4.0` | Reasonably current |
+| `mongoose@^7.5.1` | Outdated — latest is 8.x |
+| `express@^4.18.2` | Current stable |
+| `recharts@^2.8.0` | Reasonably current |
+| `tailwindcss@3.3.3` | Outdated — latest is 3.4.x / 4.x |
+
+### Potentially Unused
+| Package | Reason |
+|---|---|
+| `react-barcode-reader@^0.0.2` | Imported but commented out in `CreateProduct` |
+| `react-pro-sidebar@^1.1.0-alpha.1` | Listed as dependency but custom sidebar used instead |
+| `react-firebase-hooks@^5.1.1` | Only `useAuthState` imported but never actually used in the code |
+
+### Packages That Could Be Replaced
+- `html2canvas + jsPDF` → `@react-pdf/renderer` (better React integration)
+- `react-to-print` → could use browser native `window.print()`
+- `axios` → native `fetch` (already polyfilled in Next.js)
+- Manual context-based state → React Query / TanStack Query for server state
+
+---
+
+## 17. Modernization Opportunities
+
+### Next.js App Router
+- **Convert layout to Server Component** — move providers to a client wrapper
+- **Use Server Components** for static content (NotePreview, InvoiceHeader static parts)
+- **Use `loading.js`** and `error.js` conventions instead of manual loading states
+- **Use parallel routes** for dashboard widgets
+
+### Server Actions
+- Replace `POST /api/invoice/new` with Server Actions for invoice creation
+- Eliminates need for manual API routes for mutations
+
+### Data Fetching
+- **Adopt TanStack Query (React Query)** for all server state — caching, refetching, optimistic updates
+- Replace manual `axios` + `useEffect` + `useState` patterns
+
+### Authentication
+- **Verify Firebase ID tokens on the backend** — critical security fix
+- Use Next.js middleware for route protection instead of `ProtectedRoute` component
+- Move Firebase config to environment variables
+
+### Folder Structure
+- Flatten `app/pages/` → `app/` (standard Next.js convention)
+- Create `lib/`, `services/`, `types/` directories
+- Move business logic to service layer
+
+### Backend Architecture
+- Separate routes → controllers → services → models
+- Add input validation (Zod or Joi)
+- Add centralized error handling middleware
+- Add proper aggregation pipelines for dashboard stats
+- Add pagination to all list endpoints
+
+### TypeScript
+- **Migrate to TypeScript** — biggest quality-of-life improvement
+- Define interfaces for Invoice, Product, User, API responses
+
+### Performance
+- Add MongoDB indexes on `userEmail`, `issuedDate`, `invoiceNumber`
+- Use MongoDB text indexes for search instead of `$regex`
+- Implement pagination (cursor-based or offset)
+- Lazy load heavy components (PDF generation, charts)
+
+---
+
+## 18. Final Summary
+
+### Current Architecture Strengths
+- Clean, simple monorepo structure
+- Working authentication flow (Firebase)
+- Functional core features (invoice CRUD, product CRUD, PDF export)
+- Responsive design with dark mode
+- Good use of Tailwind CSS + DaisyUI for consistent styling
+- Framer Motion for subtle animations
+
+### Biggest Weaknesses
+1. **Zero backend security** — no auth verification, user data exposed
+2. **100% client components** — no SSR/SSG benefits from Next.js 13
+3. **No pagination** — will break at scale
+4. **No validation** — neither frontend nor backend
+5. **Massive code duplication** — DRY violations everywhere
+6. **No TypeScript** — no type safety anywhere
+7. **Dead code and empty files** scattered throughout
+
+### Highest-Priority Refactoring Tasks
+| Priority | Task | Complexity |
+|---|---|---|
+| 🔴 P0 | Add Firebase token verification to backend (security) | Medium |
+| 🔴 P0 | Move Firebase config to env variables | Low |
+| 🔴 P0 | Remove hardcoded credentials from repo history | Low |
+| 🟠 P1 | Add pagination to all list endpoints | Medium |
+| 🟠 P1 | Add input validation (frontend + backend) | Medium |
+| 🟠 P1 | Extract shared DataTable component (remove duplication) | Medium |
+| 🟡 P2 | Migrate to TypeScript | High |
+| 🟡 P2 | Adopt TanStack Query for server state | Medium |
+| 🟡 P2 | Separate backend into controllers/services/models | Medium |
+| 🟢 P3 | Convert layout to Server Component | Medium |
+| 🟢 P3 | Add proper MongoDB indexes | Low |
+| 🟢 P3 | Clean up dead code and fix typos | Low |
+| 🟢 P3 | Implement Server Actions for mutations | Medium |
+
+### Suggested Order of Implementation
+1. **Security fixes** (P0) — non-negotiable, must be done first
+2. **Dead code cleanup** — remove empty files, Test component, unused configs
+3. **Extract shared components** — DataTable, form inputs, toWords config
+4. **Add pagination + indexes** — prepare for scale
+5. **Add validation** — Zod schemas shared between frontend and backend
+6. **Adopt TanStack Query** — replace manual data fetching
+7. **TypeScript migration** — incremental, file by file
+8. **Backend restructuring** — controllers/services separation
+9. **Next.js modernization** — Server Components, Server Actions, middleware auth
+
+---
+
+This report covers every file and architectural concern in the repository. No files were modified.
