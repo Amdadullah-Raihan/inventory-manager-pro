@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from "express";
-import admin from "../config/firebaseAdmin";
+import { verifyFirebaseToken } from "../utils/verifyToken";
 
 export const authMiddleware = async (
   req: Request,
@@ -25,12 +25,12 @@ export const authMiddleware = async (
       return;
     }
 
-    const decoded = await admin.auth().verifyIdToken(idToken);
+    const decoded = await verifyFirebaseToken(idToken);
 
     (req as any).user = {
-      uid: decoded.uid,
-      email: decoded.email!,
-      emailVerified: decoded.email_verified,
+      uid: decoded.uid || decoded.sub,
+      email: decoded.email || "",
+      emailVerified: decoded.email_verified || false,
       name: decoded.name || null,
       picture: decoded.picture || null,
     };
@@ -38,9 +38,10 @@ export const authMiddleware = async (
     next();
   } catch (error: any) {
     const message =
+      error?.name === "TokenExpiredError" ||
       error?.code === "auth/id-token-expired"
         ? "Token expired. Please log in again."
-        : "Invalid authentication token.";
+        : `Invalid authentication token: ${error.message}`;
 
     res.status(401).json({ success: false, error: message });
   }
@@ -54,13 +55,11 @@ export const optionalAuth = async (
   try {
     const authHeader = req.headers.authorization;
     if (authHeader?.startsWith("Bearer ")) {
-      const decoded = await admin
-        .auth()
-        .verifyIdToken(authHeader.split("Bearer ")[1]);
+      const decoded = await verifyFirebaseToken(authHeader.split("Bearer ")[1]);
       (req as any).user = {
-        uid: decoded.uid,
-        email: decoded.email!,
-        emailVerified: decoded.email_verified,
+        uid: decoded.uid || decoded.sub,
+        email: decoded.email || "",
+        emailVerified: decoded.email_verified || false,
         name: decoded.name || null,
         picture: decoded.picture || null,
       };
