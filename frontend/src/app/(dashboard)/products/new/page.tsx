@@ -1,22 +1,19 @@
 "use client";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import { useAuth } from "@/providers/AuthContext";
-import useApiUrl from "@/hooks/useApiUrl";
-import axios from "axios";
+import { useCreateProductMutation } from "@/redux/api/productApi";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { AiOutlineScan } from "react-icons/ai";
+import React, { useState } from "react";
 import { BsBagPlus, BsFillBagPlusFill } from "react-icons/bs";
 import toast, { Toaster } from "react-hot-toast";
-import BarcodeReader from "react-barcode-reader";
 import { motion } from "framer-motion";
+import { AiOutlineScan } from "react-icons/ai";
 
 const CreateProduct = () => {
-  const [apiUrl] = useApiUrl();
-  const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
   const router = useRouter();
+  const [createProduct] = useCreateProductMutation();
 
   const [product, setProduct] = useState({
     user: user?.email,
@@ -35,55 +32,37 @@ const CreateProduct = () => {
     warranty: "",
   });
 
-  //hande barcode scanning
-  const handleScan = (barCode) => {
-    setProduct({ ...product, barCode: barCode });
-  };
-
-  // Use useEffect to update the product state when user data becomes available
-  // useEffect(() => {
-  //   if (user && user.email) {
-  //     setProduct({ ...product, user: user.email });
-  //   }
-  // }, [product, user, user.email, setProduct]);
-
-  const handleAddProduct = (e) => {
+  const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    axios
-      .post(`${apiUrl}/api/products/new`, product)
-      .then((result) => {
-        if (result.data.success) {
-          toast.success("Product added successfully!", {
-            duration: 3000, // Close the toast after 3 seconds (optional)
-          });
-          setIsLoading(false);
-          // Reset the form after a successful submission
-          setProduct({
-            user: user?.email,
-            productName: "",
-            barCode: "",
-            brand: "",
-            purchasedFrom: {
-              shopName: "",
-              shopNumber: "",
-              shopAddress: "",
-              purchasingPrice: 0,
-              sellingPrice: 0,
-              purchasingDate: new Date().toISOString(),
-            },
-            stock: "",
-            warranty: "",
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.success(`${error.message}`, {
-          duration: 3000, // Close the toast after 3 seconds (optional)
+    try {
+      const result = await createProduct(product).unwrap();
+      if (result.success) {
+        toast.success("Product added successfully!", { duration: 3000 });
+        setIsLoading(false);
+        setProduct({
+          user: user?.email,
+          productName: "",
+          barCode: "",
+          brand: "",
+          purchasedFrom: {
+            shopName: "",
+            shopNumber: "",
+            shopAddress: "",
+            purchasingPrice: 0,
+            sellingPrice: 0,
+            purchasingDate: new Date().toISOString(),
+          },
+          stock: "",
+          warranty: "",
         });
-      });
+      }
+    } catch (error: unknown) {
+      const err = error as { message?: string };
+      toast.error(err?.message || "Error adding product", { duration: 3000 });
+      setIsLoading(false);
+    }
   };
 
   return (

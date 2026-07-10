@@ -2,18 +2,23 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
-import { BsBagPlus, BsFillBagPlusFill } from "react-icons/bs";
+import { BsFillBagPlusFill } from "react-icons/bs";
 import { AiOutlineScan } from "react-icons/ai";
 import { useParams, useRouter } from "next/navigation";
-import axios from "axios";
-import useApiUrl from "@/hooks/useApiUrl";
-import { TbShoppingBagEdit } from "react-icons/tb";
+import {
+  useGetSingleProductQuery,
+  useUpdateProductMutation,
+} from "@/redux/api/productApi";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 
 const UpdateProduct = () => {
-  const { productId } = useParams();
-  const [apiUrl] = useApiUrl();
+  const { id: productId } = useParams();
   const router = useRouter();
+
+  const { data: fetchedProduct, isLoading: isFetching } =
+    useGetSingleProductQuery(productId as string, { skip: !productId });
+
+  const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
 
   const [product, setProduct] = useState({
     user: "",
@@ -32,37 +37,33 @@ const UpdateProduct = () => {
     warranty: "",
   });
 
-  // Funtion to update a product
-  const handleUpdateProduct = (e) => {
+  // Populate form when fetched product data arrives
+  useEffect(() => {
+    if (fetchedProduct) {
+      setProduct(fetchedProduct);
+    }
+  }, [fetchedProduct]);
+
+  // Function to update a product
+  const handleUpdateProduct = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    axios
-      .put(`${apiUrl}/api/products/update/${productId}`, product)
-      .then((response) => {
-        if (response.data.success) {
-          toast.success("Product updated successfully");
-          setProduct(response.data.product);
-        } else {
-          toast.error("Failed to update product");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating product:", error);
-        toast.error("An error occurred while updating the product");
-      });
+    try {
+      const response = await updateProduct({
+        productId: productId as string,
+        product,
+      }).unwrap();
+      if (response.success) {
+        toast.success("Product updated successfully");
+        setProduct(response.product);
+      } else {
+        toast.error("Failed to update product");
+      }
+    } catch (error) {
+      console.error("Error updating product:", error);
+      toast.error("An error occurred while updating the product");
+    }
   };
-
-  useEffect(() => {
-    axios
-      .get(`${apiUrl}/api/products/product/${productId}`)
-      .then((res) => {
-        // console.log(res);
-        setProduct(res.data.product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [apiUrl, productId]);
 
   return (
     <ProtectedRoute router={router}>

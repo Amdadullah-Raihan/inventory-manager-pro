@@ -1,9 +1,12 @@
 "use client";
 import { useAuth } from "@/providers/AuthContext";
-import useApiUrl from "@/hooks/useApiUrl";
-import axios from "axios";
+import {
+  useGetProductsQuery,
+  useDeleteProductMutation,
+  useDeleteManyProductsMutation,
+} from "@/redux/api/productApi";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineFolderView, AiOutlinePlus } from "react-icons/ai";
 import { TbShoppingBagEdit, TbTrash } from "react-icons/tb";
 import { RotatingLines } from "react-loader-spinner";
@@ -14,19 +17,23 @@ import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import { useRouter } from "next/navigation";
 
 const Products = () => {
-  const [apiUrl] = useApiUrl();
   const { user } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
-  const [productsList, setproductsList] = useState([]);
   const [partialQuery, setPartialQuery] = useState("");
   const [id, setId] = useState("");
   const [selectAll, setSelectAll] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const router = useRouter();
-  const [pagination, setPagination] = useState({
-    pageSize: 10,
-    pageNum: 1,
-  });
+
+  const { data: productsList = [], isLoading } = useGetProductsQuery(
+    {
+      userEmail: user?.email as string,
+      partialQuery: partialQuery || undefined,
+    },
+    { skip: !user?.email },
+  );
+
+  const [deleteProduct] = useDeleteProductMutation();
+  const [deleteManyProducts] = useDeleteManyProductsMutation();
 
   // Animation properties for the table and rows.
   const tableVariants = {
@@ -42,14 +49,14 @@ const Products = () => {
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
     if (!selectAll) {
-      setSelectedItems(productsList.map((item) => item._id));
+      setSelectedItems(productsList.map((item: { _id: string }) => item._id));
     } else {
       setSelectedItems([]);
     }
   };
 
   // Function to handle changes in checkbox selection.
-  const handleCheckboxChange = (itemId) => {
+  const handleCheckboxChange = (itemId: string) => {
     const updatedSelectedItems = [...selectedItems];
     if (updatedSelectedItems.includes(itemId)) {
       updatedSelectedItems.splice(updatedSelectedItems.indexOf(itemId), 1);
@@ -60,68 +67,30 @@ const Products = () => {
   };
 
   // Function to delete selected items.
-  const handleDeleteSelected = () => {
-    axios
-      .delete(`${apiUrl}/api/products/delete/many`, {
-        data: { ids: selectedItems },
-      })
-      .then((response) => {
-        if (response.data.success) {
-          toast.success(response.data.message);
-          const newData = productsList.filter(
-            (item) => !selectedItems.includes(item._id),
-          );
-          setproductsList(newData);
-          setSelectedItems([]);
-          setSelectAll(false);
-        }
-      })
-      .catch((error) => {
-        console.error("Error deleting products:", error);
-        toast.error("Error deleting products");
-      });
+  const handleDeleteSelected = async () => {
+    try {
+      const response = await deleteManyProducts(selectedItems).unwrap();
+      if (response.success) {
+        toast.success(response.message);
+        setSelectedItems([]);
+        setSelectAll(false);
+      }
+    } catch (error: unknown) {
+      const err = error as { message?: string };
+      toast.error(err?.message || "Error deleting products");
+    }
   };
 
-  // Effect for loading product data.
-  useEffect(() => {
-    setIsLoading(true);
-    let url;
-    if (partialQuery) {
-      url = `${apiUrl}/api/products/${user?.email}?partialQuery=${partialQuery}`;
-    } else {
-      url = `${apiUrl}/api/products/${user?.email}`;
-    }
-    if (user?.email) {
-      axios
-        .get(url)
-        .then((products) => {
-          setproductsList(products.data.products);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [user?.email, apiUrl, partialQuery]);
-
   // Function to delete a single product by ID.
-  const handleDeleteProduct = (productId) => {
-    axios
-      .delete(`${apiUrl}/api/products/${productId}`)
-      .then((res) => {
-        if (res.data.success) {
-          toast.success("Product deleted successfully", {
-          });
-        }
-        const newproductsList = productsList.filter(
-          (products) => products._id !== productId,
-        );
-        setproductsList(newproductsList);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Product deletion failed");
-      });
+  const handleDeleteProduct = async (productId: string) => {
+    try {
+      const res = await deleteProduct(productId).unwrap();
+      if (res.success) {
+        toast.success("Product deleted successfully");
+      }
+    } catch {
+      // error handled by RTK Query
+    }
   };
 
   return (

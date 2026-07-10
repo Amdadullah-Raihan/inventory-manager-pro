@@ -1,15 +1,13 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useInvoiceContext } from "@/providers/InvoiceContext";
 import { AiFillPrinter } from "react-icons/ai";
 import { RiFileEditFill, RiSave3Fill } from "react-icons/ri";
-import { TbCurrencyTaka, TbFileDownload } from "react-icons/tb";
+import { TbFileDownload } from "react-icons/tb";
 import InvoiceHeader from "../_components/InvoiceHeader";
-import BillingDetails from "../_components/BillingDetails";
 import ProductDetailsPreview from "../_components/ProductDetailsPreview";
 import BillingDetailsPreview from "../_components/BillingDetailsPreview";
-import axios from "axios";
-import useApiUrl from "@/hooks/useApiUrl";
+import { useCreateInvoiceMutation } from "@/redux/api/invoiceApi";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import ReactToPrint from "react-to-print";
@@ -21,28 +19,25 @@ import Link from "next/link";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 
 const InvoicePreview = () => {
-  //states will go here
   const [isSuccess, setIsSuccess] = useState(false);
   const { invoice } = useInvoiceContext();
-  const [apiUrl] = useApiUrl();
+  const [createInvoice] = useCreateInvoiceMutation();
   const router = useRouter();
   const componentRef = useRef(null);
 
-  const handleSaveInvoice = () => {
-    axios
-      .post(`${apiUrl}/api/invoice/new`, invoice)
-      .then((result) => {
-        if (result.data.success) {
-          toast.success("Invoice added successfully!", {
-            duration: 3000, // Close the toast after 3 seconds (optional)
-          });
-          setIsSuccess(true);
-        }
-      })
-      .catch((err) => {
-        console.log("error creating invoice", err);
-        alert("Error creating invoice");
-      });
+  const handleSaveInvoice = async () => {
+    try {
+      const result = await createInvoice(invoice).unwrap();
+      if (result.success) {
+        toast.success("Invoice added successfully!", {
+          duration: 3000,
+        });
+        setIsSuccess(true);
+      }
+    } catch (err) {
+      console.log("error creating invoice", err);
+      alert("Error creating invoice");
+    }
   };
 
   const handleDownloadPDF = () => {

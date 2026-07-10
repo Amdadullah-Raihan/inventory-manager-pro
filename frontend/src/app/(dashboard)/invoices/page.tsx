@@ -1,9 +1,12 @@
 "use client";
 import { useAuth } from "@/providers/AuthContext";
-import useApiUrl from "@/hooks/useApiUrl";
-import axios from "axios";
+import {
+  useGetInvoicesQuery,
+  useDeleteInvoiceMutation,
+  useDeleteManyInvoicesMutation,
+} from "@/redux/api/invoiceApi";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineFolderView, AiOutlinePlus } from "react-icons/ai";
 import { TbTrash } from "react-icons/tb";
 import { RotatingLines } from "react-loader-spinner";
@@ -14,15 +17,23 @@ import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import { useRouter } from "next/navigation";
 
 const Invoice = () => {
-  const [apiUrl] = useApiUrl();
   const { user } = useAuth();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-  const [invoiceList, setInvoiceList] = useState([]);
   const [partialQuery, setPartialQuery] = useState("");
   const [id, setId] = useState("");
   const [selectAll, setSelectAll] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const { data: invoiceList = [], isLoading } = useGetInvoicesQuery(
+    {
+      userEmail: user?.email as string,
+      partialQuery: partialQuery || undefined,
+    },
+    { skip: !user?.email },
+  );
+
+  const [deleteInvoice] = useDeleteInvoiceMutation();
+  const [deleteManyInvoices] = useDeleteManyInvoicesMutation();
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
@@ -43,63 +54,29 @@ const Invoice = () => {
     setSelectedItems(updatedSelectedItems);
   };
 
-  const handleDeleteSelected = () => {
-    axios
-      .delete(`${apiUrl}/api/invoice/delete/many`, {
-        data: { ids: selectedItems },
-      })
-      .then((response) => {
-        if (response.data.success) {
-          toast.success(response.data.message);
-          const newData = invoiceList.filter(
-            (item) => !selectedItems.includes(item._id),
-          );
-          setInvoiceList(newData);
-          setSelectedItems([]);
-          setSelectAll(false);
-        }
-      })
-      .catch((error) => {
-        console.error("Error deleting invoices:", error);
-        toast.error(error.message);
-        // Handle any errors
-      });
+  const handleDeleteSelected = async () => {
+    try {
+      const response = await deleteManyInvoices(selectedItems).unwrap();
+      if (response.success) {
+        toast.success(response.message);
+        setSelectedItems([]);
+        setSelectAll(false);
+      }
+    } catch (error: unknown) {
+      const err = error as { message?: string };
+      toast.error(err?.message || "Error deleting invoices");
+    }
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    let url;
-    if (partialQuery) {
-      url = `${apiUrl}/api/invoice/${user?.email}?partialQuery=${partialQuery}`;
-    } else {
-      url = `${apiUrl}/api/invoice/${user?.email}`;
+  const handleDeleteInvoice = async (invoiceId: string) => {
+    try {
+      const res = await deleteInvoice(invoiceId).unwrap();
+      if (res.success) {
+        toast.success("Invoice deleted successfully");
+      }
+    } catch {
+      // error handled by RTK Query
     }
-    if (user?.email) {
-      axios
-        .get(url)
-        .then((invoice) => {
-          setInvoiceList(invoice.data.invoices);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [user?.email, apiUrl, partialQuery]);
-
-  const handleDeleteInvoice = (invoiceId) => {
-    axios
-      .delete(`${apiUrl}/api/invoice/${invoiceId}`)
-      .then((res) => {
-        if (res.data.success) {
-          toast.success("Invoice deleted successfully", {});
-        }
-        const newInvoiceList = invoiceList.filter(
-          (invoice) => invoice._id !== invoiceId,
-        );
-        setInvoiceList(newInvoiceList);
-      })
-      .catch((err) => {});
   };
 
   return (

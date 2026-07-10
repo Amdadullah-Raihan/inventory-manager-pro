@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/providers/AuthContext";
-import useApiUrl from "./useApiUrl";
-import axios from "axios";
+import { useGetLatestInvoiceNumberQuery } from "@/redux/api/invoiceApi";
 
 const useInvoice = () => {
   const { user } = useAuth();
-  const [apiUrl] = useApiUrl();
 
   const issuedDate = new Date().toISOString().split("T")[0];
 
@@ -44,27 +42,29 @@ const useInvoice = () => {
     },
   });
 
-  //Generate a new invoice Number;
+  const { data: latestInvoiceData } = useGetLatestInvoiceNumberQuery();
+
+  // Generate a new invoice Number
   useEffect(() => {
     if (!user?.email) return;
 
-    axios.get(`${apiUrl}/api/invoice/latest/invoiceNumber`).then((res) => {
-      if (res.data.greatestInvoiceNumber) {
-        const greatestInvoiceNumber = parseInt(res.data.greatestInvoiceNumber);
+    if (latestInvoiceData?.greatestInvoiceNumber) {
+      const greatestInvoiceNumber = parseInt(
+        latestInvoiceData.greatestInvoiceNumber,
+      );
 
-        let newInvoiceNumber = `CN-${currentYear}${currentMonth}${currentDay}-${String(
-          greatestInvoiceNumber + 1,
-        ).padStart(3, "0")}`;
+      const newInvoiceNumber = `CN-${currentYear}${currentMonth}${currentDay}-${String(
+        greatestInvoiceNumber + 1,
+      ).padStart(3, "0")}`;
 
-        setInvoice((prevInvoice) => ({
-          ...prevInvoice,
-          invoiceNumber: newInvoiceNumber,
-          userEmail: user.email as string,
-        }));
-      }
-    });
+      setInvoice((prevInvoice) => ({
+        ...prevInvoice,
+        invoiceNumber: newInvoiceNumber,
+        userEmail: user.email as string,
+      }));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.email, apiUrl, currentYear, currentMonth, currentDay]);
+  }, [user.email, latestInvoiceData, currentYear, currentMonth, currentDay]);
 
   return {
     invoice,

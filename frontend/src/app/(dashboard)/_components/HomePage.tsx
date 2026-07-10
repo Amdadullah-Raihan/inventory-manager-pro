@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   FaBangladeshiTakaSign,
   FaChartLine,
@@ -9,35 +9,27 @@ import {
   FaSackDollar,
 } from "react-icons/fa6";
 import LineChartDemo from "@/components/charts/LineChart";
-import axios from "axios";
-import useApiUrl from "@/hooks/useApiUrl";
 import { useAuth } from "@/providers/AuthContext";
 import { useTimeInterval } from "@/providers/TimeIntervalContext";
+import { useGetSalesDataQuery } from "@/redux/api/featureApi";
 import { motion } from "framer-motion";
 
 const HomePage = () => {
-  const [apiUrl] = useApiUrl();
   const { user } = useAuth();
-  const [totalSold, setTotalSold] = useState(0);
-  const [totalPurchased, setTotalPurchased] = useState(0);
   const { timeInterval } = useTimeInterval();
 
+  const { data: salesData } = useGetSalesDataQuery(
+    { userEmail: user?.email as string, timeInterval },
+    { skip: !user?.email },
+  );
+
+  const totalSold = salesData?.totalSold || 0;
+  const totalPurchased = salesData?.totalPurchased || 0;
+
   // Function to format numbers with commas
-  const formatNumberWithCommas = (number) => {
+  const formatNumberWithCommas = (number: number) => {
     return number.toLocaleString("en-IN");
   };
-
-  useEffect(() => {
-    axios
-      .get(`${apiUrl}/api/features/sales/${user.email}/${timeInterval}`)
-      .then((res) => {
-        setTotalSold(res.data.totalSold);
-        setTotalPurchased(res.data.totalPurchased);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [user.email, apiUrl, timeInterval]);
 
   const cardData = [
     {

@@ -6,25 +6,23 @@ const SidebarContext = createContext<ReturnType<typeof useSidebar>>(
 );
 
 const useSidebar = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const [isCollapsed, setCollapsed] = useState(false);
-  const [width, setWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 0,
-  );
+  const [width, setWidth] = useState(0);
 
   const handleResize = () => {
-    const newWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    const newWidth = window.innerWidth;
     setWidth(newWidth);
     setCollapsed(newWidth < 576);
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", handleResize);
-      handleResize(); // Initialize based on the current width
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
+    setIsMounted(true);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return {
