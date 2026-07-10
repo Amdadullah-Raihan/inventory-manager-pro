@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ToastContainer, toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
 import { BsBagPlus, BsFillBagPlusFill } from "react-icons/bs";
 import { AiOutlineScan } from "react-icons/ai";
 import { useParams, useRouter } from "next/navigation";
@@ -72,7 +72,7 @@ const UpdateProduct = () => {
         transition={{ duration: 0.3 }}
         className="lg:p-6 p-2 relative min-h-[100vh] w-full bg-[#F7F7F9] dark:bg-secondary  "
       >
-        <ToastContainer />
+        <Toaster />
         <form onSubmit={(e) => handleUpdateProduct(e)}>
           <div className="bg-white dark:bg-neutral dark:text-gray-400   shadow lg:p-6 p-2 rounded-lg max-w-[900px] mx-auto">
             <p className="uppercase font-bold text-2xl w-full text-center text-primary flex justify-center gap-2">

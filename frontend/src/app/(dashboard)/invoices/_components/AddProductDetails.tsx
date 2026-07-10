@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { FaPlus, FaTrash } from 'react-icons/fa6'
 import { useInvoiceContext } from '@/providers/InvoiceContext'
-import { toast, ToastContainer } from 'react-toastify'
-;
+import toast, { Toaster } from 'react-hot-toast'
 
 
 
@@ -36,6 +35,7 @@ const AddProductDetails = () => {
                         },
                     ],
                 },
+            });
         } else {
 
             toast.error("Please fill in all required fields")
@@ -54,6 +54,7 @@ const AddProductDetails = () => {
                 ...invoice.productDetails,
                 products: updatedProducts,
             },
+        });
     };
 
     // Function to remove the item at the specified index
@@ -66,6 +67,7 @@ const AddProductDetails = () => {
                 ...invoice.productDetails,
                 products: updatedProducts,
             },
+        });
     };
 
 

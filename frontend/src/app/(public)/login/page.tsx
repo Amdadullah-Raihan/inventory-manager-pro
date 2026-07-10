@@ -6,7 +6,7 @@ import { useAuth } from "@/providers/AuthContext";
 import useFirebase from "@/hooks/useFirebase";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const { handleGoogleSignIn, setUser, user, handleEmailSignIn, error } =
@@ -114,7 +114,7 @@ const Login = () => {
           Log in with Google
         </button>
       </div>
-      <ToastContainer />
+      <Toaster />
     </div>
   );
 };

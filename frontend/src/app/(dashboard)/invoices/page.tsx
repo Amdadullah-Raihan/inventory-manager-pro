@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineFolderView, AiOutlinePlus } from "react-icons/ai";
 import { TbTrash } from "react-icons/tb";
 import { RotatingLines } from "react-loader-spinner";
-import { ToastContainer, toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { FaTrash } from "react-icons/fa6";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
@@ -93,7 +93,6 @@ const Invoice = () => {
       .then((res) => {
         if (res.data.success) {
           toast.success("Invoice deleted successfully", {
-            position: toast.POSITION.TOP_RIGHT,
           });
         }
         const newInvoiceList = invoiceList.filter(
@@ -107,7 +106,7 @@ const Invoice = () => {
   return (
     <ProtectedRoute router={router}>
       <div className="w-full py-4 lg:p-4  bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400 min-h-[100vh] capitalize">
-        <ToastContainer />
+        <Toaster />
 
         <div className="max-w-sm lg:max-w-none mx-auto bg-white dark:bg-neutral shadow-md rounded-lg ">
           <div className="flex flex-col-reverse lg:flex-row gap-2 lg:justify-between py-6 px-4">

@@ -26,6 +26,7 @@
     "react-barcode-reader": "^0.0.2",
     "react-dom": "^19.2.7",
     "react-firebase-hooks": "^5.1.1",
+    "react-hot-toast": "^2.6.0",
     "react-icons": "^4.11.0",
     "react-loader-spinner": "^5.4.5",
     "react-pro-sidebar": "^1.1.0-alpha.1",
