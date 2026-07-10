@@ -14,6 +14,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { FaTrash } from "react-icons/fa6";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
+import type { ProductListItem } from "@/redux/api/productApi";
 
 const Products = () => {
   const { user } = useAppSelector((s) => s.auth);
@@ -52,7 +53,7 @@ const Products = () => {
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
     if (!selectAll) {
-      setSelectedItems(productsList.map((item: { _id: string }) => item._id));
+      setSelectedItems(productsList.map((item: ProductListItem) => item._id));
     } else {
       setSelectedItems([]);
     }

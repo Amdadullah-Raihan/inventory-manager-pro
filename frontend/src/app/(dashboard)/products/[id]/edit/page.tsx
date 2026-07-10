@@ -4,12 +4,14 @@ import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 import { BsFillBagPlusFill } from "react-icons/bs";
 import { AiOutlineScan } from "react-icons/ai";
+import { TbShoppingBagEdit } from "react-icons/tb";
 import { useParams, useRouter } from "next/navigation";
 import {
   useGetSingleProductQuery,
   useUpdateProductMutation,
 } from "@/redux/api/productApi";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
+import type { ProductDetail } from "@/redux/api/productApi";
 
 const UpdateProduct = () => {
   const { id: productId } = useParams();
@@ -20,7 +22,8 @@ const UpdateProduct = () => {
 
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
 
-  const [product, setProduct] = useState({
+  const [product, setProduct] = useState<ProductDetail>({
+    _id: "",
     user: "",
     productName: "",
     barCode: "",

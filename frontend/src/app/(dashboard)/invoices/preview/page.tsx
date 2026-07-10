@@ -103,7 +103,7 @@ const InvoicePreview = () => {
             Save Invoice
           </button>
           <Link href="/invoices/new">
-            <button className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none bg-primary text-accent hover:bg-primary/90 h-10 px-4 text-sm btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400">
+            <button className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400 h-10 px-4 text-sm">
               <RiFileEditFill className="text-xl" />
               Edit Invoice
             </button>
@@ -112,7 +112,7 @@ const InvoicePreview = () => {
             trigger={() => {
               return (
                 <button
-                  className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none bg-primary text-accent hover:bg-primary/90 h-10 px-4 text-sm btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400 h-10 px-4 text-sm"
                   disabled={!isSuccess}
                 >
                   <AiFillPrinter className="text-xl" />
@@ -126,7 +126,7 @@ const InvoicePreview = () => {
           />
 
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none bg-primary text-accent hover:bg-primary/90 h-10 px-4 text-sm btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400"
+            className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400 h-10 px-4 text-sm"
             disabled={!isSuccess}
             onClick={handleDownloadPDF}
           >

@@ -1,9 +1,36 @@
 import { baseApi } from "./baseApi";
 
+export interface ProductListItem {
+  _id: string;
+  productName: string;
+  barCode: string;
+  stock: string | number;
+  warranty: string;
+  purchasedFrom: {
+    shopName: string;
+    shopNumber: string;
+    shopAddress: string;
+    purchasingPrice: number;
+    sellingPrice: number;
+  };
+}
+
+export interface ProductDetail extends ProductListItem {
+  barCode: string;
+  brand: string;
+  user: string;
+  purchasedFrom: ProductListItem["purchasedFrom"] & {
+    purchasingDate: string;
+  };
+}
+
 export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // Get all products for a user (with optional search)
-    getProducts: builder.query({
+    getProducts: builder.query<
+      ProductListItem[],
+      { userEmail: string; partialQuery?: string }
+    >({
       query: ({
         userEmail,
         partialQuery,
@@ -19,18 +46,20 @@ export const productApi = baseApi.injectEndpoints({
       providesTags: ["Product"],
       transformResponse: (response: {
         success: boolean;
-        products: unknown[];
+        products: ProductListItem[];
       }) => response.products,
     }),
 
     // Get a single product by ID
-    getSingleProduct: builder.query({
+    getSingleProduct: builder.query<ProductDetail, string>({
       query: (productId: string) => `/api/products/product/${productId}`,
       providesTags: (_result, _error, productId) => [
         { type: "Product", id: productId },
       ],
-      transformResponse: (response: { success: boolean; product: unknown }) =>
-        response.product,
+      transformResponse: (response: {
+        success: boolean;
+        product: ProductDetail;
+      }) => response.product,
     }),
 
     // Create a new product
@@ -44,14 +73,14 @@ export const productApi = baseApi.injectEndpoints({
     }),
 
     // Update a product
-    updateProduct: builder.mutation({
-      query: ({
-        productId,
-        product,
-      }: {
+    updateProduct: builder.mutation<
+      { success: boolean; product: ProductDetail },
+      {
         productId: string;
-        product: unknown;
-      }) => ({
+        product: ProductDetail;
+      }
+    >({
+      query: ({ productId, product }) => ({
         url: `/api/products/update/${productId}`,
         method: "PUT",
         body: product,

@@ -284,7 +284,7 @@ const CreateProduct = () => {
                   </p>
                   <button
                     type="submit"
-                    className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none bg-primary text-accent hover:bg-primary/90 h-10 px-4 text-sm  border-none w-full bg-[#5A66F1] text-white  hover:bg-secondary"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none border-none w-full bg-[#5A66F1] text-white hover:bg-secondary h-10 px-4 text-sm"
                   >
                     <BsBagPlus className="" />
                     Add Product

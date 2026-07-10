@@ -1,9 +1,50 @@
 import { baseApi } from "./baseApi";
 
+export interface InvoiceListItem {
+  _id: string;
+  invoiceNumber: string;
+  issuedDate?: string;
+  customerDetails: {
+    customerName: string;
+    customerEmail: string;
+  };
+}
+
+export interface InvoiceDetail {
+  _id?: string;
+  invoiceNumber?: string;
+  issuedDate?: string;
+  customerDetails?: {
+    customerName?: string;
+    customerAddress?: string;
+    customerPhoneNo?: string;
+    customerEmail?: string;
+  };
+  productDetails?: {
+    products: Array<{
+      productName: string;
+      warranty: string;
+      quantity: number;
+      unitPrice: number;
+    }>;
+  };
+  paymentDetails?: {
+    subtotal: number;
+    discount: number;
+    total: number;
+    totalPaid: number;
+    totalDue: number;
+  };
+  [key: string]: unknown;
+}
+
 export const invoiceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // Get all invoices for a user (with optional search)
-    getInvoices: builder.query({
+    getInvoices: builder.query<
+      InvoiceListItem[],
+      { userEmail: string; partialQuery?: string }
+    >({
       query: ({
         userEmail,
         partialQuery,
@@ -19,22 +60,27 @@ export const invoiceApi = baseApi.injectEndpoints({
       providesTags: ["Invoice"],
       transformResponse: (response: {
         success: boolean;
-        invoices: unknown[];
+        invoices: InvoiceListItem[];
       }) => response.invoices,
     }),
 
     // Get a single invoice by ID
-    getSingleInvoice: builder.query({
+    getSingleInvoice: builder.query<InvoiceDetail, string>({
       query: (invoiceId: string) => `/api/invoice/singleInvoice/${invoiceId}`,
       providesTags: (_result, _error, invoiceId) => [
         { type: "Invoice", id: invoiceId },
       ],
-      transformResponse: (response: { success: boolean; invoice: unknown }) =>
-        response.invoice,
+      transformResponse: (response: {
+        success: boolean;
+        invoice: InvoiceDetail;
+      }) => response.invoice,
     }),
 
     // Get the latest invoice number
-    getLatestInvoiceNumber: builder.query({
+    getLatestInvoiceNumber: builder.query<
+      { greatestInvoiceNumber: string },
+      void
+    >({
       query: () => "/api/invoice/latest/invoiceNumber",
       providesTags: ["Invoice"],
     }),

@@ -14,6 +14,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { FaTrash } from "react-icons/fa6";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
+import type { InvoiceListItem } from "@/redux/api/invoiceApi";
 
 const Invoice = () => {
   const { user } = useAppSelector((s) => s.auth);
@@ -36,13 +37,13 @@ const Invoice = () => {
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
     if (!selectAll) {
-      setSelectedItems(invoiceList.map((item) => item._id));
+      setSelectedItems(invoiceList.map((item: InvoiceListItem) => item._id));
     } else {
       setSelectedItems([]);
     }
   };
 
-  const handleCheckboxChange = (itemId) => {
+  const handleCheckboxChange = (itemId: string) => {
     const updatedSelectedItems = [...selectedItems];
     if (updatedSelectedItems.includes(itemId)) {
       updatedSelectedItems.splice(updatedSelectedItems.indexOf(itemId), 1);
