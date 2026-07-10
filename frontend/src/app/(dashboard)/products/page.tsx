@@ -35,6 +35,11 @@ const Products = () => {
   const [deleteProduct] = useDeleteProductMutation();
   const [deleteManyProducts] = useDeleteManyProductsMutation();
 
+  const [pagination, setPagination] = useState({
+    pageSize: 10,
+    pageNum: 1,
+  });
+
   // Animation properties for the table and rows.
   const tableVariants = {
     hidden: { opacity: 0, height: 0 },

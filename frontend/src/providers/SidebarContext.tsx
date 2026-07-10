@@ -6,7 +6,6 @@ const SidebarContext = createContext<ReturnType<typeof useSidebar>>(
 );
 
 const useSidebar = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const [isCollapsed, setCollapsed] = useState(false);
   const [width, setWidth] = useState(0);
 
@@ -17,7 +16,6 @@ const useSidebar = () => {
   };
 
   useEffect(() => {
-    setIsMounted(true);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => {
