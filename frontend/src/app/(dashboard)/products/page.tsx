@@ -279,7 +279,7 @@ const Products = () => {
                             <TbTrash className="text-2xl text-rose-500" />
                           </button>
                           <Link
-                            href={`/pages/products/update/${product._id}`}
+                            href={`/products/update/${product._id}`}
                             className="dark:text-accent"
                           >
                             <button className="btn border-none btn-ghost btn-xs ">

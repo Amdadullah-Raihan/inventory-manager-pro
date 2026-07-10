@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FaPlus, FaTrash } from 'react-icons/fa6'
 import { useInvoiceContext } from '@/providers/InvoiceContext'
 import { toast, ToastContainer } from 'react-toastify'
-import "react-toastify/dist/ReactToastify.css";
+;
 
 
 
@@ -36,10 +36,9 @@ const AddProductDetails = () => {
                         },
                     ],
                 },
-            });
         } else {
 
-            toast.warn("Please fill in all required fields")
+            toast.error("Please fill in all required fields")
         }
     };
 
@@ -55,7 +54,6 @@ const AddProductDetails = () => {
                 ...invoice.productDetails,
                 products: updatedProducts,
             },
-        });
     };
 
     // Function to remove the item at the specified index
@@ -68,25 +66,24 @@ const AddProductDetails = () => {
                 ...invoice.productDetails,
                 products: updatedProducts,
             },
-        });
     };
 
 
 
 
     return (
-        <form onSubmit={handleAddItem} className='border-b dark:border-b-gray-500  py-4'>
-            <ToastContainer />
+        <form onSubmit={handleAddItem} className='py-4 border-b dark:border-b-gray-500'>
+            <Toaster />
             <h4 className=''>Add Product&apos;s Details</h4>
-            <div className='h-full w-full'>
+            <div className='w-full h-full'>
                 {
                     invoice?.productDetails?.products && invoice.productDetails.products.map((product, idx) =>
-                        <div key={idx} className='flex lg:items-center gap-1    border-b border-b-secondary  mb-2 lg:mb-0 lg:border-none '>
+                        <div key={idx} className='flex gap-1 mb-2 border-b lg:items-center border-b-secondary lg:mb-0 lg:border-none '>
                             <div className='mt-3 sm:mt-0'>{idx + 1}.</div>
-                            <div className='relative grid grid-cols-2 lg:grid-cols-4 gap-2 mb-2  '>
+                            <div className='relative grid grid-cols-2 gap-2 mb-2 lg:grid-cols-4 '>
                                 <input
                                     type="text"
-                                    className='input w-full input-bordered  dark:bg-secondary'
+                                    className='w-full h-10 px-3 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-secondary dark:text-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50'
                                     placeholder="Product's Name"
                                     value={invoice.productDetails.products[idx].productName}
                                     onChange={(e) => handleProductChange(e, idx, 'productName')}
@@ -94,7 +91,7 @@ const AddProductDetails = () => {
                                 />
                                 <input
                                     type="text"
-                                    className='input w-full input-bordered  dark:bg-secondary'
+                                    className='w-full h-10 px-3 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-secondary dark:text-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50'
                                     placeholder="Warranty"
                                     value={invoice.productDetails.products[idx].warranty}
                                     onChange={(e) => handleProductChange(e, idx, 'warranty')}
@@ -102,7 +99,7 @@ const AddProductDetails = () => {
                                 />
                                 <input
                                     type="number"
-                                    className='input w-full input-bordered  dark:bg-secondary'
+                                    className='w-full h-10 px-3 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-secondary dark:text-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50'
                                     placeholder="Quantity"
                                     value={invoice.productDetails.products[idx].quantity === 0 ? '' : invoice.productDetails.products[idx].quantity}
                                     onChange={(e) => handleProductChange(e, idx, 'quantity')}
@@ -110,7 +107,7 @@ const AddProductDetails = () => {
                                 />
                                 <input
                                     type="number"
-                                    className='input w-full input-bordered  dark:bg-secondary'
+                                    className='w-full h-10 px-3 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-secondary dark:text-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50'
                                     placeholder="Unit Price"
                                     value={invoice.productDetails.products[idx].unitPrice === 0 ? '' : invoice.productDetails.products[idx].unitPrice}
                                     onChange={(e) => handleProductChange(e, idx, 'unitPrice')}

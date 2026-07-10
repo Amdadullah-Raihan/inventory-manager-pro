@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { AiOutlineScan } from "react-icons/ai";
 import { BsBagPlus, BsFillBagPlusFill } from "react-icons/bs";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 import BarcodeReader from "react-barcode-reader";
 import { motion } from "framer-motion";
 
@@ -57,8 +56,7 @@ const CreateProduct = () => {
       .then((result) => {
         if (result.data.success) {
           toast.success("Product added successfully!", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 3000, // Close the toast after 3 seconds (optional)
+            duration: 3000, // Close the toast after 3 seconds (optional)
           });
           setIsLoading(false);
           // Reset the form after a successful submission
@@ -83,8 +81,7 @@ const CreateProduct = () => {
       .catch((error) => {
         console.log(error);
         toast.success(`${error.message}`, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 3000, // Close the toast after 3 seconds (optional)
+          duration: 3000, // Close the toast after 3 seconds (optional)
         });
       });
   };
@@ -310,12 +307,12 @@ const CreateProduct = () => {
                   </p>
                   <button
                     type="submit"
-                    className="btn  border-none w-full bg-[#5A66F1] text-white  hover:bg-secondary"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none bg-primary text-accent hover:bg-primary/90 h-10 px-4 text-sm  border-none w-full bg-[#5A66F1] text-white  hover:bg-secondary"
                   >
                     <BsBagPlus className="" />
                     Add Product
                   </button>
-                  <ToastContainer />
+                  <Toaster />
                 </div>
               </div>
             </div>

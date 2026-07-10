@@ -10,8 +10,7 @@ import ProductDetailsPreview from "../_components/ProductDetailsPreview";
 import BillingDetailsPreview from "../_components/BillingDetailsPreview";
 import axios from "axios";
 import useApiUrl from "@/hooks/useApiUrl";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import ReactToPrint from "react-to-print";
 import html2canvas from "html2canvas";
@@ -35,8 +34,7 @@ const InvoicePreview = () => {
       .then((result) => {
         if (result.data.success) {
           toast.success("Invoice added successfully!", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 3000, // Close the toast after 3 seconds (optional)
+            duration: 3000, // Close the toast after 3 seconds (optional)
           });
           setIsSuccess(true);
         }
@@ -71,10 +69,10 @@ const InvoicePreview = () => {
         imgX,
         imgY,
         imgWidth * ratio,
-        imgHeight * ratio
+        imgHeight * ratio,
       );
       pdf.save(
-        `${invoice.customerDetails.customerName}-invoice-${invoice.invoiceNumber}.pdf`
+        `${invoice.customerDetails.customerName}-invoice-${invoice.invoiceNumber}.pdf`,
       );
     });
   };
@@ -82,7 +80,7 @@ const InvoicePreview = () => {
   return (
     <ProtectedRoute router={router}>
       <div className="w-full h-screen bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400          lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize">
-        <ToastContainer />
+        <Toaster />
         {/* start invoice */}
         <motion.div
           initial={{ x: -50 }}
@@ -112,7 +110,7 @@ const InvoicePreview = () => {
             Save Invoice
           </button>
           <Link href="/invoices/new">
-            <button className="btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400">
+            <button className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none bg-primary text-accent hover:bg-primary/90 h-10 px-4 text-sm btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400">
               <RiFileEditFill className="text-xl" />
               Edit Invoice
             </button>
@@ -121,7 +119,7 @@ const InvoicePreview = () => {
             trigger={() => {
               return (
                 <button
-                  className="btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none bg-primary text-accent hover:bg-primary/90 h-10 px-4 text-sm btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400"
                   disabled={!isSuccess}
                 >
                   <AiFillPrinter className="text-xl" />
@@ -135,7 +133,7 @@ const InvoicePreview = () => {
           />
 
           <button
-            className="btn btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400"
+            className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none bg-primary text-accent hover:bg-primary/90 h-10 px-4 text-sm btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400"
             disabled={!isSuccess}
             onClick={handleDownloadPDF}
           >

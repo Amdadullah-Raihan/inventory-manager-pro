@@ -244,7 +244,7 @@ const Invoice = () => {
                           >
                             <TbTrash className="text-2xl text-rose-500" />
                           </button>
-                          <Link href={`/pages/invoice/${invoice._id}`}>
+                          <Link href={`/invoice/${invoice._id}`}>
                             <button className="btn border-none btn-ghost btn-xs">
                               <AiOutlineFolderView className="text-2xl text-[#5A5FE0]" />
                             </button>
