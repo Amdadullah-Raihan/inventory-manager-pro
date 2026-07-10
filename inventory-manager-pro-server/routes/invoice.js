@@ -7,10 +7,21 @@ const router = express.Router();
 // Get the latest invoice number => /api/invoice/latest/invoiceNumber
 router.get("/latest/invoiceNumber", async (req, res) => {
   try {
-    const currentDate = new Date().toISOString().split("T")[0];
-    const invoices = await Invoice.find({ issuedDate: currentDate }).select(
-      "invoiceNumber",
+    const today = new Date();
+    const startOfDay = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
     );
+    const endOfDay = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1,
+    );
+
+    const invoices = await Invoice.find({
+      issuedDate: { $gte: startOfDay, $lt: endOfDay },
+    }).select("invoiceNumber");
 
     // Extract the numeric part of the invoice numbers and convert them to numbers
     const numericParts = invoices.map((invoice) => {
@@ -132,7 +143,7 @@ router.delete("/:id", async (req, res) => {
 
   try {
     // Find the invoice by ID and remove it
-    const deletedInvoice = await Invoice.findByIdAndRemove(invoiceId);
+    const deletedInvoice = await Invoice.findByIdAndDelete(invoiceId);
 
     if (!deletedInvoice) {
       // If the invoice with the given ID is not found

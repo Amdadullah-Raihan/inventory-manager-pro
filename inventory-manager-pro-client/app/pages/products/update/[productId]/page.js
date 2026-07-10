@@ -26,7 +26,7 @@ const UpdateProduct = () => {
       shopAddress: "",
       purchasingPrice: 0,
       sellingPrice: 0,
-      purchasingDate: new Date().toDateString(),
+      purchasingDate: new Date().toISOString(),
     },
     stock: "",
     warranty: "",

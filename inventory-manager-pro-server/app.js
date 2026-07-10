@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
-require("dotenv").config();
+require("dotenv").config({ path: __dirname + "/.env" });
 
 //internal imports
 const products = require("./routes/products");
@@ -40,18 +40,9 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
 //database connection
-let dbUrl = process.env.DB_ATLAS;
+const dbUrl = process.env.DB_ATLAS;
 
-// if (process.env.NODE_ENV === 'development') {
-
-//     dbUrl = process.env.DB_LOCAL
-
-// }
-// else {
-//     dbUrl = process.env.DB_ATLAS
-// }
-
-console.log("db url ", dbUrl);
+console.log("Connecting to MongoDB Atlas...");
 
 mongoose
   .connect(dbUrl)
