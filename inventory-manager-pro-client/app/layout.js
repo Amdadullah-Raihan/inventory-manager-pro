@@ -12,7 +12,6 @@ import { TimeIntervalContextProvider } from "./context/TimeIntervalContext";
 import SidebarPro from "./components/SideBar/Sidebar";
 import SidebarContextProvider from "./context/SidebarContext";
 import { useEffect, useState } from "react";
-import { document } from "postcss";
 import { motion } from "framer-motion";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -40,7 +40,6 @@ import {
 import { useSidebarContext } from "../../context/SidebarContext";
 import { useTimeInterval } from "../../context/TimeIntervalContext";
 import { usePathname } from "next/navigation";
-import { useDarkMode } from "@/app/layout";
 import { motion } from "framer-motion";
 import { PiMoonStars } from "react-icons/pi";
 

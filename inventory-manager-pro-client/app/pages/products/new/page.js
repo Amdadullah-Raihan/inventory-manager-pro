@@ -2,7 +2,6 @@
 import ProtectedRoute from "@/app/components/ProtectedRoute/ProtectedRoute";
 import { useAuth } from "@/app/context/AuthContext";
 import useApiUrl from "@/app/hooks/useApiUrl";
-import useFirebase from "@/app/hooks/useFirebase";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -12,7 +11,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BarcodeReader from "react-barcode-reader";
 import { motion } from "framer-motion";
-import Products from "../page";
 
 const CreateProduct = () => {
   const [apiUrl] = useApiUrl();

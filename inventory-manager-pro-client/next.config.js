@@ -3,7 +3,17 @@ const nextConfig = {
   images: {
     domains: ["lh3.googleusercontent.com"],
   },
-  transpilePackages: ["undici"],
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        net: false,
+        tls: false,
+        fs: false,
+      };
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;

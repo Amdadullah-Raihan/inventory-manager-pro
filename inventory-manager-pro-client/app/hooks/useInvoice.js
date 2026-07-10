@@ -46,12 +46,14 @@ const useInvoice = () => {
 
   //Generate a new invoice Number;
   useEffect(() => {
+    if (!user?.email) return;
+
     axios.get(`${apiUrl}/api/invoice/latest/invoiceNumber`).then((res) => {
       if (res.data.greatestInvoiceNumber) {
         const greatestInvoiceNumber = parseInt(res.data.greatestInvoiceNumber);
 
         let newInvoiceNumber = `CN-${currentYear}${currentMonth}${currentDay}-${String(
-          greatestInvoiceNumber + 1
+          greatestInvoiceNumber + 1,
         ).padStart(3, "0")}`;
 
         setInvoice((prevInvoice) => ({
@@ -61,14 +63,8 @@ const useInvoice = () => {
         }));
       }
     });
-  }, [
-    user.email,
-    apiUrl,
-    invoice.invoiceNumber,
-    currentYear,
-    currentMonth,
-    currentDay,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.email, apiUrl, currentYear, currentMonth, currentDay]);
 
   return {
     invoice,
