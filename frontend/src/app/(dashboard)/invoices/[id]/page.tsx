@@ -14,7 +14,7 @@ import ReactToPrint from "react-to-print";
 
 const SingleInvoice = () => {
   const [apiUrl] = useApiUrl();
-  const { invoiceId } = useParams();
+  const { id: invoiceId } = useParams();
   const [singleInvoice, setSingleInvoice] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
