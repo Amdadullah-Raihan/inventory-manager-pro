@@ -9,14 +9,13 @@ import {
   FaSackDollar,
 } from "react-icons/fa6";
 import LineChartDemo from "@/components/charts/LineChart";
-import { useAuth } from "@/providers/AuthContext";
-import { useTimeInterval } from "@/providers/TimeIntervalContext";
+import { useAppSelector } from "@/redux/hooks";
 import { useGetSalesDataQuery } from "@/redux/api/featureApi";
 import { motion } from "framer-motion";
 
 const HomePage = () => {
-  const { user } = useAuth();
-  const { timeInterval } = useTimeInterval();
+  const { user } = useAppSelector((s) => s.auth);
+  const timeInterval = useAppSelector((s) => s.timeInterval.timeInterval);
 
   const { data: salesData } = useGetSalesDataQuery(
     { userEmail: user?.email as string, timeInterval },

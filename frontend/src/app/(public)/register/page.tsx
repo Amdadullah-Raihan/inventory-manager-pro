@@ -2,23 +2,24 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
-import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { googleSignIn, setUser } from "@/redux/slices/authSlice";
 
 const Register = () => {
-  const { handleGoogleSignIn, setUser, user } = useAuth();
+  const { user } = useAppSelector((s) => s.auth);
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   // Function to handle Google login
   const handleGoogleLogin = async () => {
     try {
-      const result = await handleGoogleSignIn();
-      setUser(result.user as any);
-      if ((result as any)?.user?.email) {
+      const result = await dispatch(googleSignIn()).unwrap();
+      if (result && (result as Record<string, unknown>).email) {
         router.back();
       }
-    } catch (error) {
-      console.error("Google sign-in error:", error);
+    } catch (err) {
+      console.error("Google sign-in error:", err);
     }
   };
 

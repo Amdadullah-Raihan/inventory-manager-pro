@@ -6,8 +6,6 @@ import { RiFileEditFill, RiSave3Fill } from "react-icons/ri";
 import { FaArrowRotateRight, FaPlus } from "react-icons/fa6";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import { ToWords } from "to-words";
-import useInvoice from "@/hooks/useInvoice";
-import { useInvoiceContext } from "@/providers/InvoiceContext";
 import Link from "next/link";
 import InvoiceHeader from "../_components/InvoiceHeader";
 import InvoiceTo from "../_components/InvoiceTo";
@@ -16,10 +14,17 @@ import BillingDetails from "../_components/BillingDetails";
 import { GrPowerReset } from "react-icons/gr";
 import NotePreview from "../_components/NotePreview";
 import { motion } from "framer-motion";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { updateInvoice, resetInvoice } from "@/redux/slices/invoiceSlice";
+import useInvoice from "@/hooks/useInvoice";
 
 const CreateInvoice = () => {
-  const { invoice, setInvoice } = useInvoiceContext();
+  const invoice = useAppSelector((s) => s.invoice);
+  const dispatch = useAppDispatch();
   const [isDisabled, setIsDisabled] = useState(true);
+
+  // Auto-generate invoice number
+  useInvoice();
 
   // console.log('customerDetails', invoice.customerDetails);
   // console.log('invoice', invoice);
@@ -27,73 +32,39 @@ const CreateInvoice = () => {
 
   const issuedDate = new Date().toISOString().split("T")[0];
 
-  const handleReset = (resetOption) => {
+  const handleReset = (resetOption: string) => {
     if (resetOption === "all") {
-      setInvoice({
-        userEmail: "",
-        invoiceNumber: "",
-        issuedDate: issuedDate,
-        customerDetails: {
-          customerName: "",
-          customerAddress: "",
-          customerPhoneNo: "",
-          customerEmail: "",
-        },
-        productDetails: {
-          products: [
-            {
-              productName: "",
-              warranty: "",
-              quantity: 0,
-              unitPrice: 0,
-            },
-          ],
-        },
-        paymentDetails: {
-          subtotal: 0,
-          discount: 0,
-          total: 0,
-          totalPaid: 0,
-          totalDue: 0,
-        },
-      });
+      dispatch(resetInvoice());
     } else if (resetOption === "customer") {
-      setInvoice((prevInvoice) => ({
-        ...prevInvoice,
-        invoiceNumber: "",
-        customerDetails: {
-          customerName: "",
-          customerAddress: "",
-          customerPhoneNo: "",
-          customerEmail: "",
-        }, // Reset customerDetails to an empty object
-      }));
+      dispatch(
+        updateInvoice({
+          invoiceNumber: "",
+          customerDetails: {
+            customerName: "",
+            customerAddress: "",
+            customerPhoneNo: "",
+            customerEmail: "",
+          },
+        }),
+      );
     } else if (resetOption === "product") {
-      setInvoice((prevInvoice) => ({
-        ...prevInvoice,
-        invoiceNumber: "",
-        productDetails: {
-          products: [
-            {
-              productName: "",
-              warranty: "",
-              quantity: 0,
-              unitPrice: 0,
-            },
-          ],
-        }, // Reset productsDetails to an empty object
-      }));
-      setInvoice((prevInvoice) => ({
-        ...prevInvoice,
-        invoiceNumber: "",
-        paymentDetails: {
-          subtotal: 0,
-          discount: 0,
-          total: 0,
-          totalPaid: 0,
-          totalDue: 0,
-        }, // Reset paymentDetails to an empty object
-      }));
+      dispatch(
+        updateInvoice({
+          invoiceNumber: "",
+          productDetails: {
+            products: [
+              { productName: "", warranty: "", quantity: 0, unitPrice: 0 },
+            ],
+          },
+          paymentDetails: {
+            subtotal: 0,
+            discount: 0,
+            total: 0,
+            totalPaid: 0,
+            totalDue: 0,
+          },
+        }),
+      );
     }
   };
 

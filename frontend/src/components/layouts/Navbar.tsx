@@ -30,26 +30,34 @@ import { TbMoonStars, TbShoppingBagPlus } from "react-icons/tb";
 
 //internal imports
 import logo from "@/assets/logo/cn-computer-logo-removebg-preview.png";
-import useFirebase from "@/hooks/useFirebase";
-import { useAuth } from "@/providers/AuthContext";
 import {
   AiOutlineMenu,
   AiOutlineMenuFold,
   AiOutlineMenuUnfold,
 } from "react-icons/ai";
-import { useSidebarContext } from "@/providers/SidebarContext";
-import { useTimeInterval } from "@/providers/TimeIntervalContext";
-import { useDarkMode } from "@/providers/DarkModeContext";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { PiMoonStars } from "react-icons/pi";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout } from "@/redux/slices/authSlice";
+import { setDarkMode } from "@/redux/slices/darkModeSlice";
+import { setCollapsed } from "@/redux/slices/sidebarSlice";
+import { setTimeInterval } from "@/redux/slices/timeIntervalSlice";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const { user, handleSignOut } = useAuth();
-  const { timeInterval, setTimeInterval } = useTimeInterval();
-  const { isCollapsed, setCollapsed, width } = useSidebarContext();
-  const { isDark, setIsDark } = useDarkMode();
+  const { user, isLoading } = useAppSelector((s) => s.auth);
+  const timeInterval = useAppSelector((s) => s.timeInterval.timeInterval);
+  const { isCollapsed } = useAppSelector((s) => s.sidebar);
+  const isDark = useAppSelector((s) => s.darkMode.isDark);
+  const dispatch = useAppDispatch();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await dispatch(logout());
+    router.push("/");
+  };
 
   return (
     <div className="navbar justify-between bg-base-100 shadow-b-md lg:dark:bg-secondary dark:bg-neutral">
@@ -62,7 +70,7 @@ const Navbar = () => {
             <select
               className="select  select-bordered select-sm w-full  max-w-xs dark:bg-secondary dark:text-accent         dark:border-gray-500 ml-1"
               value={timeInterval}
-              onChange={(e) => setTimeInterval(e.target.value)}
+              onChange={(e) => dispatch(setTimeInterval(e.target.value))}
             >
               <option value="daily">Daily</option>
               <option value="weekly">Weekly</option>
@@ -82,7 +90,9 @@ const Navbar = () => {
             {/* this hidden checkbox controls the state */}
             <input
               type="checkbox"
-              onChange={() => setIsDark(isDark === "dark" ? "light" : "dark")}
+              onChange={() =>
+                dispatch(setDarkMode(isDark === "dark" ? "light" : "dark"))
+              }
               checked={isDark === "dark" ? true : false}
             />
 

@@ -1,10 +1,10 @@
 "use client";
-import { useAuth } from "@/providers/AuthContext";
 import {
   useGetInvoicesQuery,
   useDeleteInvoiceMutation,
   useDeleteManyInvoicesMutation,
 } from "@/redux/api/invoiceApi";
+import { useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import React, { useState } from "react";
 import { AiOutlineFolderView, AiOutlinePlus } from "react-icons/ai";
@@ -16,7 +16,7 @@ import { FaTrash } from "react-icons/fa6";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 
 const Invoice = () => {
-  const { user } = useAuth();
+  const { user } = useAppSelector((s) => s.auth);
   const [partialQuery, setPartialQuery] = useState("");
   const [id, setId] = useState("");
   const [selectAll, setSelectAll] = useState(false);

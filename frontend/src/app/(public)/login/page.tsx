@@ -2,15 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
-import { useAuth } from "@/providers/AuthContext";
-import useFirebase from "@/hooks/useFirebase";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Toaster } from "react-hot-toast";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { googleSignIn, emailSignIn, setUser } from "@/redux/slices/authSlice";
 
 const Login = () => {
-  const { handleGoogleSignIn, setUser, user, handleEmailSignIn, error } =
-    useAuth();
+  const { user, error, isLoading } = useAppSelector((s) => s.auth);
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isHidden, setIsHidden] = useState(true);
@@ -20,20 +20,19 @@ const Login = () => {
   // Function to handle Google login
   const handleGoogleLogin = async () => {
     try {
-      const result = await handleGoogleSignIn();
-      setUser(result.user as any);
-      if ((result as any)?.user?.email) {
+      const result = await dispatch(googleSignIn()).unwrap();
+      if (result && (result as Record<string, unknown>).email) {
         router.back();
       }
-    } catch (error) {
-      console.error("Google sign-in error:", error);
+    } catch (err) {
+      console.error("Google sign-in error:", err);
     }
   };
 
   // Reference Function to handle login with email and password
-  const handleSignIn = (e) => {
+  const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
-    handleEmailSignIn(email, password);
+    dispatch(emailSignIn({ email, password }));
   };
   // console.log(error);
   // if (error.length > 0) {

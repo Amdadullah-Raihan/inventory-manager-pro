@@ -2,24 +2,24 @@
 
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
-import { AuthContextProvider } from "@/providers/AuthContext";
-import { DarkModeProvider } from "@/providers/DarkModeContext";
-import { InvoiceContextProvider } from "@/providers/InvoiceContext";
-import SidebarContextProvider from "@/providers/SidebarContext";
-import { TimeIntervalContextProvider } from "@/providers/TimeIntervalContext";
+import {
+  useSidebarResize,
+  useDarkModeEffect,
+  useAuthInit,
+} from "@/hooks/useReduxEffects";
 
-export default function Providers({ children }) {
+function AppEffects() {
+  useAuthInit();
+  useSidebarResize();
+  useDarkModeEffect();
+  return null;
+}
+
+export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
-      <DarkModeProvider>
-        <AuthContextProvider>
-          <SidebarContextProvider>
-            <TimeIntervalContextProvider>
-              <InvoiceContextProvider>{children}</InvoiceContextProvider>
-            </TimeIntervalContextProvider>
-          </SidebarContextProvider>
-        </AuthContextProvider>
-      </DarkModeProvider>
+      <AppEffects />
+      {children}
     </Provider>
   );
 }

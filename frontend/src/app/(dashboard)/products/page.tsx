@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "@/providers/AuthContext";
+import { useAppSelector } from "@/redux/hooks";
 import {
   useGetProductsQuery,
   useDeleteProductMutation,
@@ -16,7 +16,7 @@ import { FaTrash } from "react-icons/fa6";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 
 const Products = () => {
-  const { user } = useAuth();
+  const { user } = useAppSelector((s) => s.auth);
   const [partialQuery, setPartialQuery] = useState("");
   const [id, setId] = useState("");
   const [selectAll, setSelectAll] = useState(false);

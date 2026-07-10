@@ -1,6 +1,6 @@
 "use client";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
-import { useAuth } from "@/providers/AuthContext";
+import { useAppSelector } from "@/redux/hooks";
 import { useCreateProductMutation } from "@/redux/api/productApi";
 import React, { useState } from "react";
 import { BsBagPlus, BsFillBagPlusFill } from "react-icons/bs";
@@ -10,7 +10,7 @@ import { AiOutlineScan } from "react-icons/ai";
 
 const CreateProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAuth();
+  const { user } = useAppSelector((s) => s.auth);
   const [createProduct] = useCreateProductMutation();
 
   const [product, setProduct] = useState({

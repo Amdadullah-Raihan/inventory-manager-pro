@@ -2,13 +2,13 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect } from "react";
-import { useAuth } from "@/providers/AuthContext";
+import { useAppSelector } from "@/redux/hooks";
 
 // Paths that don't require authentication
 const publicPaths = ["/login", "/register"];
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading } = useAppSelector((s) => s.auth);
   const router = useRouter();
   const pathname = usePathname();
 

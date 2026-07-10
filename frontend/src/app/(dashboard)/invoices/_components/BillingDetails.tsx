@@ -1,9 +1,9 @@
 "use client";
-import useInvoice from "@/hooks/useInvoice";
 import React, { useEffect, useState } from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { ToWords } from "to-words";
-import { useInvoiceContext } from '@/providers/InvoiceContext';
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { updateInvoice } from "@/redux/slices/invoiceSlice";
 
 const toWords = new ToWords({
   localeCode: "en-IN",
@@ -27,63 +27,66 @@ const toWords = new ToWords({
 });
 
 const BillingDetails = () => {
-  const { invoice, setInvoice } = useInvoiceContext();
+  const invoice = useAppSelector((s) => s.invoice);
+  const dispatch = useAppDispatch();
 
   const [totalInWords, setTotalInWords] = useState("");
 
-  const handleDiscount = (e) => {
-    setInvoice((prevInvoice) => ({
-      ...prevInvoice,
-      paymentDetails: {
-        ...prevInvoice.paymentDetails,
-        discount: e.target.value,
-      },
-    }));
+  const handleDiscount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      updateInvoice({
+        paymentDetails: {
+          ...invoice.paymentDetails,
+          discount: Number(e.target.value),
+        },
+      }),
+    );
   };
 
-  const handleTotalPaidChange = (e) => {
-    setInvoice((prevInvoice) => ({
-      ...prevInvoice,
-      paymentDetails: {
-        ...prevInvoice.paymentDetails,
-        totalPaid: e.target.value,
-      },
-    }));
+  const handleTotalPaidChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      updateInvoice({
+        paymentDetails: {
+          ...invoice.paymentDetails,
+          totalPaid: Number(e.target.value),
+        },
+      }),
+    );
   };
 
+  // Auto-calculate subtotal from products
   useEffect(() => {
     let newSubtotal = 0;
-
     invoice.productDetails.products.forEach((product) => {
       newSubtotal += product.unitPrice * product.quantity;
     });
 
-    setInvoice((prevInvoice) => ({
-      ...prevInvoice,
-      paymentDetails: {
-        ...prevInvoice.paymentDetails,
-        subtotal: newSubtotal,
-      },
-    }));
-  }, [invoice.productDetails.products, setInvoice]);
+    dispatch(
+      updateInvoice({
+        paymentDetails: {
+          ...invoice.paymentDetails,
+          subtotal: newSubtotal,
+        },
+      }),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [invoice.productDetails.products]);
 
+  // Auto-calculate total from subtotal - discount
   useEffect(() => {
-    let subtotal = invoice.paymentDetails.subtotal;
-    let newTotal =
+    const newTotal =
       invoice.paymentDetails.subtotal - invoice.paymentDetails.discount;
-    setInvoice((prevInvoice) => ({
-      ...prevInvoice,
-      paymentDetails: {
-        ...prevInvoice.paymentDetails,
-        total: newTotal,
-      },
-    }));
+    dispatch(
+      updateInvoice({
+        paymentDetails: {
+          ...invoice.paymentDetails,
+          total: newTotal,
+        },
+      }),
+    );
     setTotalInWords(toWords.convert(newTotal));
-  }, [
-    invoice.paymentDetails.subtotal,
-    invoice.paymentDetails.discount,
-    setInvoice,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [invoice.paymentDetails.subtotal, invoice.paymentDetails.discount]);
 
   return (
     <div className="flex flex-col-reverse lg:flex-row lg:justify-between gap-6  py-2 dark:text-gray-400          ">

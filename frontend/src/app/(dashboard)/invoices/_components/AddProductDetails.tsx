@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa6";
-import { useInvoiceContext } from "@/providers/InvoiceContext";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { updateInvoice } from "@/redux/slices/invoiceSlice";
 import toast, { Toaster } from "react-hot-toast";
 
 const AddProductDetails = () => {
-  const { invoice, setInvoice } = useInvoiceContext();
+  const invoice = useAppSelector((s) => s.invoice);
+  const dispatch = useAppDispatch();
 
   // Function to add product details to the invoice.
   const handleAddItem = (e) => {
@@ -20,21 +22,21 @@ const AddProductDetails = () => {
       lastItem?.quantity !== 0 &&
       lastItem?.unitPrice !== 0
     ) {
-      setInvoice({
-        ...invoice,
-        productDetails: {
-          ...invoice.productDetails,
-          products: [
-            ...invoice.productDetails.products,
-            {
-              productName: "",
-              warranty: "",
-              quantity: 0,
-              unitPrice: 0,
-            },
-          ],
-        },
-      });
+      dispatch(
+        updateInvoice({
+          productDetails: {
+            products: [
+              ...invoice.productDetails.products,
+              {
+                productName: "",
+                warranty: "",
+                quantity: 0,
+                unitPrice: 0,
+              },
+            ],
+          },
+        }),
+      );
     } else {
       toast.error("Please fill in all required fields");
     }
@@ -45,26 +47,26 @@ const AddProductDetails = () => {
     const updatedProducts = [...invoice.productDetails.products];
     updatedProducts[idx][field] = e.target.value;
 
-    setInvoice({
-      ...invoice,
-      productDetails: {
-        ...invoice.productDetails,
-        products: updatedProducts,
-      },
-    });
+    dispatch(
+      updateInvoice({
+        productDetails: {
+          products: updatedProducts,
+        },
+      }),
+    );
   };
 
   // Function to remove the item at the specified index
   const handleDeleteItem = (idx) => {
     const updatedProducts = [...invoice.productDetails.products];
     updatedProducts.splice(idx, 1);
-    setInvoice({
-      ...invoice,
-      productDetails: {
-        ...invoice.productDetails,
-        products: updatedProducts,
-      },
-    });
+    dispatch(
+      updateInvoice({
+        productDetails: {
+          products: updatedProducts,
+        },
+      }),
+    );
   };
 
   return (

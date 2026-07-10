@@ -1,19 +1,21 @@
 "use client";
-import { useAuth } from "@/providers/AuthContext";
+import { useAppDispatch } from "@/redux/hooks";
+import { changePassword } from "@/redux/slices/authSlice";
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const ProfileSettings = () => {
-  const { handleUpdatePassword } = useAuth();
+  const dispatch = useAppDispatch();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isHidden, setIsHidden] = useState(true);
 
   // Reference Function to handle update password
-  const ReferenceToUpdatePassword = (e) => {
+  const ReferenceToUpdatePassword = (e: React.FormEvent) => {
     e.preventDefault();
-    handleUpdatePassword(password);
+    dispatch(changePassword(password));
+    alert("Password update initiated");
   };
 
   useEffect(() => {

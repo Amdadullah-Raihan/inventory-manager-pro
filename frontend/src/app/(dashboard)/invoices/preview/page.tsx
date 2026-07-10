@@ -1,6 +1,5 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { useInvoiceContext } from "@/providers/InvoiceContext";
 import { AiFillPrinter } from "react-icons/ai";
 import { RiFileEditFill, RiSave3Fill } from "react-icons/ri";
 import { TbFileDownload } from "react-icons/tb";
@@ -8,6 +7,7 @@ import InvoiceHeader from "../_components/InvoiceHeader";
 import ProductDetailsPreview from "../_components/ProductDetailsPreview";
 import BillingDetailsPreview from "../_components/BillingDetailsPreview";
 import { useCreateInvoiceMutation } from "@/redux/api/invoiceApi";
+import { useAppSelector } from "@/redux/hooks";
 import toast, { Toaster } from "react-hot-toast";
 import ReactToPrint from "react-to-print";
 import html2canvas from "html2canvas";
@@ -19,7 +19,7 @@ import ProtectedRoute from "@/components/shared/ProtectedRoute";
 
 const InvoicePreview = () => {
   const [isSuccess, setIsSuccess] = useState(false);
-  const { invoice } = useInvoiceContext();
+  const invoice = useAppSelector((s) => s.invoice);
   const [createInvoice] = useCreateInvoiceMutation();
   const componentRef = useRef(null);
 
