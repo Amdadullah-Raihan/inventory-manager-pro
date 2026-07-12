@@ -1,6 +1,7 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { changePassword, clearError } from "@/redux/slices/authSlice";
+import { clearError } from "@/redux/slices/authSlice";
+import { useChangePasswordMutation } from "@/redux/api/authApi";
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { toast } from "react-hot-toast";
@@ -8,6 +9,7 @@ import { toast } from "react-hot-toast";
 const ProfileSettings = () => {
   const dispatch = useAppDispatch();
   const { error } = useAppSelector((s) => s.auth);
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -28,14 +30,18 @@ const ProfileSettings = () => {
       return;
     }
 
-    const result = await dispatch(
-      changePassword({ currentPassword, newPassword }),
-    );
-    if (changePassword.fulfilled.match(result)) {
+    try {
+      await changePassword({ currentPassword, newPassword }).unwrap();
       toast.success("Password updated successfully");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
+    } catch (err: unknown) {
+      const message =
+        err && typeof err === "object" && "data" in err
+          ? (err as { data: { message?: string } }).data?.message
+          : "Password update failed";
+      toast.error(message || "Password update failed");
     }
   };
 
@@ -85,8 +91,16 @@ const ProfileSettings = () => {
         {validationError && (
           <p className="text-rose-400 text-sm mt-1">{validationError}</p>
         )}
-        <button type="submit" className="btn mt-4" disabled={!!validationError}>
-          Update Password
+        <button
+          type="submit"
+          className="btn mt-4"
+          disabled={!!validationError || isLoading}
+        >
+          {isLoading ? (
+            <span className="loading loading-spinner loading-sm"></span>
+          ) : (
+            "Update Password"
+          )}
         </button>
       </form>
     </div>

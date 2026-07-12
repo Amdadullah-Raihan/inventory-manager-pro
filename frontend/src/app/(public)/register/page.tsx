@@ -5,12 +5,14 @@ import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Toaster, toast } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { registerUser, clearError } from "@/redux/slices/authSlice";
+import { setUser, setToken, clearError } from "@/redux/slices/authSlice";
+import { useRegisterMutation } from "@/redux/api/authApi";
 
 const Register = () => {
-  const { user, error, isLoading } = useAppSelector((s) => s.auth);
+  const { user, error } = useAppSelector((s) => s.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [register, { isLoading }] = useRegisterMutation();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -33,10 +35,19 @@ const Register = () => {
       return;
     }
 
-    const result = await dispatch(registerUser({ name, email, password }));
-    if (registerUser.fulfilled.match(result)) {
+    try {
+      const result = await register({ name, email, password }).unwrap();
+      localStorage.setItem("token", result.token);
+      dispatch(setUser(result.user as unknown as Record<string, unknown>));
+      dispatch(setToken(result.token));
       toast.success("Account created successfully!");
       router.push("/");
+    } catch (err: unknown) {
+      const message =
+        err && typeof err === "object" && "data" in err
+          ? (err as { data: { message?: string } }).data?.message
+          : "Registration failed";
+      toast.error(message || "Registration failed");
     }
   };
 
@@ -59,11 +70,11 @@ const Register = () => {
     <div className="bg-[#F7F7F9] dark:bg-secondary w-full h-[100vh] p-4 ">
       <div className="bg-white dark:bg-neutral dark:border-none w-full max-w-[400px] border shadow  p-3 flex flex-col   rounded-lg mx-auto">
         <form
-          className="w-full flex flex-col gap-y-3"
+          className="flex flex-col w-full gap-y-3"
           onSubmit={handleRegister}
         >
-          <div className="w-full text-start mb-4 ">
-            <h1 className="dark:text-white text-xl text-gray-700">
+          <div className="w-full mb-4 text-start ">
+            <h1 className="text-xl text-gray-700 dark:text-white">
               Welcome to Invoice Maker!!
             </h1>
             <p className="text-xs text-gray-500">
@@ -76,7 +87,7 @@ const Register = () => {
             <input
               type="text"
               onChange={(e) => setName(e.target.value)}
-              className="w-full dark:text-gray-400  input input-bordered dark:bg-secondary"
+              className="w-full dark:text-gray-400 input input-bordered dark:bg-secondary"
               placeholder="Your Full Name"
               required
             />
@@ -86,7 +97,7 @@ const Register = () => {
             <input
               type="email"
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full dark:text-gray-400  input input-bordered dark:bg-secondary"
+              className="w-full dark:text-gray-400 input input-bordered dark:bg-secondary"
               placeholder="Write Your Email"
               required
             />
@@ -120,10 +131,10 @@ const Register = () => {
           </div>
 
           {validationError && (
-            <p className="text-rose-500 text-sm">{validationError}</p>
+            <p className="text-sm text-rose-500">{validationError}</p>
           )}
 
-          <div className="flex  gap-4 my-3">
+          <div className="flex gap-4 my-3">
             <p className="text-gray-500">Already have an account? </p>
             <Link href="/login" className="text-primary ">
               Login
@@ -132,7 +143,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="btn btn-primary  border-none hover:bg-secondary "
+            className="border-none btn btn-primary hover:bg-secondary "
           >
             {isLoading ? (
               <span className="loading loading-spinner loading-sm"></span>

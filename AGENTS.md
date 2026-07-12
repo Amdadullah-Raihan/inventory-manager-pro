@@ -23,9 +23,9 @@ backend/           Express API (:5000 or Vercel serverless)
 ### Frontend
 
 - **All state in Redux.** Use `useAppSelector`/`useAppDispatch` from `@/redux/hooks` (typed).
-- **All API calls via RTK Query** (`invoiceApi`, `productApi`, `featureApi`). Tags: `Invoice`, `Product`, `Dashboard`.
-- **Auth user:** `{id, email, name}` from JWT. Token stored in localStorage. Use `loginUser`/`registerUser`/`fetchCurrentUser`/`logout` from authSlice.
-- **JWT token** is sent via `Authorization: Bearer <token>` header (see `baseApi.ts`).
+- **All API calls via RTK Query** (`invoiceApi`, `productApi`, `featureApi`, `authApi`). Tags: `Invoice`, `Product`, `Dashboard`, `User`.
+- **Auth user:** `{id, email, name}` from JWT. Token stored in localStorage. Auth mutations in `authApi` (RTK Query): `useLoginMutation`, `useRegisterMutation`, `useChangePasswordMutation`. App init uses `useGetMeQuery`. Auth slice holds pure state; dispatch `setUser`/`setToken` after successful mutations.
+- **JWT token** is sent via `Authorization: Bearer <token>` header (see `baseApi.ts` prepareHeaders).
 - **Path alias `@/*`** → `frontend/src/*`.
 - **Tailwind + DaisyUI.** Dark mode via `dark:` prefix + `darkModeSlice`. DaisyUI components for modals, buttons, drawers.
 - **Invoice flow:** Build draft in `invoiceSlice` → save via `useCreateInvoiceMutation`.
@@ -42,20 +42,21 @@ backend/           Express API (:5000 or Vercel serverless)
 
 ## File Reference (most edited)
 
-| File                                                     | What's in it                                                                                         |
-| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `frontend/src/redux/slices/authSlice.ts`                 | Auth state, JWT thunks (`loginUser`, `registerUser`, `fetchCurrentUser`, `logout`, `changePassword`) |
-| `frontend/src/redux/slices/invoiceSlice.ts`              | Draft invoice state + reducers                                                                       |
-| `frontend/src/redux/api/invoiceApi.ts`                   | Invoice CRUD endpoints                                                                               |
-| `frontend/src/redux/api/productApi.ts`                   | Product CRUD endpoints                                                                               |
-| `frontend/src/app/(dashboard)/invoices/page.tsx`         | Invoice list with search, select, delete                                                             |
-| `frontend/src/app/(dashboard)/invoices/new/page.tsx`     | Create invoice form                                                                                  |
-| `frontend/src/app/(dashboard)/invoices/preview/page.tsx` | Preview before save                                                                                  |
-| `frontend/src/app/(dashboard)/products/page.tsx`         | Product list                                                                                         |
-| `backend/routes/invoice.js`                              | Invoice CRUD + latest invoice number                                                                 |
-| `backend/routes/products.js`                             | Product CRUD                                                                                         |
-| `backend/models/invoice.js`                              | Invoice Mongoose schema                                                                              |
-| `backend/models/products.js`                             | Product Mongoose schema                                                                              |
+| File                                                     | What's in it                                                                          |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `frontend/src/redux/slices/authSlice.ts`                 | Auth state (pure slice — `setUser`, `setToken`, `setLoading`, `logout`, `clearError`) |
+| `frontend/src/redux/api/authApi.ts`                      | Auth RTK Query endpoints (`login`, `register`, `getMe`, `changePassword`)             |
+| `frontend/src/redux/slices/invoiceSlice.ts`              | Draft invoice state + reducers                                                        |
+| `frontend/src/redux/api/invoiceApi.ts`                   | Invoice CRUD endpoints                                                                |
+| `frontend/src/redux/api/productApi.ts`                   | Product CRUD endpoints                                                                |
+| `frontend/src/app/(dashboard)/invoices/page.tsx`         | Invoice list with search, select, delete                                              |
+| `frontend/src/app/(dashboard)/invoices/new/page.tsx`     | Create invoice form                                                                   |
+| `frontend/src/app/(dashboard)/invoices/preview/page.tsx` | Preview before save                                                                   |
+| `frontend/src/app/(dashboard)/products/page.tsx`         | Product list                                                                          |
+| `backend/routes/invoice.js`                              | Invoice CRUD + latest invoice number                                                  |
+| `backend/routes/products.js`                             | Product CRUD                                                                          |
+| `backend/models/invoice.js`                              | Invoice Mongoose schema                                                               |
+| `backend/models/products.js`                             | Product Mongoose schema                                                               |
 
 ## Environment
 

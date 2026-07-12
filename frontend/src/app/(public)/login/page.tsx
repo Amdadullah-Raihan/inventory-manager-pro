@@ -5,11 +5,13 @@ import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Toaster, toast } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { loginUser, clearError } from "@/redux/slices/authSlice";
+import { setUser, setToken, clearError } from "@/redux/slices/authSlice";
+import { useLoginMutation } from "@/redux/api/authApi";
 
 const Login = () => {
-  const { user, error, isLoading } = useAppSelector((s) => s.auth);
+  const { user, error } = useAppSelector((s) => s.auth);
   const dispatch = useAppDispatch();
+  const [login, { isLoading }] = useLoginMutation();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isHidden, setIsHidden] = useState(true);
@@ -17,13 +19,22 @@ const Login = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await dispatch(loginUser({ email, password }));
-    if (loginUser.fulfilled.match(result)) {
+    try {
+      const result = await login({ email, password }).unwrap();
+      localStorage.setItem("token", result.token);
+      dispatch(setUser(result.user as unknown as Record<string, unknown>));
+      dispatch(setToken(result.token));
       toast.success("Logged in successfully");
+    } catch (err: unknown) {
+      const message =
+        err && typeof err === "object" && "data" in err
+          ? (err as { data: { message?: string } }).data?.message
+          : "Login failed";
+      toast.error(message || "Login failed");
     }
   };
 
-  // Show error toast
+  // Show error toast from slice
   useEffect(() => {
     if (error) {
       toast.error(error);

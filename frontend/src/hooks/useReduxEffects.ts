@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setCollapsed, setWidth } from "@/redux/slices/sidebarSlice";
 import { setDarkMode } from "@/redux/slices/darkModeSlice";
-import { fetchCurrentUser } from "@/redux/slices/authSlice";
+import { setUser, setToken, setLoading } from "@/redux/slices/authSlice";
+import { useGetMeQuery } from "@/redux/api/authApi";
 
 /** Syncs Redux sidebar state with window resize events */
 export function useSidebarResize() {
@@ -43,16 +44,31 @@ export function useDarkModeEffect() {
   }, [isDark]);
 }
 
-/** Initializes JWT auth state by checking localStorage for an existing token */
+/** Hydrates auth state on app init using RTK Query's getMe endpoint */
 export function useAuthInit() {
   const dispatch = useAppDispatch();
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+  const { data, isSuccess, isError, isLoading } = useGetMeQuery(undefined, {
+    skip: !token,
+  });
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      dispatch(fetchCurrentUser());
-    } else {
-      dispatch({ type: "auth/setLoading", payload: false });
+    dispatch(setLoading(isLoading));
+  }, [isLoading, dispatch]);
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(setUser(data.user as unknown as Record<string, unknown>));
+      dispatch(setToken(token!));
+      dispatch(setLoading(false));
     }
-  }, [dispatch]);
+  }, [isSuccess, data, token, dispatch]);
+
+  useEffect(() => {
+    if (isError || !token) {
+      dispatch(setLoading(false));
+    }
+  }, [isError, token, dispatch]);
 }
