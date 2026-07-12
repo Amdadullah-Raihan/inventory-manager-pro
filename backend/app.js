@@ -70,6 +70,15 @@ app.get("/", (req, res) => {
   res.send("Welcome to Inventory Management App Server!");
 });
 
+// Global error handler — catches errors forwarded by catchAsync
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    success: false,
+    error: err.message || "Internal Server Error",
+  });
+});
+
 //listen to port:5000
 if (process.env.VERCEL !== "1") {
   app.listen(port, (req, res) => {

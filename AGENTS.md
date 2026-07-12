@@ -15,7 +15,8 @@ frontend/          Next.js app (:3000)
   src/components/  layouts/ (Navbar, Sidebar), shared/
   src/middleware.ts Next.js middleware — route protection via cookie check
 backend/           Express API (:5000 or Vercel serverless)
-  routes/          All logic inline (no controllers layer)
+  routes/          Thin route files — map HTTP verbs → controller functions
+  controllers/     Business logic (invoiceController, productController, userController, featureController)
   models/          Mongoose schemas (User, OTP — auto-expiring)
 ```
 
@@ -38,7 +39,8 @@ backend/           Express API (:5000 or Vercel serverless)
 
 ### Backend
 
-- **Routes are self-contained.** No separate controller files. Add logic directly in `routes/*.js`.
+- **Routes are thin, controllers hold logic.** Route files just map HTTP methods to controller functions. All async handlers are wrapped with `catchAsync()` from `utils/catchAsync.js` which forwards errors to the global error handler in `app.js`.
+- **Global error handler** in `app.js` catches all errors and returns `{ success: false, error: message }`.
 - **Auth middleware available.** `backend/utils/authMiddleware.js` verifies JWT and attaches `req.user`. Apply to routes that need protection.
 - **Auth routes:** POST `/api/user/send-otp`, POST `/api/user/register`, POST `/api/user/login`, GET `/api/user/me`, PUT `/api/user/change-password`.
 - **Config files in `configs/` are empty.** Use `process.env` directly.
@@ -57,8 +59,10 @@ backend/           Express API (:5000 or Vercel serverless)
 | `frontend/src/app/(dashboard)/invoices/new/page.tsx`     | Create invoice form                                                                   |
 | `frontend/src/app/(dashboard)/invoices/preview/page.tsx` | Preview before save                                                                   |
 | `frontend/src/app/(dashboard)/products/page.tsx`         | Product list                                                                          |
-| `backend/routes/invoice.js`                              | Invoice CRUD + latest invoice number                                                  |
-| `backend/routes/products.js`                             | Product CRUD                                                                          |
+| `backend/routes/invoice.js`                              | Thin routes → `controllers/invoiceController.js`                                      |
+| `backend/routes/products.js`                             | Thin routes → `controllers/productController.js`                                      |
+| `backend/controllers/invoiceController.js`               | Invoice business logic (getAll, getById, create, deleteOne, deleteMany, getLatest)    |
+| `backend/controllers/productController.js`               | Product business logic (getAll, getById, create, update, deleteOne, deleteMany)       |
 | `backend/models/invoice.js`                              | Invoice Mongoose schema                                                               |
 | `backend/models/products.js`                             | Product Mongoose schema                                                               |
 
