@@ -37,4 +37,3 @@ export interface TimeInterval {
   value: string;
   label: string;
 }
-}
