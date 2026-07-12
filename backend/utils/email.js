@@ -1,22 +1,36 @@
 const nodemailer = require("nodemailer");
 
-const transporter =
-  process.env.EMAIL_USER && process.env.EMAIL_PASS
-    ? nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
-        },
-      })
-    : null;
+function createTransporter() {
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASS;
+
+  if (!user || !pass) {
+    console.log(
+      "[email] EMAIL_USER/EMAIL_PASS not set — OTPs logged to console only",
+    );
+    return null;
+  }
+
+  console.log(`[email] Creating transporter for ${user}`);
+  return nodemailer.createTransport({
+    service: "gmail",
+    auth: { user, pass },
+  });
+}
 
 /**
- * Sends an OTP email. In development (no EMAIL_USER/PASS), logs to console.
+ * Sends an OTP email. Falls back to console.log if email is not configured or fails.
  */
 async function sendOTPEmail(email, code) {
-  if (transporter) {
-    await transporter.sendMail({
+  const transporter = createTransporter();
+
+  if (!transporter) {
+    console.log(`\n📧 [DEV] OTP for ${email}: ${code}\n`);
+    return;
+  }
+
+  try {
+    const info = await transporter.sendMail({
       from: `"Invoice Maker" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Your OTP for Invoice Maker Registration",
@@ -30,8 +44,16 @@ async function sendOTPEmail(email, code) {
         </div>
       `,
     });
-  } else {
-    console.log(`\n📧 [DEV] OTP for ${email}: ${code}\n`);
+    console.log(`[email] OTP sent to ${email} (messageId: ${info.messageId})`);
+  } catch (err) {
+    console.error(`[email] FAILED to send to ${email}:`, err.message);
+    // If Gmail blocked it, it might be a "sign-in attempt was blocked" issue
+    if (err.message?.includes("Invalid login")) {
+      console.error(
+        "[email] → App Password may be wrong or have spaces. Remove all spaces.",
+      );
+    }
+    console.log(`\n📧 [FALLBACK] OTP for ${email}: ${code}\n`);
   }
 }
 
