@@ -10,7 +10,7 @@ import { setTokenCookie } from "@/utils/cookies";
 import { useRegisterMutation } from "@/redux/api/authApi";
 
 const Register = () => {
-  const { user, error } = useAppSelector((s) => s.auth);
+  const { error } = useAppSelector((s) => s.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [register, { isLoading }] = useRegisterMutation();
@@ -60,13 +60,6 @@ const Register = () => {
       dispatch(clearError());
     }
   }, [error, dispatch]);
-
-  // Redirect if already logged in
-  useEffect(() => {
-    if (user?.email) {
-      router.push("/");
-    }
-  }, [user, router]);
 
   return (
     <div className="bg-[#F7F7F9] dark:bg-secondary w-full h-[100vh] p-4 ">

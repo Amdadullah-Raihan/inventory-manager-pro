@@ -10,7 +10,7 @@ import { setTokenCookie } from "@/utils/cookies";
 import { useLoginMutation } from "@/redux/api/authApi";
 
 function LoginForm() {
-  const { user, error } = useAppSelector((s) => s.auth);
+  const { error } = useAppSelector((s) => s.auth);
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
   const [email, setEmail] = useState<string>("");
@@ -46,13 +46,6 @@ function LoginForm() {
       dispatch(clearError());
     }
   }, [error, dispatch]);
-
-  // Redirect if already logged in (handled by middleware, belt-and-suspenders)
-  useEffect(() => {
-    if (user?.email) {
-      router.push("/");
-    }
-  }, [router, user]);
 
   return (
     <div className="bg-[#F7F7F9] dark:bg-secondary w-full h-[100vh] p-4 ">
