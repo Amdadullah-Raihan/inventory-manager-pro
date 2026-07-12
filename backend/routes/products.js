@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const authMiddleware = require("../utils/authMiddleware");
-const catchAsync = require("../utils/catchAsync");
+const authMiddleware = require("../middlewares/authMiddleware");
+const catchAsync = require("../middlewares/catchAsync");
 const ctrl = require("../controllers/productController");
 
 router.use(authMiddleware);
