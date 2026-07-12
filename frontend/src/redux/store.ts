@@ -16,14 +16,7 @@ export const store = configureStore({
     timeInterval: timeIntervalReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [
-          "auth/googleSignIn/fulfilled",
-          "auth/emailSignIn/fulfilled",
-        ],
-      },
-    }).concat(baseApi.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -11,6 +11,7 @@ import {
   signInWithPopup,
   signOut,
   updatePassword,
+  type User,
 } from "firebase/auth";
 import initializeAuthentication from "@/services/firebase/firebase.init";
 
@@ -31,16 +32,33 @@ initializeAuthentication();
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth();
 
+/**
+ * Extract only serializable fields from a Firebase User object.
+ * Firebase UserImpl contains non-serializable internals (methods, circular refs)
+ * that Redux cannot store. This extracts the plain data we actually need.
+ */
+const serializeUser = (firebaseUser: User | null): Record<string, unknown> => {
+  if (!firebaseUser) return {};
+  return {
+    uid: firebaseUser.uid,
+    email: firebaseUser.email,
+    displayName: firebaseUser.displayName,
+    photoURL: firebaseUser.photoURL,
+    emailVerified: firebaseUser.emailVerified,
+    phoneNumber: firebaseUser.phoneNumber,
+  };
+};
+
 export const googleSignIn = createAsyncThunk("auth/googleSignIn", async () => {
   const result = await signInWithPopup(auth, googleProvider);
-  return result.user as unknown as Record<string, unknown>;
+  return serializeUser(result.user);
 });
 
 export const emailSignIn = createAsyncThunk(
   "auth/emailSignIn",
   async ({ email, password }: { email: string; password: string }) => {
     const result = await signInWithEmailAndPassword(auth, email, password);
-    return result.user as unknown as Record<string, unknown>;
+    return serializeUser(result.user);
   },
 );
 
@@ -116,11 +134,7 @@ export const { setUser, setLoading, clearError } = authSlice.actions;
 // Auth state listener - should be called once at app init
 export const initAuthListener = () => (dispatch: AppDispatch) => {
   const unsubscribe = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      dispatch(setUser(user as unknown as Record<string, unknown>));
-    } else {
-      dispatch(setUser({}));
-    }
+    dispatch(setUser(serializeUser(user)));
     dispatch(setLoading(false));
   });
   return unsubscribe;
