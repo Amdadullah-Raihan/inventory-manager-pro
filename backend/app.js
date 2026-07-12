@@ -16,7 +16,9 @@ const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:3000",
+  "http://localhost:3001",
   "https://invoice-maker.vercel.app",
+  "https://inventory-manager-pro.vercel.app",
 ];
 
 if (process.env.CLIENT_ORIGIN) {
@@ -42,7 +44,11 @@ app.options("*", cors(corsOptions));
 //database connection
 const dbUrl = process.env.DB_ATLAS;
 
-console.log("Connecting to MongoDB Atlas...");
+if (!dbUrl) {
+  console.error("FATAL: DB_ATLAS environment variable is not set!");
+} else {
+  console.log("Connecting to MongoDB Atlas...");
+}
 
 mongoose
   .connect(dbUrl)
@@ -50,7 +56,7 @@ mongoose
     console.log("Database connection established...");
   })
   .catch((err) => {
-    console.log("Error connecting to Database... " + err);
+    console.error("Error connecting to Database: " + err.message);
   });
 
 //routes handlers middlewares
@@ -62,6 +68,15 @@ app.use("/api/features", apiFeatures);
 //main route
 app.get("/", (req, res) => {
   res.send("Welcome to Inventory Management App Server!");
+});
+
+// Global error handler — catches errors forwarded by catchAsync
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    success: false,
+    error: err.message || "Internal Server Error",
+  });
 });
 
 //listen to port:5000

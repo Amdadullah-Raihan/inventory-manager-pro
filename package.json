@@ -1,0 +1,14 @@
+{
+  "name": "invoice-maker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,green \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start": "code --command workbench.action.tasks.runTask Start\\ All"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

@@ -1,5 +1,7 @@
 # Invoice Maker
 
+> **🤖 AI Assistants:** Read [`AGENTS.md`](./AGENTS.md) first for project conventions, architecture, and file reference.
+
 ![Project Logo](path/to/logo.png)
 
 **Invoice Maker** is a web-based invoice management application designed to streamline and optimize inventory processes for businesses of all sizes. This tool provides a user-friendly interface to manage, track, and analyze your inventory efficiently.
