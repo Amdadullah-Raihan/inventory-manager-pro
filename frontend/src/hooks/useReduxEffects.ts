@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setCollapsed, setWidth } from "@/redux/slices/sidebarSlice";
 import { setDarkMode } from "@/redux/slices/darkModeSlice";
-import { initAuthListener } from "@/redux/slices/authSlice";
+import { fetchCurrentUser } from "@/redux/slices/authSlice";
 
 /** Syncs Redux sidebar state with window resize events */
 export function useSidebarResize() {
@@ -43,14 +43,16 @@ export function useDarkModeEffect() {
   }, [isDark]);
 }
 
-/** Initializes Firebase auth state listener */
+/** Initializes JWT auth state by checking localStorage for an existing token */
 export function useAuthInit() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const unsubscribe = dispatch(initAuthListener());
-    return () => {
-      if (typeof unsubscribe === "function") unsubscribe();
-    };
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(fetchCurrentUser());
+    } else {
+      dispatch({ type: "auth/setLoading", payload: false });
+    }
   }, [dispatch]);
 }

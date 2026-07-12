@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     }
   }, [router, user?.email, isLoading, isPublicPath]);
 
-  // Show a loading screen while Firebase restores the auth state
+  // Show a loading screen while the auth state is being restored
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen w-full">

@@ -3,77 +3,134 @@ import {
   createAsyncThunk,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-import {
-  GoogleAuthProvider,
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  updatePassword,
-  type User,
-} from "firebase/auth";
-import initializeAuthentication from "@/services/firebase/firebase.init";
+import axios from "axios";
+
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "") ||
+  "http://localhost:5000";
+
+interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+}
 
 interface AuthState {
   user: Record<string, unknown>;
+  token: string | null;
   isLoading: boolean;
   error: string;
 }
 
 const initialState: AuthState = {
   user: {},
+  token: null,
   isLoading: true,
   error: "",
 };
 
-// Initialize Firebase auth
-initializeAuthentication();
-const googleProvider = new GoogleAuthProvider();
-const auth = getAuth();
+// ---- Thunks ----
 
-/**
- * Extract only serializable fields from a Firebase User object.
- * Firebase UserImpl contains non-serializable internals (methods, circular refs)
- * that Redux cannot store. This extracts the plain data we actually need.
- */
-const serializeUser = (firebaseUser: User | null): Record<string, unknown> => {
-  if (!firebaseUser) return {};
-  return {
-    uid: firebaseUser.uid,
-    email: firebaseUser.email,
-    displayName: firebaseUser.displayName,
-    photoURL: firebaseUser.photoURL,
-    emailVerified: firebaseUser.emailVerified,
-    phoneNumber: firebaseUser.phoneNumber,
-  };
-};
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (
+    {
+      name,
+      email,
+      password,
+    }: { name: string; email: string; password: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const { data } = await axios.post(`${API_URL}/api/user/register`, {
+        name,
+        email,
+        password,
+      });
+      localStorage.setItem("token", data.token);
+      return data as { token: string; user: AuthUser };
+    } catch (err: unknown) {
+      const message =
+        axios.isAxiosError(err) && err.response?.data?.message
+          ? err.response.data.message
+          : "Registration failed";
+      return rejectWithValue(message);
+    }
+  },
+);
 
-export const googleSignIn = createAsyncThunk("auth/googleSignIn", async () => {
-  const result = await signInWithPopup(auth, googleProvider);
-  return serializeUser(result.user);
-});
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (
+    { email, password }: { email: string; password: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const { data } = await axios.post(`${API_URL}/api/user/login`, {
+        email,
+        password,
+      });
+      localStorage.setItem("token", data.token);
+      return data as { token: string; user: AuthUser };
+    } catch (err: unknown) {
+      const message =
+        axios.isAxiosError(err) && err.response?.data?.message
+          ? err.response.data.message
+          : "Login failed";
+      return rejectWithValue(message);
+    }
+  },
+);
 
-export const emailSignIn = createAsyncThunk(
-  "auth/emailSignIn",
-  async ({ email, password }: { email: string; password: string }) => {
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    return serializeUser(result.user);
+export const fetchCurrentUser = createAsyncThunk(
+  "auth/fetchCurrentUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return rejectWithValue("No token");
+
+      const { data } = await axios.get(`${API_URL}/api/user/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return { token, user: data.user as AuthUser };
+    } catch {
+      localStorage.removeItem("token");
+      return rejectWithValue("Session expired");
+    }
   },
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  await signOut(auth);
+  localStorage.removeItem("token");
 });
 
 export const changePassword = createAsyncThunk(
   "auth/changePassword",
-  async (newPassword: string) => {
-    if (auth.currentUser) {
-      await updatePassword(auth.currentUser, newPassword);
+  async (
+    {
+      currentPassword,
+      newPassword,
+    }: { currentPassword: string; newPassword: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `${API_URL}/api/user/change-password`,
+        { currentPassword, newPassword },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+    } catch (err: unknown) {
+      const message =
+        axios.isAxiosError(err) && err.response?.data?.message
+          ? err.response.data.message
+          : "Password update failed";
+      return rejectWithValue(message);
     }
   },
 );
+
+// ---- Slice ----
 
 export const authSlice = createSlice({
   name: "auth",
@@ -91,56 +148,60 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Google Sign In
-      .addCase(googleSignIn.pending, (state) => {
+      // Register
+      .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
         state.error = "";
       })
-      .addCase(googleSignIn.fulfilled, (state, action) => {
-        state.user = action.payload;
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.user = action.payload.user as unknown as Record<string, unknown>;
+        state.token = action.payload.token;
         state.isLoading = false;
       })
-      .addCase(googleSignIn.rejected, (state, action) => {
+      .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || "Google sign-in failed";
+        state.error = action.payload as string;
       })
-      // Email Sign In
-      .addCase(emailSignIn.pending, (state) => {
+      // Login
+      .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = "";
       })
-      .addCase(emailSignIn.fulfilled, (state, action) => {
-        state.user = action.payload;
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.user = action.payload.user as unknown as Record<string, unknown>;
+        state.token = action.payload.token;
         state.isLoading = false;
       })
-      .addCase(emailSignIn.rejected, (state, action) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || "Email sign-in failed";
+        state.error = action.payload as string;
+      })
+      // Fetch current user (app init)
+      .addCase(fetchCurrentUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        state.user = action.payload.user as unknown as Record<string, unknown>;
+        state.token = action.payload.token;
+        state.isLoading = false;
+      })
+      .addCase(fetchCurrentUser.rejected, (state) => {
+        state.user = {};
+        state.token = null;
+        state.isLoading = false;
       })
       // Logout
       .addCase(logout.fulfilled, (state) => {
         state.user = {};
+        state.token = null;
         state.isLoading = false;
       })
       // Change Password
       .addCase(changePassword.rejected, (state, action) => {
-        state.error = action.error.message || "Password update failed";
+        state.error = action.payload as string;
       });
   },
 });
 
 export const { setUser, setLoading, clearError } = authSlice.actions;
-
-// Auth state listener - should be called once at app init
-export const initAuthListener = () => (dispatch: AppDispatch) => {
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
-    dispatch(setUser(serializeUser(user)));
-    dispatch(setLoading(false));
-  });
-  return unsubscribe;
-};
-
 export default authSlice.reducer;
-
-// Import at bottom to avoid circular dependency
-import type { AppDispatch } from "../store";

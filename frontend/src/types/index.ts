@@ -1,10 +1,9 @@
 // Shared types for the application
 
 export interface User {
+  id?: string;
   email?: string;
-  uid?: string;
-  displayName?: string;
-  photoURL?: string;
+  name?: string;
   [key: string]: unknown;
 }
 
@@ -38,14 +37,4 @@ export interface TimeInterval {
   value: string;
   label: string;
 }
-
-export interface UseFirebaseReturn {
-  user: Record<string, unknown>;
-  setUser: (user: Record<string, unknown>) => void;
-  error: string;
-  handleGoogleSignIn: () => Promise<Record<string, unknown>>;
-  handleEmailSignIn: (email: string, password: string) => void;
-  handleSignOut: () => void;
-  handleUpdatePassword: (newPassword: string) => void;
-  isLoading: boolean;
 }

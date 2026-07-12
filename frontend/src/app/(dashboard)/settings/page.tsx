@@ -1,43 +1,55 @@
 "use client";
-import { useAppDispatch } from "@/redux/hooks";
-import { changePassword } from "@/redux/slices/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { changePassword, clearError } from "@/redux/slices/authSlice";
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { toast } from "react-hot-toast";
 
 const ProfileSettings = () => {
   const dispatch = useAppDispatch();
-  const [password, setPassword] = useState("");
+  const { error } = useAppSelector((s) => s.auth);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [validationError, setValidationError] = useState("");
   const [isHidden, setIsHidden] = useState(true);
 
-  // Reference Function to handle update password
-  const ReferenceToUpdatePassword = (e: React.FormEvent) => {
+  const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(changePassword(password));
-    alert("Password update initiated");
+    setValidationError("");
+
+    if (newPassword !== confirmPassword) {
+      setValidationError("Passwords do not match");
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setValidationError("New password must be at least 6 characters");
+      return;
+    }
+
+    const result = await dispatch(
+      changePassword({ currentPassword, newPassword }),
+    );
+    if (changePassword.fulfilled.match(result)) {
+      toast.success("Password updated successfully");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    }
   };
 
   useEffect(() => {
-    if (
-      password.length &&
-      confirmPassword.length &&
-      password !== confirmPassword
-    ) {
-      setError("Password didn't match");
-    } else {
-      setError("");
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
     }
-
-    if (password.length && password.length < 6) {
-      setError("Password must be at least 6 characters");
-    }
-  }, [confirmPassword, password]);
+  }, [error, dispatch]);
 
   return (
     <div className="bg-[#F7F7F9] dark:bg-secondary w-full h-[100vh] p-4 dark:text-accent ">
       <form
-        onSubmit={ReferenceToUpdatePassword}
+        onSubmit={handleUpdatePassword}
         className="bg-white dark:bg-neutral p-2 md:p-4 rounded-lg max-w-sm  mx-auto"
       >
         <div className="flex justify-between mb-4">
@@ -48,22 +60,32 @@ const ProfileSettings = () => {
         </div>
         <input
           type={isHidden ? "password" : "text"}
-          onChange={(e) => setPassword(e.target.value)}
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          className="input input-bordered w-full mb-4"
+          placeholder="Current Password"
+          required
+        />
+        <input
+          type={isHidden ? "password" : "text"}
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
           className="input input-bordered w-full mb-4"
           placeholder="New Password"
           required
-        />{" "}
-        <br />
+        />
         <input
           type={isHidden ? "password" : "text"}
+          value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           className="input input-bordered w-full mb-1"
-          placeholder="Confirm Password"
+          placeholder="Confirm New Password"
           required
-        />{" "}
-        <br />
-        {error.length > 0 && <p className="text-rose-400">{error}</p>}
-        <button className="btn mt-4 " disabled={error.length && true}>
+        />
+        {validationError && (
+          <p className="text-rose-400 text-sm mt-1">{validationError}</p>
+        )}
+        <button type="submit" className="btn mt-4" disabled={!!validationError}>
           Update Password
         </button>
       </form>

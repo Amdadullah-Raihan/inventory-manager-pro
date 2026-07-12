@@ -1,12 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { FcGoogle } from "react-icons/fc";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { googleSignIn, emailSignIn, setUser } from "@/redux/slices/authSlice";
+import { loginUser, clearError } from "@/redux/slices/authSlice";
 
 const Login = () => {
   const { user, error, isLoading } = useAppSelector((s) => s.auth);
@@ -15,45 +14,36 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [isHidden, setIsHidden] = useState(true);
   const router = useRouter();
-  const path = usePathname();
 
-  // Function to handle Google login
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await dispatch(googleSignIn()).unwrap();
-      if (result && (result as Record<string, unknown>).email) {
-        router.back();
-      }
-    } catch (err) {
-      console.error("Google sign-in error:", err);
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = await dispatch(loginUser({ email, password }));
+    if (loginUser.fulfilled.match(result)) {
+      toast.success("Logged in successfully");
     }
   };
 
-  // Reference Function to handle login with email and password
-  const handleSignIn = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch(emailSignIn({ email, password }));
-  };
-  // console.log(error);
-  // if (error.length > 0) {
-  //   toastr.error(error);
-  // }
+  // Show error toast
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
 
-  // Check if the user is already logged in, and if so, redirect to the home page
+  // Redirect if already logged in
   useEffect(() => {
     if (user?.email) {
       router.push("/");
     }
   }, [router, user]);
 
-  console.log(path);
-
   return (
     <div className="bg-[#F7F7F9] dark:bg-secondary w-full h-[100vh] p-4 ">
       <div className="bg-white dark:bg-neutral dark:border-none w-full max-w-[400px] border shadow  p-3 flex flex-col   rounded-lg mx-auto">
-        <form className=" w-full flex flex-col gap-y-3" onSubmit={handleSignIn}>
-          <div className="w-full text-start mb-4 ">
-            <h1 className="dark:text-white text-xl text-gray-700">
+        <form className="flex flex-col w-full  gap-y-3" onSubmit={handleSignIn}>
+          <div className="w-full mb-4 text-start ">
+            <h1 className="text-xl text-gray-700 dark:text-white">
               Welcome to Invoice Maker!!
             </h1>
             <p className="text-xs text-gray-500">
@@ -65,9 +55,8 @@ const Login = () => {
             <label className="text-sm text-gray-500 ">Email</label>
             <input
               type="email"
-              name=""
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full dark:text-gray-400  input input-bordered dark:bg-secondary"
+              className="w-full dark:text-gray-400 input input-bordered dark:bg-secondary"
               placeholder="Write Your Email"
               required
             />
@@ -76,7 +65,6 @@ const Login = () => {
             <label className="text-sm text-gray-500 ">Password</label>
             <input
               type={isHidden ? "password" : "text"}
-              name=""
               onChange={(e) => setPassword(e.target.value)}
               className="w-full dark:text-gray-400 input input-bordered dark:bg-secondary"
               placeholder="Enter Your Password"
@@ -99,19 +87,16 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="btn btn-primary  border-none hover:bg-secondary "
+            disabled={isLoading}
+            className="border-none btn btn-primary hover:bg-secondary "
           >
-            Login
+            {isLoading ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
-        <div className="divider dark:text-white">OR</div>
-        <button
-          className="btn bg-gray-800 border-none text-white hover:bg-gray-900 "
-          onClick={handleGoogleLogin}
-        >
-          <FcGoogle className="text-xl" />
-          Log in with Google
-        </button>
       </div>
       <Toaster />
     </div>
