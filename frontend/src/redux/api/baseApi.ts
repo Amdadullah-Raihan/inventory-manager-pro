@@ -4,10 +4,8 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 function getToken(): string | null {
   if (typeof document === "undefined") return null;
-  // Try cookie first (set by middleware-friendly flow), fall back to localStorage
   const cookieMatch = document.cookie.match(/(?:^|;\s*)token=([^;]*)/);
-  if (cookieMatch) return cookieMatch[1];
-  return localStorage.getItem("token");
+  return cookieMatch ? cookieMatch[1] : null;
 }
 
 export const baseApi = createApi({

@@ -24,7 +24,6 @@ function LoginForm() {
     e.preventDefault();
     try {
       const result = await login({ email, password }).unwrap();
-      localStorage.setItem("token", result.token);
       setTokenCookie(result.token);
       dispatch(setUser(result.user as unknown as Record<string, unknown>));
       dispatch(setToken(result.token));

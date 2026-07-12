@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setCollapsed, setWidth } from "@/redux/slices/sidebarSlice";
 import { setDarkMode } from "@/redux/slices/darkModeSlice";
 import { setUser, setToken, setLoading } from "@/redux/slices/authSlice";
+import { getTokenCookie } from "@/utils/cookies";
 import { useGetMeQuery } from "@/redux/api/authApi";
 
 /** Syncs Redux sidebar state with window resize events */
@@ -44,31 +45,33 @@ export function useDarkModeEffect() {
   }, [isDark]);
 }
 
-/** Hydrates auth state on app init using RTK Query's getMe endpoint */
+/** Hydrates auth state on app init — reads token from cookie (same source as middleware) */
 export function useAuthInit() {
   const dispatch = useAppDispatch();
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-  const { data, isSuccess, isError, isLoading } = useGetMeQuery(undefined, {
+  const token = typeof window !== "undefined" ? getTokenCookie() : null;
+
+  const { data, isSuccess, isError } = useGetMeQuery(undefined, {
     skip: !token,
   });
 
   useEffect(() => {
-    dispatch(setLoading(isLoading));
-  }, [isLoading, dispatch]);
+    if (!token) {
+      dispatch(setLoading(false));
+    }
+  }, [token, dispatch]);
 
   useEffect(() => {
-    if (isSuccess && data) {
+    if (isSuccess && data && token) {
       dispatch(setUser(data.user as unknown as Record<string, unknown>));
-      dispatch(setToken(token!));
+      dispatch(setToken(token));
       dispatch(setLoading(false));
     }
   }, [isSuccess, data, token, dispatch]);
 
   useEffect(() => {
-    if (isError || !token) {
+    if (isError) {
       dispatch(setLoading(false));
     }
-  }, [isError, token, dispatch]);
+  }, [isError, dispatch]);
 }
