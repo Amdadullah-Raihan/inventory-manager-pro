@@ -1,10 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_API_URL ||
-  (process.env.NODE_ENV === "development"
-    ? "http://localhost:5000"
-    : "https://inventory-management-server-cx01ppgc0.vercel.app");
+// In development, uses localhost:5000.
+// In production, set NEXT_PUBLIC_API_URL in your Vercel env vars to your backend URL.
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export const baseApi = createApi({
   reducerPath: "api",
