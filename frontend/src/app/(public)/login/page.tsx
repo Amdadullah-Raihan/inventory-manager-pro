@@ -1,14 +1,15 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Toaster, toast } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser, setToken, clearError } from "@/redux/slices/authSlice";
+import { setTokenCookie } from "@/utils/cookies";
 import { useLoginMutation } from "@/redux/api/authApi";
 
-const Login = () => {
+function LoginForm() {
   const { user, error } = useAppSelector((s) => s.auth);
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
@@ -16,15 +17,19 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [isHidden, setIsHidden] = useState(true);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from") || "/";
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const result = await login({ email, password }).unwrap();
       localStorage.setItem("token", result.token);
+      setTokenCookie(result.token);
       dispatch(setUser(result.user as unknown as Record<string, unknown>));
       dispatch(setToken(result.token));
       toast.success("Logged in successfully");
+      router.push(from);
     } catch (err: unknown) {
       const message =
         err && typeof err === "object" && "data" in err
@@ -42,7 +47,7 @@ const Login = () => {
     }
   }, [error, dispatch]);
 
-  // Redirect if already logged in
+  // Redirect if already logged in (handled by middleware, belt-and-suspenders)
   useEffect(() => {
     if (user?.email) {
       router.push("/");
@@ -52,7 +57,7 @@ const Login = () => {
   return (
     <div className="bg-[#F7F7F9] dark:bg-secondary w-full h-[100vh] p-4 ">
       <div className="bg-white dark:bg-neutral dark:border-none w-full max-w-[400px] border shadow  p-3 flex flex-col   rounded-lg mx-auto">
-        <form className="flex flex-col w-full  gap-y-3" onSubmit={handleSignIn}>
+        <form className="flex flex-col w-full gap-y-3" onSubmit={handleSignIn}>
           <div className="w-full mb-4 text-start ">
             <h1 className="text-xl text-gray-700 dark:text-white">
               Welcome to Invoice Maker!!
@@ -112,6 +117,18 @@ const Login = () => {
       <Toaster />
     </div>
   );
-};
+}
 
-export default Login;
+export default function Login() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center w-full h-screen">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
+  );
+}

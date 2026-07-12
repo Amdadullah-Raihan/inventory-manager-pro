@@ -4,7 +4,6 @@ import { TbCurrencyTaka, TbFileDownload } from "react-icons/tb";
 import { AiFillPrinter, AiOutlineSend } from "react-icons/ai";
 import { RiFileEditFill, RiSave3Fill } from "react-icons/ri";
 import { FaArrowRotateRight, FaPlus } from "react-icons/fa6";
-import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import { ToWords } from "to-words";
 import Link from "next/link";
 import InvoiceHeader from "../_components/InvoiceHeader";
@@ -103,71 +102,69 @@ const CreateInvoice = () => {
   console.log("isDisabled", isDisabled);
 
   return (
-    <ProtectedRoute>
-      <div className="w-full bg-[#F7F7F9] dark:bg-secondary lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize">
-        {/* Invoice Starts */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3 }}
-          className="max-w-[700px]  bg-white dark:bg-neutral dark:text-gray-400  shadow p-2 lg:p-4 rounded-md"
+    <div className="w-full bg-[#F7F7F9] dark:bg-secondary lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize">
+      {/* Invoice Starts */}
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3 }}
+        className="max-w-[700px]  bg-white dark:bg-neutral dark:text-gray-400  shadow p-2 lg:p-4 rounded-md"
+      >
+        <InvoiceHeader invoice={invoice} />
+        <InvoiceTo />
+        <AddProductDetails />
+        <BillingDetails />
+        <NotePreview />
+      </motion.div>
+      {/* Invoice ends */}
+
+      {/* right btn  */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2 }}
+        className="max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral rounded-md shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4"
+      >
+        <Link
+          href={isDisabled ? "" : "/invoices/preview"}
+          className="flex items-center gap-2"
         >
-          <InvoiceHeader invoice={invoice} />
-          <InvoiceTo />
-          <AddProductDetails />
-          <BillingDetails />
-          <NotePreview />
-        </motion.div>
-        {/* Invoice ends */}
-
-        {/* right btn  */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.2 }}
-          className="max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral rounded-md shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4"
-        >
-          <Link
-            href={isDisabled ? "" : "/invoices/preview"}
-            className="flex items-center gap-2"
-          >
-            <button
-              disabled={isDisabled}
-              className="btn border-none w-full bg-[#5a66f1] text-white hover:text-black disabled:dark:bg-base-200"
-            >
-              <RiSave3Fill className="text-xl" />
-              See Preview
-            </button>
-          </Link>
-
-          {process.env.NODE_ENV === "development" && (
-            <>
-              <button
-                className="btn border-none w-full bg-orange-500 text-white hover:text-black"
-                onClick={() => handleReset("customer")}
-              >
-                Reset customer details
-              </button>
-
-              <button
-                className="btn border-none w-full bg-blue-500 text-white hover:text-black"
-                onClick={() => handleReset("product")}
-              >
-                Reset Product Details
-              </button>
-            </>
-          )}
-
           <button
-            className="btn border-none w-full bg-rose-500 text-white hover:text-black"
-            onClick={() => handleReset("all")}
+            disabled={isDisabled}
+            className="btn border-none w-full bg-[#5a66f1] text-white hover:text-black disabled:dark:bg-base-200"
           >
-            <FaArrowRotateRight className="text-xl" />
-            Reset All
+            <RiSave3Fill className="text-xl" />
+            See Preview
           </button>
-        </motion.div>
-      </div>
-    </ProtectedRoute>
+        </Link>
+
+        {process.env.NODE_ENV === "development" && (
+          <>
+            <button
+              className="btn border-none w-full bg-orange-500 text-white hover:text-black"
+              onClick={() => handleReset("customer")}
+            >
+              Reset customer details
+            </button>
+
+            <button
+              className="btn border-none w-full bg-blue-500 text-white hover:text-black"
+              onClick={() => handleReset("product")}
+            >
+              Reset Product Details
+            </button>
+          </>
+        )}
+
+        <button
+          className="btn border-none w-full bg-rose-500 text-white hover:text-black"
+          onClick={() => handleReset("all")}
+        >
+          <FaArrowRotateRight className="text-xl" />
+          Reset All
+        </button>
+      </motion.div>
+    </div>
   );
 };
 

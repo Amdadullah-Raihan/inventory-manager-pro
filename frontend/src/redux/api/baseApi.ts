@@ -1,14 +1,21 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Set NEXT_PUBLIC_API_URL in .env.local (local dev) or Vercel env vars (production).
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+function getToken(): string | null {
+  if (typeof document === "undefined") return null;
+  // Try cookie first (set by middleware-friendly flow), fall back to localStorage
+  const cookieMatch = document.cookie.match(/(?:^|;\s*)token=([^;]*)/);
+  if (cookieMatch) return cookieMatch[1];
+  return localStorage.getItem("token");
+}
 
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl.replace(/\/+$/, ""),
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }

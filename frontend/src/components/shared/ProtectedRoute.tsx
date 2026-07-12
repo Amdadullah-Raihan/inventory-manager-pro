@@ -4,7 +4,6 @@ import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect } from "react";
 import { useAppSelector } from "@/redux/hooks";
 
-// Paths that don't require authentication
 const publicPaths = ["/login", "/register"];
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -14,20 +13,24 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   const isPublicPath = publicPaths.includes(pathname);
 
+  const needsRedirect =
+    (!user?.email && !isPublicPath) || // unauthenticated → protected route
+    (user?.email && isPublicPath); // authenticated → public route
+
   useEffect(() => {
-    // Only redirect when auth state is resolved and not on a public path
-    if (!isLoading && !user?.email && !isPublicPath) {
-      router.push("/login");
+    if (isLoading) return; // don't redirect until auth state resolves
+
+    if (!user?.email && !isPublicPath) {
+      router.push(`/login?from=${encodeURIComponent(pathname)}`);
     }
 
-    // If user is authenticated and on a public path, redirect to home
-    if (!isLoading && user?.email && isPublicPath) {
+    if (user?.email && isPublicPath) {
       router.push("/");
     }
-  }, [router, user?.email, isLoading, isPublicPath]);
+  }, [router, user?.email, isLoading, isPublicPath, pathname]);
 
-  // Show a loading screen while the auth state is being restored
-  if (isLoading) {
+  // Show spinner while: auth is loading, OR a redirect is pending (don't flash content)
+  if (isLoading || needsRedirect) {
     return (
       <div className="flex items-center justify-center h-screen w-full">
         <div className="flex flex-col items-center gap-3">
@@ -36,11 +39,6 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
     );
-  }
-
-  // On public paths (login/register), render children without the app shell
-  if (isPublicPath) {
-    return children;
   }
 
   return children;

@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { clearTokenCookie } from "@/utils/cookies";
 
 interface AuthState {
   user: Record<string, unknown>;
@@ -38,6 +39,7 @@ export const authSlice = createSlice({
       state.token = null;
       state.isLoading = false;
       localStorage.removeItem("token");
+      clearTokenCookie();
     },
   },
 });

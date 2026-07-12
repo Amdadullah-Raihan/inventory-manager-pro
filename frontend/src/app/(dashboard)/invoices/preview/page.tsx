@@ -15,7 +15,6 @@ import jsPDF from "jspdf";
 import NotePreview from "../_components/NotePreview";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import ProtectedRoute from "@/components/shared/ProtectedRoute";
 
 const InvoicePreview = () => {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -71,71 +70,69 @@ const InvoicePreview = () => {
   };
 
   return (
-    <ProtectedRoute>
-      <div className="w-full h-screen bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400          lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize">
-        <Toaster />
-        {/* start invoice */}
-        <motion.div
-          initial={{ x: -50 }}
-          animate={{ x: 0 }}
-          ref={componentRef}
-          id="printable-content"
-          className="max-w-[700px]  bg-white dark:bg-neutral dark:text-gray-400 shadow p-2 lg:p-4 rounded-md "
-        >
-          <InvoiceHeader invoice={invoice} />
-          <ProductDetailsPreview invoice={invoice} />
-          <BillingDetailsPreview invoice={invoice} />
-          <NotePreview />
-        </motion.div>
+    <div className="w-full h-screen bg-[#F7F7F9] dark:bg-secondary dark:text-gray-400          lg:flex justify-center items-start flex-col lg:flex-row gap-y-2 lg:gap-x-6 min-h-[100vh] p-2 lg:p-4 capitalize">
+      <Toaster />
+      {/* start invoice */}
+      <motion.div
+        initial={{ x: -50 }}
+        animate={{ x: 0 }}
+        ref={componentRef}
+        id="printable-content"
+        className="max-w-[700px]  bg-white dark:bg-neutral dark:text-gray-400 shadow p-2 lg:p-4 rounded-md "
+      >
+        <InvoiceHeader invoice={invoice} />
+        <ProductDetailsPreview invoice={invoice} />
+        <BillingDetailsPreview invoice={invoice} />
+        <NotePreview />
+      </motion.div>
 
-        {/* right btns */}
-        <motion.div
-          initial={{ x: 50 }}
-          animate={{ x: 0 }}
-          className="max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral dark:text-gray-400 rounded-lg shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4 "
+      {/* right btns */}
+      <motion.div
+        initial={{ x: 50 }}
+        animate={{ x: 0 }}
+        className="max-h-[300px] w-full lg:max-w-[400px] bg-white dark:bg-neutral dark:text-gray-400 rounded-lg shadow-md mt-2 lg:mt-0 p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4 "
+      >
+        <button
+          className={`btn border-none w-full bg-[#5a66f1] text-white hover:text-black dark:disabled:bg-gray-500 dark:disabled:text-gray-400`}
+          disabled={isSuccess}
+          onClick={handleSaveInvoice}
         >
-          <button
-            className={`btn border-none w-full bg-[#5a66f1] text-white hover:text-black dark:disabled:bg-gray-500 dark:disabled:text-gray-400`}
-            disabled={isSuccess}
-            onClick={handleSaveInvoice}
-          >
-            <RiSave3Fill className="text-xl" />
-            Save Invoice
+          <RiSave3Fill className="text-xl" />
+          Save Invoice
+        </button>
+        <Link href="/invoices/new">
+          <button className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400 h-10 px-4 text-sm">
+            <RiFileEditFill className="text-xl" />
+            Edit Invoice
           </button>
-          <Link href="/invoices/new">
-            <button className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400 h-10 px-4 text-sm">
-              <RiFileEditFill className="text-xl" />
-              Edit Invoice
-            </button>
-          </Link>
-          <ReactToPrint
-            trigger={() => {
-              return (
-                <button
-                  className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400 h-10 px-4 text-sm"
-                  disabled={!isSuccess}
-                >
-                  <AiFillPrinter className="text-xl" />
-                  Print
-                </button>
-              );
-            }}
-            content={() => componentRef.current}
-            documentTitle="Invoice"
-            pageStyle="print"
-          />
+        </Link>
+        <ReactToPrint
+          trigger={() => {
+            return (
+              <button
+                className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400 h-10 px-4 text-sm"
+                disabled={!isSuccess}
+              >
+                <AiFillPrinter className="text-xl" />
+                Print
+              </button>
+            );
+          }}
+          content={() => componentRef.current}
+          documentTitle="Invoice"
+          pageStyle="print"
+        />
 
-          <button
-            className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400 h-10 px-4 text-sm"
-            disabled={!isSuccess}
-            onClick={handleDownloadPDF}
-          >
-            <TbFileDownload className="text-xl" />
-            Download
-          </button>
-        </motion.div>
-      </div>
-    </ProtectedRoute>
+        <button
+          className="inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none btn-outline w-full border-[#5a66f1] text-primary hover:text-white dark:disabled:bg-gray-500 dark:disabled:text-gray-400 h-10 px-4 text-sm"
+          disabled={!isSuccess}
+          onClick={handleDownloadPDF}
+        >
+          <TbFileDownload className="text-xl" />
+          Download
+        </button>
+      </motion.div>
+    </div>
   );
 };
 

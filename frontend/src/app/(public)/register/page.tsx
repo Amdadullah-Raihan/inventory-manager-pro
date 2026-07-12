@@ -6,6 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Toaster, toast } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser, setToken, clearError } from "@/redux/slices/authSlice";
+import { setTokenCookie } from "@/utils/cookies";
 import { useRegisterMutation } from "@/redux/api/authApi";
 
 const Register = () => {
@@ -38,6 +39,7 @@ const Register = () => {
     try {
       const result = await register({ name, email, password }).unwrap();
       localStorage.setItem("token", result.token);
+      setTokenCookie(result.token);
       dispatch(setUser(result.user as unknown as Record<string, unknown>));
       dispatch(setToken(result.token));
       toast.success("Account created successfully!");

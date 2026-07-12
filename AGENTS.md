@@ -12,7 +12,8 @@ Next.js 16 (App Router) + React 19 + TypeScript + Tailwind/DaisyUI + Redux Toolk
 frontend/          Next.js app (:3000)
   src/redux/       slices/ + api/ (RTK Query)
   src/app/         (dashboard)/ = protected, (public)/ = login/register
-  src/components/  layouts/ (Navbar, Sidebar), shared/ (ProtectedRoute)
+  src/components/  layouts/ (Navbar, Sidebar), shared/
+  src/middleware.ts Next.js middleware — route protection via cookie check
 backend/           Express API (:5000 or Vercel serverless)
   routes/          All logic inline (no controllers layer)
   models/          Mongoose schemas (User model has name, email, password)
@@ -24,8 +25,9 @@ backend/           Express API (:5000 or Vercel serverless)
 
 - **All state in Redux.** Use `useAppSelector`/`useAppDispatch` from `@/redux/hooks` (typed).
 - **All API calls via RTK Query** (`invoiceApi`, `productApi`, `featureApi`, `authApi`). Tags: `Invoice`, `Product`, `Dashboard`, `User`.
-- **Auth user:** `{id, email, name}` from JWT. Token stored in localStorage. Auth mutations in `authApi` (RTK Query): `useLoginMutation`, `useRegisterMutation`, `useChangePasswordMutation`. App init uses `useGetMeQuery`. Auth slice holds pure state; dispatch `setUser`/`setToken` after successful mutations.
-- **JWT token** is sent via `Authorization: Bearer <token>` header (see `baseApi.ts` prepareHeaders).
+- **Auth user:** `{id, email, name}` from JWT. Token stored in both a `token` cookie (for middleware) and localStorage (for API calls). Auth mutations in `authApi` (RTK Query): `useLoginMutation`, `useRegisterMutation`, `useChangePasswordMutation`. App init uses `useGetMeQuery`. Auth slice holds pure state; dispatch `setUser`/`setToken` after successful mutations.
+- **Route protection:** `src/middleware.ts` checks the `token` cookie. No `ProtectedRoute` component needed — middleware runs server-side before rendering, zero flash. Public paths: `/login`, `/register`.
+- **JWT token** is sent via `Authorization: Bearer <token>` header (see `baseApi.ts` prepareHeaders — reads from cookie first, falls back to localStorage).
 - **Path alias `@/*`** → `frontend/src/*`.
 - **Tailwind + DaisyUI.** Dark mode via `dark:` prefix + `darkModeSlice`. DaisyUI components for modals, buttons, drawers.
 - **Invoice flow:** Build draft in `invoiceSlice` → save via `useCreateInvoiceMutation`.
