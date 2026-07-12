@@ -1,59 +1,36 @@
 const express = require("express");
 const Product = require("../models/products");
+const authMiddleware = require("../utils/authMiddleware");
 const router = express.Router();
 
-//get all prouducts => /api/products
-router.get("/:userEmail", async (req, res) => {
+// All product routes require authentication
+router.use(authMiddleware);
+
+// Get all products for current user => /api/products?partialQuery=...
+router.get("/", async (req, res) => {
+  const userEmail = req.user.email;
+  const partialQuery = req.query.partialQuery;
+
   try {
-    const userEmail = req.params.userEmail;
-    const partialQuery = req.query.partialQuery;
+    const query = { user: userEmail };
 
-    if (userEmail && partialQuery) {
-      const products = await Product.find({
-        user: userEmail, // Match the specific user's email address
-        $or: [
-          { barCode: { $regex: `.*${partialQuery}.*`, $options: "i" } },
-          { productName: { $regex: `.*${partialQuery}.*`, $options: "i" } },
-          {
-            "purchasedFrom.shopName": {
-              $regex: `.*${partialQuery}.*`,
-              $options: "i",
-            },
-          },
-          {
-            "purchasedFrom.shopNumber": {
-              $regex: `.*${partialQuery}.*`,
-              $options: "i",
-            },
-          },
-          {
-            "purchasedFrom.shopAddress": {
-              $regex: `.*${partialQuery}.*`,
-              $options: "i",
-            },
-          },
-        ],
-      });
-
-      res.status(200).json({
-        success: true,
-        products: products,
-      });
-    } else if (userEmail) {
-      // Only userEmail is provided
-      const products = await Product.find({ user: userEmail });
-
-      res.status(200).json({
-        success: true,
-        products: products,
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        error:
-          "User email is missing from the URL or partialQuery is missing from the query parameters.",
-      });
+    if (partialQuery) {
+      const escaped = partialQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      query.$or = [
+        { barCode: { $regex: escaped, $options: "i" } },
+        { productName: { $regex: escaped, $options: "i" } },
+        { "purchasedFrom.shopName": { $regex: escaped, $options: "i" } },
+        { "purchasedFrom.shopNumber": { $regex: escaped, $options: "i" } },
+        { "purchasedFrom.shopAddress": { $regex: escaped, $options: "i" } },
+      ];
     }
+
+    const products = await Product.find(query);
+
+    res.status(200).json({
+      success: true,
+      products,
+    });
   } catch (err) {
     res.status(500).json({
       success: false,
@@ -62,11 +39,11 @@ router.get("/:userEmail", async (req, res) => {
   }
 });
 
-//create a new product => /api/products/new
+// Create a new product => /api/products/new
 router.post("/new", async (req, res) => {
   try {
     const product = new Product({
-      user: req.body.user,
+      user: req.user.email,
       productName: req.body.productName,
       barCode: req.body.barCode,
       brand: req.body.brand,

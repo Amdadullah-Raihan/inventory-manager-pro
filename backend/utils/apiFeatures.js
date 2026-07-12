@@ -2,10 +2,14 @@ const express = require("express");
 const router = express.Router();
 const Invoice = require("../models/invoice");
 const Product = require("../models/products");
+const authMiddleware = require("./authMiddleware");
 
-router.get("/sales/:userEmail/:timeInterval", async (req, res) => {
+// All feature routes require authentication
+router.use(authMiddleware);
+
+router.get("/sales/:timeInterval", async (req, res) => {
   try {
-    const userEmail = req.params.userEmail;
+    const userEmail = req.user.email;
     if (!userEmail) {
       return res.status(400).send("Please provide a valid userEmail");
     }

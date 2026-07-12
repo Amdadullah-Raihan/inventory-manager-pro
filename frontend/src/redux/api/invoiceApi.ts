@@ -40,22 +40,13 @@ export interface InvoiceDetail {
 
 export const invoiceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // Get all invoices for a user (with optional search)
-    getInvoices: builder.query<
-      InvoiceListItem[],
-      { userEmail: string; partialQuery?: string }
-    >({
-      query: ({
-        userEmail,
-        partialQuery,
-      }: {
-        userEmail: string;
-        partialQuery?: string;
-      }) => {
+    // Get all invoices for the current user (with optional search)
+    getInvoices: builder.query<InvoiceListItem[], { partialQuery?: string }>({
+      query: ({ partialQuery } = {}) => {
         const queryStr = partialQuery
           ? `?partialQuery=${encodeURIComponent(partialQuery)}`
           : "";
-        return `/api/invoice/${userEmail}${queryStr}`;
+        return `/api/invoice${queryStr}`;
       },
       providesTags: ["Invoice"],
       transformResponse: (response: {

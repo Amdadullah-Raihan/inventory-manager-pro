@@ -23,10 +23,7 @@ const Products = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const { data: productsList = [], isLoading } = useGetProductsQuery(
-    {
-      userEmail: user?.email as string,
-      partialQuery: partialQuery || undefined,
-    },
+    { partialQuery: partialQuery || undefined },
     { skip: !user?.email },
   );
 

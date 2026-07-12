@@ -23,10 +23,7 @@ const Invoice = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const { data: invoiceList = [], isLoading } = useGetInvoicesQuery(
-    {
-      userEmail: user?.email as string,
-      partialQuery: partialQuery || undefined,
-    },
+    { partialQuery: partialQuery || undefined },
     { skip: !user?.email },
   );
 

@@ -4,13 +4,8 @@ export const featureApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // Get sales data for dashboard
     getSalesData: builder.query({
-      query: ({
-        userEmail,
-        timeInterval,
-      }: {
-        userEmail: string;
-        timeInterval: string;
-      }) => `/api/features/sales/${userEmail}/${timeInterval}`,
+      query: ({ timeInterval }: { timeInterval: string }) =>
+        `/api/features/sales/${timeInterval}`,
       providesTags: ["Dashboard"],
     }),
   }),

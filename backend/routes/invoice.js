@@ -1,6 +1,10 @@
 const express = require("express");
 const Invoice = require("../models/invoice");
+const authMiddleware = require("../utils/authMiddleware");
 const router = express.Router();
+
+// All invoice routes require authentication
+router.use(authMiddleware);
 
 // IMPORTANT: Static routes MUST be defined before parameterized routes
 
@@ -83,52 +87,43 @@ router.get("/singleInvoice/:id", async (req, res) => {
   }
 });
 
-// Get invoices for a specific user with optional partial query => /api/invoices/:userEmail?partialQuery=...
-router.get("/:userEmail", async (req, res) => {
+// Get invoices for current user with optional partial query => /api/invoice?partialQuery=...
+router.get("/", async (req, res) => {
+  const userEmail = req.user.email;
+  const partialQuery = req.query.partialQuery;
+
   try {
-    const userEmail = req.params.userEmail;
-    const partialQuery = req.query.partialQuery;
+    const query = { userEmail };
 
-    if (userEmail && partialQuery) {
-      const invoices = await Invoice.find({
-        userEmail: userEmail, // Match the specific user's email address
-        $or: [
-          { invoiceNumber: { $regex: `.*${partialQuery}.*`, $options: "i" } },
-          {
-            "customerDetails.customerName": {
-              $regex: `.*${partialQuery}.*`,
-              $options: "i",
-            },
+    if (partialQuery) {
+      query.$or = [
+        {
+          invoiceNumber: {
+            $regex: partialQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+            $options: "i",
           },
-          {
-            "customerDetails.customerEmail": {
-              $regex: `.*${partialQuery}.*`,
-              $options: "i",
-            },
+        },
+        {
+          "customerDetails.customerName": {
+            $regex: partialQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+            $options: "i",
           },
-          // Add more fields here as needed
-        ],
-      });
-
-      res.status(200).json({
-        success: true,
-        invoices: invoices,
-      });
-    } else if (userEmail) {
-      // Only userEmail is provided
-      const invoices = await Invoice.find({ userEmail: userEmail });
-
-      res.status(200).json({
-        success: true,
-        invoices: invoices,
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        error:
-          "User email is missing from the URL or partialQuery is missing from the query parameters.",
-      });
+        },
+        {
+          "customerDetails.customerEmail": {
+            $regex: partialQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+            $options: "i",
+          },
+        },
+      ];
     }
+
+    const invoices = await Invoice.find(query);
+
+    res.status(200).json({
+      success: true,
+      invoices,
+    });
   } catch (err) {
     res.status(500).json({
       success: false,

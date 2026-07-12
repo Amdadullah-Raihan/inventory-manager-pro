@@ -26,22 +26,13 @@ export interface ProductDetail extends ProductListItem {
 
 export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // Get all products for a user (with optional search)
-    getProducts: builder.query<
-      ProductListItem[],
-      { userEmail: string; partialQuery?: string }
-    >({
-      query: ({
-        userEmail,
-        partialQuery,
-      }: {
-        userEmail: string;
-        partialQuery?: string;
-      }) => {
+    // Get all products for the current user (with optional search)
+    getProducts: builder.query<ProductListItem[], { partialQuery?: string }>({
+      query: ({ partialQuery } = {}) => {
         const queryStr = partialQuery
           ? `?partialQuery=${encodeURIComponent(partialQuery)}`
           : "";
-        return `/api/products/${userEmail}${queryStr}`;
+        return `/api/products${queryStr}`;
       },
       providesTags: ["Product"],
       transformResponse: (response: {

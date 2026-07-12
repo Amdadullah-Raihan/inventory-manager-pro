@@ -18,7 +18,7 @@ const HomePage = () => {
   const timeInterval = useAppSelector((s) => s.timeInterval.timeInterval);
 
   const { data: salesData } = useGetSalesDataQuery(
-    { userEmail: user?.email as string, timeInterval },
+    { timeInterval },
     { skip: !user?.email },
   );
 

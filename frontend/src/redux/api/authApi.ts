@@ -17,10 +17,19 @@ export interface MeResponse {
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    /** POST /api/user/register — create a new account */
+    /** POST /api/user/send-otp — send OTP to email for registration */
+    sendOtp: builder.mutation<{ message: string }, { email: string }>({
+      query: (body) => ({
+        url: "/api/user/send-otp",
+        method: "POST",
+        body,
+      }),
+    }),
+
+    /** POST /api/user/register — create a new account (requires OTP) */
     register: builder.mutation<
       AuthResponse,
-      { name: string; email: string; password: string }
+      { name: string; email: string; password: string; otp: string }
     >({
       query: (body) => ({
         url: "/api/user/register",
@@ -61,6 +70,7 @@ export const authApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useSendOtpMutation,
   useRegisterMutation,
   useLoginMutation,
   useGetMeQuery,
